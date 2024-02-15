@@ -1,0 +1,82 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/MiniTwit.csproj": {}
+  },
+  "projects": {
+    "/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/MiniTwit.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/MiniTwit.csproj",
+        "projectName": "MiniTwit",
+        "projectPath": "/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/MiniTwit.csproj",
+        "packagesPath": "/home/prouvi/.nuget/packages/",
+        "outputPath": "/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/prouvi/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Session": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "System.ComponentModel.Annotations": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
