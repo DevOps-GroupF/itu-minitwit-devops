@@ -1,17 +1,34 @@
-# itu-minitwit-devops
+# Group F - MiniTwit on ASP.NET Core Razor Pages
 
-## Exercise session 1 - steps to update
+## Decision Log
 
-1. Install Python 3 on server
-2. Install 2to3 on server
-3. Use 2to3 to convert `minitwit.py` to Python 3
-4. Install flask on server
-5. Update the import of `werkzeug` to `werkzeug.security`
-6. Update line 42 of `minitwit.py` with `.decode` so that the database initialization works.
-7. Append `.decode()` lots (27) of places (anywhere we have a `rv.data`)
-8. Install SQLite dev tools on the server
-    - `libsqlite3-dev` on Debian
-9. Compile `flag_tool` with the makefile
-10. Modify `control.sh` to change the called Python version
+### Framework Choice
+
+We chose to base or refactoring on ASP.NET Core Razor pages for the following reasons:
+
+- Multiple group members are familiar with C# and ASP.NET 
+- All group members are familiar with OOP
+- Razor Pages are relatively simple to implement and have a good separation of concerns
+- Since we are in the .NET world, we can widely expand our system later in the course; we are not constrained to a small framework, and as such, we won't have to change much to scale up the system.
+- ASP.NET comes with EF Core, which allowed us to use the database mostly without writing SQL-code, which made implementing the data layer a quick affair.
+
+## Building
+```bash
+cd MiniTwit
+dotnet build
+```
+
+## Running
+
+```bash
+dotnet run
+```
+
+### With Docker
+
+```bash
+docker build -t minitwit-image
+docker run -p 8080:8080 minitwit-image
+```
 
 
