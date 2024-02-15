@@ -1,0 +1,36 @@
+﻿@page "/register"
+@model RegisterModel
+@{
+}
+
+</br><h2>Sign Up</h2>
+
+@if (!ModelState.IsValid){
+    <div class=error><strong>Error:</strong>
+        <ul>
+            @foreach (var modelStateEntry in ModelState.Values)
+            {
+                foreach (var error in modelStateEntry.Errors)
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            }
+        </ul>
+    </div>
+}
+
+<form method="post">
+    <dl>
+        <dt>Username:</dt>
+        <dd><input type="text" asp-for="Username" class="form-control"></dd>
+        <dt>E-Mail:</dt>
+        <dd><input type="text" asp-for="Email" class="form-control"></dd>
+        <dt>Password:</dt>
+        <dd><input type="password" asp-for="Password" class="form-control"></dd>
+        <dt>Password <small>(repeat)</small>:</dt>
+        <dd><input type="password" asp-for="password2" class="form-control"></dd>
+    </dl>
+    <div class="actions">
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+    </div>
+</form>
