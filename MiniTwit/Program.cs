@@ -2,7 +2,8 @@ using System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
-using MiniTwit.Data;
+using MiniTwitInfra.Data;
+using MiniTwitInfra.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,8 +26,8 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 /* builder.Services.AddIdentityCore<MiniTwit.Models.User>(); */
 builder.Services.AddScoped<
-    IPasswordHasher<MiniTwit.Models.User>,
-    PasswordHasher<MiniTwit.Models.User>
+    IPasswordHasher<User>,
+    PasswordHasher<User>
 >();
 
 var app = builder.Build();

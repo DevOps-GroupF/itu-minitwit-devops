@@ -2,7 +2,8 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MiniTwit.Data;
+using MiniTwitInfra.Data;
+using MiniTwitInfra.Models;
 
 namespace MiniTwit.Pages;
 
@@ -28,7 +29,7 @@ public class PublicModel : PageModel
                 message => message.AuthorId,
                 user => user.Id,
                 (message, user) =>
-                    new Models.TwitViewModel
+                    new TwitViewModel
                     {
                         AuthorUsername = user.UserName,
                         Text = message.Text,

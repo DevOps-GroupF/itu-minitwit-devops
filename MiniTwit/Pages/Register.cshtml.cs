@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using MiniTwit.Data;
+using MiniTwitInfra.Data;
+using MiniTwitInfra.Models;
 
 namespace MiniTwit.Pages
 {
@@ -12,9 +13,9 @@ namespace MiniTwit.Pages
     public class RegisterModel : PageModel
     {
         private readonly MiniTwitContext _context;
-        private readonly IPasswordHasher<Models.User> _passwordHasher;
+        private readonly IPasswordHasher<User> _passwordHasher;
 
-        public RegisterModel(MiniTwitContext context, IPasswordHasher<Models.User> passwordHasher)
+        public RegisterModel(MiniTwitContext context, IPasswordHasher<User> passwordHasher)
         {
             _context = context;
             _passwordHasher = passwordHasher;
@@ -59,7 +60,7 @@ namespace MiniTwit.Pages
                 return Page();
             }
 
-            var newUser = new Models.User
+            var newUser = new User
             {
                 UserName = Username, // Set the user properties here
                 Email = Email,

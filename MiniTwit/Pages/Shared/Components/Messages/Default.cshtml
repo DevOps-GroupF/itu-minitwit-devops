@@ -1,4 +1,4 @@
-@model IEnumerable<Models.TwitViewModel>
+@model IEnumerable<MiniTwitInfra.Models.TwitViewModel>
 @{
     ViewData["Title"] = "Home page";
 }
@@ -10,7 +10,7 @@
 }
 else
 {
-    @foreach(var twit in Model as IEnumerable<Models.TwitViewModel>) {
+    @foreach(var twit in Model as IEnumerable<MiniTwitInfra.Models.TwitViewModel>) {
         <li><img src="@twit.GravatarString.ToString()"><p>
         <strong><a asp-page="/UserTimeline", asp-route-username="@twit.AuthorUsername.ToString()">@twit.AuthorUsername.ToString()</a></strong>
         @twit.Text

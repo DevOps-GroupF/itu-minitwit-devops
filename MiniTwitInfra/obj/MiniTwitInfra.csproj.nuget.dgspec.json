@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/davidfalces/Repositoris/00_ITU/00_DevOps/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj": {}
+    "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj": {}
   },
   "projects": {
-    "/home/davidfalces/Repositoris/00_ITU/00_DevOps/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj": {
+    "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/davidfalces/Repositoris/00_ITU/00_DevOps/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj",
+        "projectUniqueName": "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj",
         "projectName": "MiniTwitInfra",
-        "projectPath": "/home/davidfalces/Repositoris/00_ITU/00_DevOps/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj",
-        "packagesPath": "/home/davidfalces/.nuget/packages/",
-        "outputPath": "/home/davidfalces/Repositoris/00_ITU/00_DevOps/itu-minitwit-devops/MiniTwitInfra/obj/",
+        "projectPath": "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj",
+        "packagesPath": "/home/gertlu/.nuget/packages/",
+        "outputPath": "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwitInfra/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/davidfalces/.nuget/NuGet/NuGet.Config"
+          "/home/gertlu/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -32,16 +32,17 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -58,7 +59,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/gertlu/.dotnet/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

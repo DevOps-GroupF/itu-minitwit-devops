@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MiniTwit.Data;
-using MiniTwit.Models;
+using MiniTwitInfra.Data;
+using MiniTwitInfra.Models;
 
 namespace MiniTwit.Pages
 {
@@ -41,7 +41,7 @@ namespace MiniTwit.Pages
 
             int loggedInUserIdFromSesssion = Utility.GetUserIdFromHttpSession(HttpContext);
 
-            User loggedInUser = await Models.User.GetUserFromUserIdAsync(
+            User loggedInUser = await MiniTwitInfra.Models.User.GetUserFromUserIdAsync(
                 loggedInUserIdFromSesssion,
                 _context
             );
@@ -50,7 +50,7 @@ namespace MiniTwit.Pages
             var formCollection = Request.Form;
             string fieldText = formCollection["text"].ToString();
 
-            Models.Twit newTwit = new Twit
+            Twit newTwit = new Twit
             {
                 AuthorId = loggedInUser.Id,
                 Text = fieldText,

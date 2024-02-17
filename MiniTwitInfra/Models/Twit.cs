@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 /* ); */
 
 
-namespace MiniTwit.Models
+namespace MiniTwitInfra.Models
 {
     [Table("message")]
     public class Twit

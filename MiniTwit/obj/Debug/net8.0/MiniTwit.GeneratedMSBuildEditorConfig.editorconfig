@@ -9,71 +9,71 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MiniTwit
 build_property.RootNamespace = MiniTwit
-build_property.ProjectDir = /home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/
+build_property.ProjectDir = /home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit
+build_property.MSBuildProjectDirectory = /home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit
 build_property._RazorSourceGeneratorDebug = 
 
-[/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/Pages/AddMessage.cshtml]
+[/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/Pages/AddMessage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRkTWVzc2FnZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/Pages/Autentication/Login.cshtml]
+[/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/Pages/Autentication/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQXV0ZW50aWNhdGlvbi9Mb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/Pages/Error.cshtml]
+[/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/Pages/Index.cshtml]
+[/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/Pages/Login.cshtml]
+[/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/Pages/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/Pages/Logout.cshtml]
+[/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/Pages/Logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTG9nb3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/Pages/Privacy.cshtml]
+[/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/Pages/Public.cshtml]
+[/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/Pages/Public.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUHVibGljLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/Pages/Register.cshtml]
+[/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/Pages/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUmVnaXN0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/Pages/Shared/Components/Messages/Default.cshtml]
+[/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/Pages/Shared/Components/Messages/Default.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL0NvbXBvbmVudHMvTWVzc2FnZXMvRGVmYXVsdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/Pages/Shared/_Layout.cshtml]
+[/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/Pages/UserTimeline.cshtml]
+[/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/Pages/UserTimeline.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVXNlclRpbWVsaW5lLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/Pages/_ViewImports.cshtml]
+[/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/Pages/_ViewStart.cshtml]
+[/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

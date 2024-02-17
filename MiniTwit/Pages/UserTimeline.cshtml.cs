@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using MiniTwit.Data;
-using MiniTwit.Models;
+using MiniTwitInfra.Data;
+using MiniTwitInfra.Models;
 
 namespace MiniTwit.Pages;
 
@@ -41,7 +41,7 @@ public class UserTimelineModel : PageModel
 
             loggedInUserIdFromSesssion = Utility.GetUserIdFromHttpSession(HttpContext);
 
-            loggedInUser = await Models.User.GetUserFromUserIdAsync(
+            loggedInUser = await MiniTwitInfra.Models.User.GetUserFromUserIdAsync(
                 loggedInUserIdFromSesssion,
                 _context
             );
@@ -102,7 +102,7 @@ public class UserTimelineModel : PageModel
 
         loggedInUserIdFromSesssion = Utility.GetUserIdFromHttpSession(HttpContext);
 
-        loggedInUser = await Models.User.GetUserFromUserIdAsync(
+        loggedInUser = await MiniTwitInfra.Models.User.GetUserFromUserIdAsync(
             loggedInUserIdFromSesssion,
             _context
         );
@@ -139,7 +139,7 @@ public class UserTimelineModel : PageModel
 
         loggedInUserIdFromSesssion = Utility.GetUserIdFromHttpSession(HttpContext);
 
-        loggedInUser = await Models.User.GetUserFromUserIdAsync(
+        loggedInUser = await MiniTwitInfra.Models.User.GetUserFromUserIdAsync(
             loggedInUserIdFromSesssion,
             _context
         );

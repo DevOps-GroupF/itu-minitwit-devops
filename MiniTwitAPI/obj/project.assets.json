@@ -428,19 +428,19 @@
     ]
   },
   "packageFolders": {
-    "/home/davidfalces/.nuget/packages/": {}
+    "/home/gertlu/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/davidfalces/Repositoris/00_ITU/00_DevOps/itu-minitwit-devops/MiniTwitAPI/MiniTwitAPI.csproj",
+      "projectUniqueName": "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwitAPI/MiniTwitAPI.csproj",
       "projectName": "MiniTwitAPI",
-      "projectPath": "/home/davidfalces/Repositoris/00_ITU/00_DevOps/itu-minitwit-devops/MiniTwitAPI/MiniTwitAPI.csproj",
-      "packagesPath": "/home/davidfalces/.nuget/packages/",
-      "outputPath": "/home/davidfalces/Repositoris/00_ITU/00_DevOps/itu-minitwit-devops/MiniTwitAPI/obj/",
+      "projectPath": "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwitAPI/MiniTwitAPI.csproj",
+      "packagesPath": "/home/gertlu/.nuget/packages/",
+      "outputPath": "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwitAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/davidfalces/.nuget/NuGet/NuGet.Config"
+        "/home/gertlu/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -458,11 +458,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -493,7 +488,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/home/gertlu/.dotnet/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

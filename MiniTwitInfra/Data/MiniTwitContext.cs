@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using MiniTwit.Models;
+using MiniTwitInfra.Models;
 
-namespace MiniTwit.Data
+namespace MiniTwitInfra.Data
 {
     public class MiniTwitContext : DbContext
     {

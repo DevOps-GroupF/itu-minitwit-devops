@@ -1,22 +1,7 @@
-using System.Drawing;
-using System.Drawing;
-using System.Security.Cryptography;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text;
-using System.Web;
-using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using MiniTwit.Data;
-using MiniTwit.Data;
-using MiniTwit.Models;
-using MiniTwit.Models;
+using MiniTwitInfra.Data;
+using MiniTwitInfra.Models;
 
 namespace MiniTwit
 {

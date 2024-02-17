@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MiniTwit.Data;
-using MiniTwit.Models;
-
+using MiniTwitInfra.Data;
+using MiniTwitInfra.Models;
 namespace MiniTwit.Pages;
 
 public class IndexModel : PageModel
@@ -33,7 +32,7 @@ public class IndexModel : PageModel
 
         int loggedInUserIdFromSesssion = Utility.GetUserIdFromHttpSession(HttpContext);
 
-        User loggedInUser = await Models.User.GetUserFromUserIdAsync(
+        User loggedInUser = await MiniTwitInfra.Models.User.GetUserFromUserIdAsync(
             loggedInUserIdFromSesssion,
             _context
         );
@@ -58,7 +57,7 @@ public class IndexModel : PageModel
                 message => message.AuthorId,
                 user => user.Id,
                 (message, user) =>
-                    new Models.TwitViewModel
+                    new TwitViewModel
                     {
                         AuthorUsername = user.UserName,
                         Text = message.Text,

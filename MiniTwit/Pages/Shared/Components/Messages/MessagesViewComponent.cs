@@ -3,7 +3,8 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MiniTwit.Data;
+using MiniTwitInfra.Data;
+using MiniTwitInfra.Models;
 
 namespace MiniTwit.Pages.Shared.Components.Messages;
 
@@ -26,7 +27,7 @@ public class MessagesViewComponent : ViewComponent
             + size.ToString();
     }
 
-    public IViewComponentResult Invoke(IEnumerable<Models.TwitViewModel> messages)
+    public IViewComponentResult Invoke(IEnumerable<TwitViewModel> messages)
     {
         return View("Default", messages);
     }
