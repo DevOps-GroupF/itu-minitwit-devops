@@ -18,6 +18,7 @@ builder.Services.AddScoped<
     IPasswordHasher<User>,
     PasswordHasher<User>>();
 
+builder.Services.AddMemoryCache();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
