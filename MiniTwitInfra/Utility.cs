@@ -1,9 +1,10 @@
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 using MiniTwitInfra.Data;
 using MiniTwitInfra.Models;
 
-namespace MiniTwit
+namespace MiniTwitInfra
 {
     public class Utility
     {
@@ -24,7 +25,7 @@ namespace MiniTwit
 
         public static int GetUserIdFromHttpSession(HttpContext httpContext)
         {
-            string idFromSession = httpContext.Session.GetString(Security.Authentication.AuthId);
+            string idFromSession = httpContext.Session.GetString(Authentication.AuthId);
 
             int id;
 
@@ -57,7 +58,7 @@ namespace MiniTwit
 
         public static bool SessionHasUserId(HttpContext httpContext)
         {
-            return null != httpContext.Session.GetString(Security.Authentication.AuthId);
+            return null != httpContext.Session.GetString(Authentication.AuthId);
         }
     }
 }

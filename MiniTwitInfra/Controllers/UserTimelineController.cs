@@ -1,21 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using MiniTwitInfra.Data;
 using MiniTwitInfra.Models;
 
-namespace MiniTwit.Pages;
+namespace MiniTwitInfra.Controllers;
 
-public class UserTimelineModel : PageModel
+public class UserTimelineController : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
     private readonly MiniTwitContext _context;
 
     private readonly int PER_PAGE = 30;
 
-    public UserTimelineModel(ILogger<IndexModel> logger, MiniTwitContext context)
+    public UserTimelineController(MiniTwitContext context)
     {
-        _logger = logger;
         _context = context;
     }
 

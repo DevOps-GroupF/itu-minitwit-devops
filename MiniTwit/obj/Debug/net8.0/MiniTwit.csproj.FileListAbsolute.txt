@@ -183,3 +183,14 @@
 /home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/obj/Debug/net8.0/MiniTwit.pdb
 /home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/obj/Debug/net8.0/MiniTwit.genruntimeconfig.cache
 /home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/obj/Debug/net8.0/ref/MiniTwit.dll
+/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/bin/Debug/net8.0/Microsoft.AspNetCore.JsonPatch.dll
+/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/bin/Debug/net8.0/Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/bin/Debug/net8.0/Microsoft.AspNetCore.Razor.Language.dll
+/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/bin/Debug/net8.0/Microsoft.AspNetCore.Server.Kestrel.Https.dll
+/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/bin/Debug/net8.0/Microsoft.AspNetCore.Server.Kestrel.Transport.Abstractions.dll
+/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/bin/Debug/net8.0/Microsoft.CodeAnalysis.dll
+/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/bin/Debug/net8.0/Microsoft.CodeAnalysis.CSharp.dll
+/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/bin/Debug/net8.0/Microsoft.CodeAnalysis.Razor.dll
+/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/bin/Debug/net8.0/Newtonsoft.Json.dll
+/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/bin/Debug/net8.0/Newtonsoft.Json.Bson.dll
+/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/obj/Debug/net8.0/MiniTwit.MvcApplicationPartsAssemblyInfo.cs

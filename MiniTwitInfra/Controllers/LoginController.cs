@@ -1,25 +1,23 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MiniTwitInfra.Data;
 using MiniTwitInfra.Models;
 
-namespace MiniTwit.Pages;
+namespace MiniTwitInfra.Controllers;
 
 [IgnoreAntiforgeryToken]
-public class LoginModel : PageModel
+public class LoginController : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
     private readonly MiniTwitContext _context;
     private readonly IPasswordHasher<User> _passwordHasher;
 
-    public LoginModel(
-        ILogger<IndexModel> logger,
+    public LoginController(
         MiniTwitContext context,
         IPasswordHasher<User> passwordHasher
     )
     {
-        _logger = logger;
         _context = context;
         _passwordHasher = passwordHasher;
     }
@@ -79,9 +77,9 @@ public class LoginModel : PageModel
             return Page();
         }
 
-        HttpContext.Session.SetString(Security.Authentication.AuthUsername, user.UserName);
-        HttpContext.Session.SetString(Security.Authentication.AuthId, user.Id.ToString());
-        HttpContext.Session.SetString(Security.Authentication.AuthuserEmail, user.Email);
+        HttpContext.Session.SetString(Authentication.AuthUsername, user.UserName);
+        HttpContext.Session.SetString(Authentication.AuthId, user.Id.ToString());
+        HttpContext.Session.SetString(Authentication.AuthuserEmail, user.Email);
 
         TempData["message"] = "You were logged in";
 

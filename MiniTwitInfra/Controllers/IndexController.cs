@@ -5,19 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MiniTwitInfra;
 using MiniTwitInfra.Data;
 using MiniTwitInfra.Models;
-namespace MiniTwit.Pages;
 
-public class IndexModel : PageModel
+namespace MiniTwitInfra.Controllers;
+
+public class IndexController : PageModel
 {
     private readonly int PER_PAGE = 30;
-    private readonly ILogger<IndexModel> _logger;
     private readonly MiniTwitContext _context;
 
-    public IndexModel(ILogger<IndexModel> logger, MiniTwitContext context)
+    public IndexController(MiniTwitContext context)
     {
-        _logger = logger;
         _context = context;
     }
 

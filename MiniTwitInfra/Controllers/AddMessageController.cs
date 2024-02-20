@@ -2,24 +2,24 @@ using System.Drawing;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MiniTwitInfra;
 using MiniTwitInfra.Data;
 using MiniTwitInfra.Models;
 
-namespace MiniTwit.Pages
+namespace MiniTwitInfra.Controllers
 {
     [IgnoreAntiforgeryToken]
-    public class AddMessageModel : PageModel
+    public class AddMessageController : PageModel
     {
-        private readonly ILogger<AddMessageModel> _logger;
         private readonly MiniTwitContext _context;
 
-        public AddMessageModel(ILogger<AddMessageModel> logger, MiniTwitContext context)
+        public AddMessageController(MiniTwitContext context)
         {
-            _logger = logger;
             _context = context;
         }
 
