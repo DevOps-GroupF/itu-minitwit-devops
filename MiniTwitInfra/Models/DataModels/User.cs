@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 /*   pw_hash string not null */
 /* ); */
 
-namespace MiniTwitInfra.Models
+namespace MiniTwitInfra.Models.DataModels
 {
     [Table("user")]
     public class User

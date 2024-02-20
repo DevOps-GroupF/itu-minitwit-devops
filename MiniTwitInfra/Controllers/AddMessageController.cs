@@ -1,15 +1,8 @@
-using System.Drawing;
-using System.Security.Cryptography;
-using System.Text;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using MiniTwitInfra;
 using MiniTwitInfra.Data;
-using MiniTwitInfra.Models;
+using MiniTwitInfra.Models.DataModels;
 
 namespace MiniTwitInfra.Controllers
 {
@@ -41,7 +34,7 @@ namespace MiniTwitInfra.Controllers
 
             int loggedInUserIdFromSesssion = Utility.GetUserIdFromHttpSession(HttpContext);
 
-            User loggedInUser = await MiniTwitInfra.Models.User.GetUserFromUserIdAsync(
+            User loggedInUser = await Models.DataModels.User.GetUserFromUserIdAsync(
                 loggedInUserIdFromSesssion,
                 _context
             );
@@ -50,7 +43,7 @@ namespace MiniTwitInfra.Controllers
             var formCollection = Request.Form;
             string fieldText = formCollection["text"].ToString();
 
-            Twit newTwit = new Twit
+            Twit newTwit = new()
             {
                 AuthorId = loggedInUser.Id,
                 Text = fieldText,

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MiniTwitInfra.Data;
-using MiniTwitInfra.Models;
+using MiniTwitInfra.Models.DataModels;
 
 namespace MiniTwitInfra.Controllers;
 
@@ -44,7 +44,7 @@ public class LoginController : PageModel
         {
             user = _context.Users.Where(x => x.UserName == fieldName).First();
         }
-        catch (Exception ex)
+        catch
         {
             ViewData["error"] = "Invalid username";
             return Page();

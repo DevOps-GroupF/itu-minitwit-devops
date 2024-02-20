@@ -1,4 +1,4 @@
-namespace MiniTwitInfra.Models
+namespace MiniTwitInfra.Models.ViewModels
 {
     public class TwitViewModel
     {

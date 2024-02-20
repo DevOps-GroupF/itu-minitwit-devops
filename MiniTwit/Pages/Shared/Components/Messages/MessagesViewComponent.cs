@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MiniTwitInfra.Data;
-using MiniTwitInfra.Models;
+using MiniTwitInfra.Models.ViewModels;
 
 namespace MiniTwit.Pages.Shared.Components.Messages;
 

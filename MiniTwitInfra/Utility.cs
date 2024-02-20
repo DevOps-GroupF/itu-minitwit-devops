@@ -2,7 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using MiniTwitInfra.Data;
-using MiniTwitInfra.Models;
+using MiniTwitInfra.Models.DataModels;
 
 namespace MiniTwitInfra
 {

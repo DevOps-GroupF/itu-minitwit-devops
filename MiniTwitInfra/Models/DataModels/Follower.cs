@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace MiniTwitInfra.Models
+namespace MiniTwitInfra.Models.DataModels
 {
     [Table("follower")]
     [Keyless]

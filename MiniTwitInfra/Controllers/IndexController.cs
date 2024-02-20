@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MiniTwitInfra;
 using MiniTwitInfra.Data;
-using MiniTwitInfra.Models;
+using MiniTwitInfra.Models.ViewModels;
+using MiniTwitInfra.Models.DataModels;
 
 namespace MiniTwitInfra.Controllers;
 
@@ -32,7 +33,7 @@ public class IndexController : PageModel
 
         int loggedInUserIdFromSesssion = Utility.GetUserIdFromHttpSession(HttpContext);
 
-        User loggedInUser = await MiniTwitInfra.Models.User.GetUserFromUserIdAsync(
+        User loggedInUser = await Models.DataModels.User.GetUserFromUserIdAsync(
             loggedInUserIdFromSesssion,
             _context
         );

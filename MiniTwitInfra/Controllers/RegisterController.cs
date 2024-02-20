@@ -2,7 +2,7 @@ using MiniTwitInfra.Data;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using MiniTwitInfra.Models;
+using MiniTwitInfra.Models.DataModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
