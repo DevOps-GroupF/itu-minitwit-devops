@@ -5,7 +5,7 @@ using MiniTwitInfra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
 using MiniTwitInfra.Models.DataModels;
-
+using MiniTwitAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +36,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ApiKeyAuthMiddleware>();
 
 app.UseAuthorization();
 
