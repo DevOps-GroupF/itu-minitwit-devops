@@ -1,36 +1,39 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MiniTwit;
+using Microsoft.Extensions.Caching.Memory;
 using MiniTwitInfra.Data;
-using MiniTwitInfra.Models;
-using System;
-using System.Threading.Tasks;
+using MiniTwitInfra.Models.DataModels;
 
 
 namespace MiniTwitAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
-    public class MessagesController : ControllerBase
+    public class MsgsController : ControllerBase
     {
         private readonly MiniTwitContext _context;
 
-        public MessagesController(MiniTwitContext context)
+        private readonly IMemoryCache _memoryCache;
+        public string cacheKey = "latest";
+
+        public MsgsController(MiniTwitContext context, IMemoryCache memoryCache)
         {
             _context = context;
+            _memoryCache = memoryCache;
         }
 
         //create an new message
         [HttpPost("{username}")]
-        public async Task<ActionResult<string>> CreateMessage(string username, [FromBody] MessageData data)
+        public async Task<ActionResult<string>> CreateMessage(string username, [FromBody] MessageData data, [FromQuery] int latest)
         {
+            _memoryCache.Set(cacheKey, latest.ToString());
 
             User user;
             try
             {
                 user = _context.Users.Where(x => x.UserName == username).First();
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ModelState.AddModelError("Username", "User does not exist");
                 return "User does not exist";
@@ -47,26 +50,30 @@ namespace MiniTwitAPI.Controllers
             await _context.Twits.AddAsync(newTwit);
             await _context.SaveChangesAsync();
 
+            Response.ContentType = "application/json";
 
             return Ok(new { Message = "Your message was recorded" });
         }
 
         // get latest messages of the user
         [HttpGet("{username}")]
-        public async Task<ActionResult<List<MessageResponse>>> GetLatestUserMessage(string username, int no)
-        {   
+        public async Task<ActionResult<List<MessageResponse>>> GetLatestUserMessage(string username, int no, [FromQuery] int latest)
+        {
+            _memoryCache.Set(cacheKey, latest.ToString());
+
             User user;
             try
             {
                 user = _context.Users.Where(x => x.UserName == username).First();
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ModelState.AddModelError("Username", "User does not exist");
                 return NotFound("User does not exist");
             }
 
-            
-            var latestMessages =  await _context
+
+            var latestMessages = await _context
                 .Twits
                 .Where(t => t.AuthorId == user.Id)
                 .OrderByDescending(t => t.PubDate)
@@ -88,9 +95,11 @@ namespace MiniTwitAPI.Controllers
 
         //get the latest messages of all messages
         [HttpGet]
-        public async Task<ActionResult<List<MessageResponse>>> GetLatestMessage(int no)
+        public async Task<ActionResult<List<MessageResponse>>> GetLatestMessage(int no, [FromQuery] int latest)
         {
-            var latestMessages =  await _context
+            _memoryCache.Set(cacheKey, latest.ToString());
+
+            var latestMessages = await _context
                 .Twits
                 .OrderByDescending(t => t.PubDate)
                 .Take(no)
@@ -109,7 +118,7 @@ namespace MiniTwitAPI.Controllers
             return Ok(latestMessages);
         }
 
-        
+
     }
 
     public class MessageData
@@ -117,12 +126,13 @@ namespace MiniTwitAPI.Controllers
         public string Content { get; set; }
     }
 
-     public class MessageResponse
+    public class MessageResponse
     {
         public string Content { get; set; }
         public string User { get; set; }
 
-        public MessageResponse(string content, string user){
+        public MessageResponse(string content, string user)
+        {
             this.Content = content;
             this.User = user;
         }

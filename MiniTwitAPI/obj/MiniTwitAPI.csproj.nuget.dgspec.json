@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "/Users/nicklasjeppesen/Desktop/itu-minitwit-devops/MiniTwitAPI/MiniTwitAPI.csproj": {}
+    "C:\\Users\\markus1\\Desktop\\Master_CS\\2_Semester\\DevOps\\Exercise\\itu-minitwit-devops\\MiniTwitAPI\\MiniTwitAPI.csproj": {}
   },
   "projects": {
-    "/Users/nicklasjeppesen/Desktop/itu-minitwit-devops/MiniTwitAPI/MiniTwitAPI.csproj": {
+    "C:\\Users\\markus1\\Desktop\\Master_CS\\2_Semester\\DevOps\\Exercise\\itu-minitwit-devops\\MiniTwitAPI\\MiniTwitAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/nicklasjeppesen/Desktop/itu-minitwit-devops/MiniTwitAPI/MiniTwitAPI.csproj",
+        "projectUniqueName": "C:\\Users\\markus1\\Desktop\\Master_CS\\2_Semester\\DevOps\\Exercise\\itu-minitwit-devops\\MiniTwitAPI\\MiniTwitAPI.csproj",
         "projectName": "MiniTwitAPI",
-        "projectPath": "/Users/nicklasjeppesen/Desktop/itu-minitwit-devops/MiniTwitAPI/MiniTwitAPI.csproj",
-        "packagesPath": "/Users/nicklasjeppesen/.nuget/packages/",
-        "outputPath": "/Users/nicklasjeppesen/Desktop/itu-minitwit-devops/MiniTwitAPI/obj/",
+        "projectPath": "C:\\Users\\markus1\\Desktop\\Master_CS\\2_Semester\\DevOps\\Exercise\\itu-minitwit-devops\\MiniTwitAPI\\MiniTwitAPI.csproj",
+        "packagesPath": "C:\\Users\\markus1\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\markus1\\Desktop\\Master_CS\\2_Semester\\DevOps\\Exercise\\itu-minitwit-devops\\MiniTwitAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/Users/nicklasjeppesen/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\markus1\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -29,8 +29,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/nicklasjeppesen/Desktop/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj": {
-                "projectPath": "/Users/nicklasjeppesen/Desktop/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj"
+              "C:\\Users\\markus1\\Desktop\\Master_CS\\2_Semester\\DevOps\\Exercise\\itu-minitwit-devops\\MiniTwitInfra\\MiniTwitInfra.csproj": {
+                "projectPath": "C:\\Users\\markus1\\Desktop\\Master_CS\\2_Semester\\DevOps\\Exercise\\itu-minitwit-devops\\MiniTwitInfra\\MiniTwitInfra.csproj"
               }
             }
           }
@@ -77,24 +77,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/nicklasjeppesen/Desktop/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj": {
+    "C:\\Users\\markus1\\Desktop\\Master_CS\\2_Semester\\DevOps\\Exercise\\itu-minitwit-devops\\MiniTwitInfra\\MiniTwitInfra.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/nicklasjeppesen/Desktop/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj",
+        "projectUniqueName": "C:\\Users\\markus1\\Desktop\\Master_CS\\2_Semester\\DevOps\\Exercise\\itu-minitwit-devops\\MiniTwitInfra\\MiniTwitInfra.csproj",
         "projectName": "MiniTwitInfra",
-        "projectPath": "/Users/nicklasjeppesen/Desktop/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj",
-        "packagesPath": "/Users/nicklasjeppesen/.nuget/packages/",
-        "outputPath": "/Users/nicklasjeppesen/Desktop/itu-minitwit-devops/MiniTwitInfra/obj/",
+        "projectPath": "C:\\Users\\markus1\\Desktop\\Master_CS\\2_Semester\\DevOps\\Exercise\\itu-minitwit-devops\\MiniTwitInfra\\MiniTwitInfra.csproj",
+        "packagesPath": "C:\\Users\\markus1\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\markus1\\Desktop\\Master_CS\\2_Semester\\DevOps\\Exercise\\itu-minitwit-devops\\MiniTwitInfra\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/Users/nicklasjeppesen/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\markus1\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -118,7 +118,23 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
               "version": "[8.0.1, )"
             }
@@ -139,7 +155,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
