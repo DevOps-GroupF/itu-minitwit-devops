@@ -32,7 +32,7 @@ public class FollowController : ControllerBase
     /// <param name="no"></param>
     /// <param name="latest"></param>
     /// <returns></returns>
-    [HttpGet]
+    [HttpGet("{username}")]
     public async Task<ActionResult<IEnumerable<int>>> GetFollow(string username, int no, int latest)
     {
         _memoryCache.Set(cacheKey, latest.ToString());
@@ -57,7 +57,7 @@ public class FollowController : ControllerBase
 
     }
 
-    [HttpPost]
+    [HttpPost("{username}")]
     public async Task<ActionResult<string>> FollowAction(string username, int latest)
     {
         _memoryCache.Set(cacheKey, latest.ToString());
