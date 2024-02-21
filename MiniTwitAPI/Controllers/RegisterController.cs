@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using MiniTwitInfra.Models;
+using MiniTwitInfra.Models.DataModels;
 using MiniTwitInfra.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Memory;
@@ -32,21 +32,7 @@ namespace MiniTwitAPI.Controllers;
             email = string.Empty;
             */
         }
-        /*
-        [BindProperty]
-        [Required(ErrorMessage = "You have to enter a username")]
-        public string username { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "You have to enter a valid email address")]
-        [EmailAddress(ErrorMessage = "You have to enter a valid email address")]
-        public string email { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "You have to enter a password")]
-        public string pwd { get; set; }
-        */    
-
+        
 
          [HttpPost]
         public async Task<ActionResult<string>> Register(int latest)
