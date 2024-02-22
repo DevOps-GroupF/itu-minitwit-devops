@@ -43,13 +43,19 @@ namespace MiniTwitInfra.Controllers
             var formCollection = Request.Form;
             string fieldText = formCollection["text"].ToString();
 
-            Twit newTwit = new()
+            if (fieldText.Length > 200)
             {
-                AuthorId = loggedInUser.Id,
-                Text = fieldText,
-                PubDate = (int)DateTimeOffset.Now.ToUnixTimeSeconds(),
-                Flagged = 0
-            };
+                return new BadRequestResult();
+            }
+
+            Twit newTwit =
+                new()
+                {
+                    AuthorId = loggedInUser.Id,
+                    Text = fieldText,
+                    PubDate = (int)DateTimeOffset.Now.ToUnixTimeSeconds(),
+                    Flagged = 0
+                };
 
             await _context.Twits.AddAsync(newTwit);
             await _context.SaveChangesAsync();
