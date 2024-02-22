@@ -33,7 +33,5 @@ public class ApiKeyAuthMiddleware
        }
 
         await _next(context);
-        
-
     }
 }

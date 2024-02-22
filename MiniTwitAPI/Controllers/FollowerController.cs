@@ -33,7 +33,7 @@ public class FollowController : ControllerBase
     /// <param name="latest"></param>
     /// <returns></returns>
     [HttpGet("{username}")]
-    public async Task<ActionResult<IEnumerable<int>>> GetFollow(string username, int no, int latest)
+    public async Task<ActionResult<Dictionary<string, List<string>>>> GetFollow(string username, int no, int latest)
     {
         _memoryCache.Set(cacheKey, latest.ToString());
 
@@ -52,8 +52,12 @@ public class FollowController : ControllerBase
         .Select(f => f.WhomId)
         .ToList();
 
+        var d = new Dictionary<string, List<string>>();
+        var followerUsernames = _context.Users.Where(u => followingIds.Contains(u.Id)).Select(x => x.UserName).ToList();
+        d.Add("follows", followerUsernames);
+
         Response.ContentType = "application/json";
-        return followingIds;
+        return d;
 
     }
 
