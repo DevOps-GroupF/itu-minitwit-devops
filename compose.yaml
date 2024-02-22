@@ -1,0 +1,20 @@
+services:
+  solution:
+    image: solutionimage
+    build: .
+
+  minitwit-api:
+    image: solutionimage
+    depends_on:
+      - solution
+    ports:
+      - "5001:8080"
+    command: ./MiniTwitAPI
+
+  minitwit-frontend:
+    image: solutionimage
+    depends_on:
+      - solution
+    ports:
+      - "8080:8080"
+    command: ./MiniTwit
