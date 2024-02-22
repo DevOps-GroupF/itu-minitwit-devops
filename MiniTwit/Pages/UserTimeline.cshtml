@@ -1,11 +1,11 @@
 @page "/{username}/{handler?}"
-@model UserTimelineModel
+@model MiniTwitInfra.Controllers.UserTimelineController
 @inject IHttpContextAccessor httpContextAccessor
 @{
     ViewData["Title"] = "Home page";
 }
 
-@if(httpContextAccessor.HttpContext.Session.GetString(Security.Authentication.AuthUsername) != null) 
+@if(httpContextAccessor.HttpContext.Session.GetString(MiniTwitInfra.Authentication.AuthUsername) != null) 
     {
         <div class="followstatus">
             

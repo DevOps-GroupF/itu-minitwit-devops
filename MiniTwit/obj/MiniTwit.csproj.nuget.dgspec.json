@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/MiniTwit.csproj": {}
+    "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/MiniTwit.csproj": {}
   },
   "projects": {
-    "/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/MiniTwit.csproj": {
+    "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/MiniTwit.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/MiniTwit.csproj",
+        "projectUniqueName": "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/MiniTwit.csproj",
         "projectName": "MiniTwit",
-        "projectPath": "/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/MiniTwit.csproj",
-        "packagesPath": "/home/prouvi/.nuget/packages/",
-        "outputPath": "/home/prouvi/Documents/dtu/10th/devops/lecture2/project/itu-minitwit-dotnet/MiniTwit/obj/",
+        "projectPath": "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/MiniTwit.csproj",
+        "packagesPath": "/home/gertlu/.nuget/packages/",
+        "outputPath": "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwit/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/prouvi/.nuget/NuGet/NuGet.Config"
+          "/home/gertlu/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -25,7 +25,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj": {
+                "projectPath": "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -74,7 +78,82 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/gertlu/.dotnet/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj",
+        "projectName": "MiniTwitInfra",
+        "projectPath": "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwitInfra/MiniTwitInfra.csproj",
+        "packagesPath": "/home/gertlu/.nuget/packages/",
+        "outputPath": "/home/gertlu/Desktop/repos/itu-minitwit-devops/MiniTwitInfra/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/gertlu/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/home/gertlu/.dotnet/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

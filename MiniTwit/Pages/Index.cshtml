@@ -1,13 +1,13 @@
 ﻿@page 
-@model IndexModel
+@model MiniTwitInfra.Controllers.IndexController
 @inject IHttpContextAccessor httpContextAccessor
 @{
     ViewData["Title"] = "Home page";
 }
 
-@if(httpContextAccessor.HttpContext.Session.GetString(Security.Authentication.AuthUsername) != null) {
+@if(httpContextAccessor.HttpContext.Session.GetString(MiniTwitInfra.Authentication.AuthUsername) != null) {
 <div class=twitbox>
-  <h3>What's on your mind @httpContextAccessor.HttpContext.Session.GetString(Security.Authentication.AuthUsername)?</h3>
+  <h3>What's on your mind @httpContextAccessor.HttpContext.Session.GetString(MiniTwitInfra.Authentication.AuthUsername)?</h3>
   <form method=post>
     <p><input type=text name=text size=60><!--
     --><input type=submit asp-page="AddMessage" value="Share">
