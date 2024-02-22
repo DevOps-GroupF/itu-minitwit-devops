@@ -1,27 +1,26 @@
 using System;
 using Microsoft.AspNetCore.Identity;
-using MiniTwitInfra.Models;
-using MiniTwitInfra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
-using MiniTwitInfra.Models.DataModels;
 using MiniTwitAPI;
+using MiniTwitInfra.Data;
+using MiniTwitInfra.Models;
+using MiniTwitInfra.Models.DataModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddDbContext<MiniTwitContext>(options =>
-    options.UseSqlite("Data Source=../MiniTwit/minitwit.db")
+    options.UseSqlite("Data Source=../datavol/minitwit.db")
 );
 
-builder.Services.AddScoped<
-    IPasswordHasher<User>,
-    PasswordHasher<User>>();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 builder.Services.AddMemoryCache();
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
