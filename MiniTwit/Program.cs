@@ -12,7 +12,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddDbContext<MiniTwitContext>(options =>
-    options.UseSqlite("Data Source=./minitwit.db")
+    options.UseSqlite("Data Source=../datavol/minitwit.db")
 );
 
 builder.Services.AddSession(options =>
