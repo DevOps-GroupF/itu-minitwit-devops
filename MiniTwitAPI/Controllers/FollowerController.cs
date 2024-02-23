@@ -47,6 +47,11 @@ public class FollowController : ControllerBase
             throw new ArgumentException(e.Message);
         }
 
+        if(user == null) 
+        {
+            return NotFound();
+        }
+
         var followingIds = _context
         .Followers.Where(f => f.WhoId == user.Id)
         .Select(f => f.WhomId)
