@@ -6,7 +6,7 @@ using Xunit;
 public class MiniTwitTests
 {
     private readonly HttpClient _client;
-    private const string BaseUrl = "http://localhost:5000";
+    private const string BaseUrl = "http://localhost:8080";
 
     public MiniTwitTests()
     {

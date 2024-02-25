@@ -13,9 +13,13 @@ RUN dotnet publish --no-restore -o /app
 
 COPY MiniTwit/minitwit.db /datavol/minitwit.db
 
-# copy and publish tests and libraries
-COPY MiniTwitTests/. .
-RUN dotnet publish --no-restore -o /app/tests
+# copy csproj and restore as distinct layers
+COPY MiniTwitTests/*.csproj /tests/
+RUN dotnet restore /tests
+
+# copy and publish app and libraries
+COPY MiniTwitTests/. /tests/
+RUN dotnet publish /tests --no-restore -o /app/tests
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
