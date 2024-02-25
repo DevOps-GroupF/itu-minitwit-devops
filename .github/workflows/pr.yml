@@ -11,12 +11,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Fetch origin
-      run: git fetch origin main
-    - name: Specify identity
-      run: git config user.email "MiniTwit-DevOps@itu.dk" && git config user.name "MiniTwit DevOps"
-    - name: Merge main into the pull request branch
-      run: git merge origin/main --allow-unrelated-histories
     - name: Build the application, test it, and create a Docker image
       run: docker build -t minitwit .
     
