@@ -2,13 +2,13 @@ using System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
-using MiniTwitInfra.Data;
-using MiniTwitInfra.Models.DataModels;
+using MiniTwit.Data;
+using MiniTwit.Models.DataModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
 
 builder.Services.AddDistributedMemoryCache();
 
@@ -25,10 +25,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 /* builder.Services.AddIdentityCore<MiniTwit.Models.User>(); */
-builder.Services.AddScoped<
-    IPasswordHasher<User>,
-    PasswordHasher<User>
->();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 var app = builder.Build();
 
@@ -58,6 +55,23 @@ app.UseSession();
 
 app.UseAuthorization();
 
-app.MapRazorPages();
+app.MapAreaControllerRoute(
+    name: "default",
+    areaName: "FrontEnd",
+    pattern: "{controller=Home}/{action=Index}"
+);
+
+app.MapAreaControllerRoute(
+    name: "UserTimeline",
+    areaName: "FrontEnd",
+    pattern: "{username}/{action}",
+    defaults: new { controller = "UserTimeline", action = "Index" }
+);
+
+app.MapAreaControllerRoute(
+    name: "Api",
+    areaName: "Api",
+    pattern: "api/{controller}/{action=Index}"
+);
 
 app.Run();

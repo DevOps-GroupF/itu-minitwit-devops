@@ -1,8 +1,0 @@
-@page
-@model MiniTwitInfra.Controllers.PublicController
-@{
-    ViewData["Title"] = "Home page";
-}
-
-@await Component.InvokeAsync("Messages", ViewData["twits"])
-

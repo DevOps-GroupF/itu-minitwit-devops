@@ -1,0 +1,80 @@
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+@inject IHttpContextAccessor httpContextAccessor
+
+@{
+    // Detect if we have any qoutes (the test suite accepts only &#34;, not &quot;)
+    bool rawHtmlRequired = false;
+    char[] messageSplit = [];
+    
+    if (ViewData.ContainsKey("message") && ViewData["message"] != null) {
+        string message = (string)ViewData["message"];
+
+        if (message.Contains('\"')) {
+            rawHtmlRequired = true;
+            messageSplit = message.ToCharArray();
+        }
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] | MiniTwit</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <div class=page>
+        <h1>MiniTwit</h1>
+        <div class=navigation>
+        @if(httpContextAccessor.HttpContext.Session.GetString(MiniTwit.Authentication.AuthUsername) != null) 
+        {
+            <a asp-controller="Home">my timeline</a> 
+            <a asp-controller="Public">public timeline</a> 
+            <a asp-controller="Logout">sign out @httpContextAccessor.HttpContext.Session.GetString(MiniTwit.Authentication.AuthUsername)</a>
+        }
+        else 
+        {
+            <a asp-controller="Public" asp-action="Index">public timeline</a> 
+            <a asp-controller="Register" asp-action="Index">sign up</a> 
+            <a asp-controller="Login" asp-action="Index">sign in</a>
+        }
+        </div>
+        @if(ViewData.ContainsKey("message")) 
+        {   
+            <ul class=flashes>
+                @* If we have quotes, we have to explicitly render &#34; *@
+                @if (rawHtmlRequired) {
+                    <li>
+                    @foreach(char c in messageSplit)
+                    {
+                        @if(c == '\"')
+                        {
+                            @Html.Raw("&#34;")
+                        }
+                        else
+                        {
+                             @c
+                        }
+                    }
+                    </li>
+                }
+                else
+                {
+                    <li>@ViewData["message"]</li>
+                }
+            </ul>
+        }
+        <div class=body>
+            @RenderBody()
+        </div>
+        <div class=footer>
+          MiniTwit &mdash; A Razor Pages Application
+        </div>
+    </div>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
