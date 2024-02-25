@@ -13,6 +13,10 @@ RUN dotnet publish --no-restore -o /app
 
 COPY MiniTwit/minitwit.db /datavol/minitwit.db
 
+# copy and publish tests and libraries
+COPY MiniTwitTests/. .
+RUN dotnet publish --no-restore -o /app/tests
+
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 EXPOSE 8080
