@@ -3,25 +3,23 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /source
 
+# BUILD APP
 # copy csproj and restore as distinct layers
-COPY MiniTwit/*.csproj .
-RUN dotnet restore
+COPY MiniTwit/*.csproj /MiniTwit/
+RUN dotnet restore /MiniTwit/
 
 # copy and publish app and libraries
-COPY MiniTwit/. .
-RUN dotnet publish --no-restore -o /app
+COPY MiniTwit/. /MiniTwit/
+RUN dotnet publish --no-restore -o /app /MiniTwit/
 
+# COPY AND RUN TESTS
+COPY MiniTwitTests/. /MiniTwitTests/
+RUN dotnet test /MiniTwitTests/
+
+# COPY DATABASE
 COPY MiniTwit/minitwit.db /datavol/minitwit.db
 
-# copy csproj and restore as distinct layers
-COPY MiniTwitTests/*.csproj /tests/
-RUN dotnet restore /tests
-
-# copy and publish app and libraries
-COPY MiniTwitTests/. /tests/
-RUN dotnet publish /tests --no-restore -o /app/tests
-
-# final stage/image
+# GENERATE IMAGE
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 EXPOSE 8080
 WORKDIR /app
