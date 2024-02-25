@@ -1,0 +1,22 @@
+@model IEnumerable<MiniTwit.Models.ViewModels.TwitViewModel>
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<ul class=messages>
+@if (Model.Count() == 0)
+{
+    <li><em>There's no message so far.</em></li>
+}
+else
+{
+    @foreach(var twit in Model as IEnumerable<MiniTwit.Models.ViewModels.TwitViewModel>) {
+        <li><img src="@twit.GravatarString.ToString()"><p>
+        <strong><a asp-route="UserTimeline" asp-route-username="@twit.AuthorUsername.ToString()">@twit.AuthorUsername.ToString()</a></strong>
+        @twit.Text
+        <small>&mdash; @DateTimeOffset.FromUnixTimeSeconds(twit.PubDate).ToString("MM/dd/yyyy HH:mm")</small>
+        </li>
+    }
+}
+</ul>
+

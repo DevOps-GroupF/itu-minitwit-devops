@@ -5,12 +5,6 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniTwit", "MiniTwit\MiniTwit.csproj", "{773AB74A-DA4F-4499-B671-2F4E776081DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTwitInfra", "MiniTwitInfra\MiniTwitInfra.csproj", "{37D7C932-CBC1-4CA0-BC03-4271BAE96C41}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTwitAPI", "MiniTwitAPI\MiniTwitAPI.csproj", "{E3B3BC45-0002-4613-A2B9-331AAE5F861D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTwitTests", "MiniTwitTests\MiniTwitTests.csproj", "{DA757344-0B73-44AE-AC75-D014FE6D5F1D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinitwitAzure", "MinitwitAzure\MinitwitAzure.csproj", "{4AFF1E04-8ABC-4294-9EB2-492A39A1D66E}"
 EndProject
 Global
