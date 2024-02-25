@@ -5,18 +5,11 @@ ARG TARGETARCH
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
-# COPY MiniTwit/*.csproj .
-COPY ./itu-minitwit-dotnet.sln .
-COPY ./MiniTwit/*.csproj ./MiniTwit/
-COPY ./MiniTwitAPI/*.csproj ./MiniTwitAPI/
-COPY ./MiniTwitInfra/*.csproj ./MiniTwitInfra/
-COPY ./MiniTwitTests/*.csproj ./MiniTwitTests/
-COPY ./MinitwitAzure/*.csproj ./MinitwitAzure/
-
+COPY MiniTwit/*.csproj .
 RUN dotnet restore -a $TARGETARCH
 
 # copy and publish app and libraries
-COPY . .
+COPY MiniTwit/. .
 RUN dotnet publish -a $TARGETARCH --no-restore -o /app
 
 COPY MiniTwit/minitwit.db /datavol/minitwit.db
@@ -31,4 +24,5 @@ USER $APP_UID
 COPY --from=build /app .
 COPY --chown=$APP_UID --from=build /datavol /datavol
 
+ENTRYPOINT ["./MiniTwit"]
 
