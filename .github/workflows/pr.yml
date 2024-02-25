@@ -1,0 +1,17 @@
+name: Pull Request Workflow
+
+on:
+  pull_request
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the application, test it, and create a Docker image
+      run: docker build -t minitwit .
+    
+    
