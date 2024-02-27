@@ -3,12 +3,12 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
-public class MiniTwitTests
+public class MiniTwitOldTests
 {
     private readonly HttpClient _client;
-    private const string BaseUrl = "http://localhost:5000";
+    private const string BaseUrl = "http://localhost:8080";
 
-    public MiniTwitTests()
+    public MiniTwitOldTests()
     {
         var handler = new HttpClientHandler { 
             AllowAutoRedirect = true,
