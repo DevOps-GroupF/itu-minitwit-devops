@@ -46,6 +46,27 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+
+  # Sample action from 
+  # <https://github.com/marketplace/actions/create-a-release-in-a-github-action>
+  # (accessed on the 28th of February, 2024)
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
   # Deploy action from 
   # <https://www.programonaut.com/how-to-deploy-a-docker-image-to-a-server-using-github-actions/>
   # (Accessed on the 28th of February, 2024)
