@@ -48,7 +48,7 @@ jobs:
 
 
   # Sample action from 
-  # <https://github.com/marketplace/actions/create-a-release-in-a-github-action>
+  # <https://github.com/actions/create-release>
   # (accessed on the 28th of February, 2024)
   create-release:
     needs: build-and-push-image
