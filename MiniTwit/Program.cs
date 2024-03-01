@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
 using MiniTwit.Data;
 using MiniTwit.Models.DataModels;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,9 +13,14 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDistributedMemoryCache();
 
-builder.Services.AddDbContext<MiniTwitContext>(options =>
-    options.UseSqlite("Data Source=../datavol/minitwit.db")
+// If connection string not found, then try for localhost port 1433.
+var connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING") ?? builder.Configuration.GetConnectionString("MinitwitSqlserver");
+builder.Services.AddDbContext<MiniTwitContext>(op => 
+    op.UseSqlServer(connectionString)
 );
+// builder.Services.AddDbContext<MiniTwitContext>(options =>
+//     options.UseSqlite("Data Source=../datavol/minitwit.db")
+// );
 
 builder.Services.AddSession(options =>
 {
@@ -28,15 +34,6 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 var app = builder.Build();
-
-//builder.Services.AddDbContext<MiniTwit.Data.MiniTwitContext>();
-
-/* builder.Services.AddDbContext<MiniTwitContext>(options => */
-/*     options.UseSqlite( */
-/*         builder.Configuration.GetConnectionString("MiniTwitContext") */
-/*             ?? throw new InvalidOperationException("Connection string 'MiniTwitContext' not found.") */
-/*     ) */
-/* ); */
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
