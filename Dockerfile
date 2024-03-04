@@ -7,6 +7,7 @@ WORKDIR /source
 # copy csproj and restore as distinct layers
 COPY MiniTwit/*.csproj /MiniTwit/
 RUN dotnet restore /MiniTwit/
+RUN dotnet ef migrations add MinitwitMigration
 
 # copy and publish app and libraries
 COPY MiniTwit/. /MiniTwit/

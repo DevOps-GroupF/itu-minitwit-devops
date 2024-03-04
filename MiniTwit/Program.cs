@@ -13,11 +13,12 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDistributedMemoryCache();
 
-// If connection string not found, then try for localhost port 1433.
-var connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING") ?? builder.Configuration.GetConnectionString("MinitwitSqlserver");
+string dbPassword = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? String.Empty;
+string? connectionString = builder.Configuration.GetConnectionString("MinitwitSqlserver1");
 builder.Services.AddDbContext<MiniTwitContext>(op => 
     op.UseSqlServer(connectionString)
 );
+// Old sqlite connection
 // builder.Services.AddDbContext<MiniTwitContext>(options =>
 //     options.UseSqlite("Data Source=../datavol/minitwit.db")
 // );
@@ -41,6 +42,12 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<MiniTwitContext>();
+    db.Database.Migrate();
 }
 
 app.UseHttpsRedirection();
