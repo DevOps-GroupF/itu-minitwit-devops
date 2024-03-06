@@ -100,11 +100,41 @@ namespace MiniTwit.Areas.Api.Controllers
                 {
                     throw new ArgumentException(e.Message);
                 }
+                if (user != null && whom != null)
+                {
+                    var newFollower = new Follower
+                    {
+                        WhoId = user.Id,
+                        WhomId = whom.Id
+                    };
 
-                string sqlQuery = $"INSERT INTO Follower VALUES ({user.Id}, {whom.Id})";
-                await _context.Database.ExecuteSqlRawAsync(sqlQuery);
+                    var validationContext = new ValidationContext(newFollower);
+                    var ValidationResult = new List<ValidationResult>();
 
-                return "successful followed person";
+                    if (!Validator.TryValidateObject(newFollower, validationContext, ValidationResult, true))
+                    {
+                        return "you can't follow yourself!";
+                    }
+                    else
+                    {
+                        _context.Followers.Add(newFollower);
+                        try
+                        {
+                            await _context.SaveChangesAsync();
+                            return "successful followed person";
+
+                        }
+                        catch (DbUpdateException ex)
+                        {
+                            // Handle any exceptions that might occur during save changes
+                            Console.WriteLine($"Error adding follower: {ex.Message}");
+                        }
+                    }
+                }
+                else
+                {
+                    return "User not found";
+                }
             }
             else if (dataDic.ContainsKey("unfollow"))
             {

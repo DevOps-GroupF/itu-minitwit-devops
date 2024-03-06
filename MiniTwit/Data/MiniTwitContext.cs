@@ -18,5 +18,10 @@ namespace MiniTwit.Data
         public DbSet<Twit> Twits => Set<Twit>();
         public DbSet<User> Users => Set<User>();
         public DbSet<Follower> Followers => Set<Follower>();
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Follower>()
+                .HasKey(f => new { f.WhoId, f.WhomId });
+        }
     }
 }

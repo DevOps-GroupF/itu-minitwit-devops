@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -114,11 +115,45 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
 
             if (!await Follower.DoesFollowerExistAsync(loggedInUser.Id, whomUser.Id, _context))
             {
-                string sqlQuery = $"INSERT INTO Follower VALUES ({loggedInUser.Id}, {whomUser.Id})";
-                await _context.Database.ExecuteSqlRawAsync(sqlQuery);
+                var newFollower = new Follower
+                {
+                    WhoId = loggedInUser.Id,
+                    WhomId = whomUser.Id
+                };
+
+                var validationContext = new ValidationContext(newFollower);
+                var ValidationResult = new List<ValidationResult>();
+
+                if (!Validator.TryValidateObject(newFollower, validationContext, ValidationResult, true))
+                {
+                    TempData["message"] = $"You can't follow yourself!";
+                    //return BadRequest(new { Message = "Custom validation error!", Errors = ValidationResult.Select(r => r.ErrorMessage) });
+                    //return BadRequest();
+                }
+                else
+                {
+
+                    _context.Followers.Add(newFollower);
+
+                    try
+                    {
+                        await _context.SaveChangesAsync();
+                        TempData["message"] = $"You are now following \"{whomUser.UserName}\"";
+
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        // Handle any exceptions that might occur during save changes
+                        Console.WriteLine($"Error adding follower: {ex.Message}");
+                    }
+                }
+
+                // Add the newFollower to the Followers DbSet
+                //string sqlQuery = $"INSERT INTO Follower VALUES ({loggedInUser.Id}, {whomUser.Id})";
+                //int res = await _context.Database.ExecuteSqlRawAsync(sqlQuery);
+                //await _context.SaveChangesAsync();
             }
 
-            TempData["message"] = $"You are now following \"{whomUser.UserName}\"";
 
             return RedirectToAction("Index", username);
         }
