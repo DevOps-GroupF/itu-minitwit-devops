@@ -104,7 +104,7 @@ namespace MiniTwit.Areas.Api.Controllers
                 string sqlQuery = $"INSERT INTO Follower VALUES ({user.Id}, {whom.Id})";
                 await _context.Database.ExecuteSqlRawAsync(sqlQuery);
 
-                return "successful followed person";
+                return new NoContentResult();
             }
             else if (dataDic.ContainsKey("unfollow"))
             {
@@ -124,7 +124,8 @@ namespace MiniTwit.Areas.Api.Controllers
                 string sqlQuery =
                     $"DELETE FROM Follower WHERE who_id={user.Id} AND whom_id={whom.Id}";
                 await _context.Database.ExecuteSqlRawAsync(sqlQuery);
-                return "successful Unfollowed person";
+
+                return new NoContentResult();
             }
 
             Response.ContentType = "application/json";

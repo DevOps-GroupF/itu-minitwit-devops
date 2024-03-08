@@ -38,8 +38,6 @@ namespace MiniTwit.Areas.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<string>> Register(int latest)
         {
-            //ModelState.Clear();
-
             _memoryCache.Set(cacheKey, latest.ToString());
 
             string body;
@@ -75,11 +73,9 @@ namespace MiniTwit.Areas.Api.Controllers
             await _context.Users.AddAsync(newUser);
             await _context.SaveChangesAsync();
 
-            Dictionary<string, string> respose = new Dictionary<string, string>();
-            respose.Add("latest", latest.ToString());
-
             Response.ContentType = "application/json";
-            return "successful created user";
+
+            return new NoContentResult();
         }
 
         /*
