@@ -122,7 +122,7 @@ namespace MiniTwit.Areas.Api.Controllers
                         try
                         {
                             await _context.SaveChangesAsync();
-                            return Ok("successful followed person");
+                            return new NoContentResult();
 
                         }
                         catch (DbUpdateException ex)
@@ -165,7 +165,7 @@ namespace MiniTwit.Areas.Api.Controllers
 
                         // Save changes to the database
                         await _context.SaveChangesAsync();
-                        return Ok($"You are now following \"{whom.UserName}\"");
+                        return new NoContentResult();
                     }
                     else
                     {
