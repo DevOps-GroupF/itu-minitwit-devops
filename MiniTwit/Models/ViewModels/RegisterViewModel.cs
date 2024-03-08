@@ -13,7 +13,7 @@ namespace MiniTwit.Models.ViewModels
     {   
         [UserName]
         [BindProperty]
-        [RegularExpression(@"^[a-zA-Z0-9_]+$", 
+        [RegularExpression(@"^[a-zA-Z0-9_ ]+$", 
          ErrorMessage = "Characters are not allowed.")]
         [StringLength(16)]
         [Required(ErrorMessage = "You have to enter a username")]

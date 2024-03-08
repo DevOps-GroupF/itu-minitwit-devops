@@ -12,7 +12,7 @@ namespace MiniTwit.Validations.User {
         }
 
         public string GetErrorMessage(string username) =>
-            $"you cannot name yourself Api.";
+            $"you cannot name yourself {username}";
 
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {   
@@ -25,11 +25,24 @@ namespace MiniTwit.Validations.User {
             string? _tmp = value.ToString(); 
             string username = _tmp ?? "";
             
-            if (username == "api")
+            if (NotAllowedWords().Contains(username.ToLower()))
             {
                 return new ValidationResult(GetErrorMessage(username));
             }
             return ValidationResult.Success;
+        }
+
+        private static List<String> NotAllowedWords()
+        {
+            return new List<String>() {
+                "api",
+                "register", 
+                "public", 
+                "login", 
+                "logout",
+                "follow", 
+                "flw",
+            };
         }
     }
 }
