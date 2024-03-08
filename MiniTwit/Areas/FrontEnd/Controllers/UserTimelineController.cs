@@ -186,15 +186,20 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
                 _context
             );
 
-            if (await Follower.DoesFollowerExistAsync(loggedInUser.Id, whomUser.Id, _context))
+            var followerToDelete = _context.Followers.FirstOrDefault(f => f.WhoId == loggedInUser.Id && f.WhomId == whomUser.Id);
+            if (followerToDelete != null)
             {
-                string sqlQuery =
-                    $"DELETE FROM Follower WHERE who_id={loggedInUser.Id} AND whom_id={whomUser.Id}";
+                // Remove the follower from the context
+                _context.Followers.Remove(followerToDelete);
 
-                await _context.Database.ExecuteSqlRawAsync(sqlQuery);
+                // Save changes to the database
+                await _context.SaveChangesAsync();
+                TempData["message"] = $"You are no longer following \"{whomUser.UserName}\"";
             }
-
-            TempData["message"] = $"You are no longer following \"{whomUser.UserName}\"";
+            else
+            {
+                TempData["message"] = $"You are already not following \"{whomUser.UserName}\"";
+            }
 
             return RedirectToAction("Index", username);
         }

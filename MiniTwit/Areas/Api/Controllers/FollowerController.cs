@@ -100,7 +100,7 @@ namespace MiniTwit.Areas.Api.Controllers
                 {
                     throw new ArgumentException(e.Message);
                 }
-<<<<<<< HEAD
+
                 if (user != null && whom != null)
                 {
                     var newFollower = new Follower
@@ -114,7 +114,7 @@ namespace MiniTwit.Areas.Api.Controllers
 
                     if (!Validator.TryValidateObject(newFollower, validationContext, ValidationResult, true))
                     {
-                        return "you can't follow yourself!";
+                        return BadRequest("You can not follow yourself");
                     }
                     else
                     {
@@ -122,7 +122,7 @@ namespace MiniTwit.Areas.Api.Controllers
                         try
                         {
                             await _context.SaveChangesAsync();
-                            return "successful followed person";
+                            return Ok("successful followed person");
 
                         }
                         catch (DbUpdateException ex)
@@ -134,7 +134,7 @@ namespace MiniTwit.Areas.Api.Controllers
                 }
                 else
                 {
-                    return "User not found";
+                    return NotFound("User not found");
                 }
 
                 return new NoContentResult();
@@ -155,11 +155,27 @@ namespace MiniTwit.Areas.Api.Controllers
                     throw new ArgumentException(e.Message);
                 }
 
-                string sqlQuery =
-                    $"DELETE FROM Follower WHERE who_id={user.Id} AND whom_id={whom.Id}";
-                await _context.Database.ExecuteSqlRawAsync(sqlQuery);
+                if (user != null && whom != null)
+                {
+                    var followerToDelete = _context.Followers.FirstOrDefault(f => f.WhoId == user.Id && f.WhomId == whom.Id);
+                    if (followerToDelete != null)
+                    {
+                        // Remove the follower from the context
+                        _context.Followers.Remove(followerToDelete);
 
-                return new NoContentResult();
+                        // Save changes to the database
+                        await _context.SaveChangesAsync();
+                        return Ok($"You are now following \"{whom.UserName}\"");
+                    }
+                    else
+                    {
+                        return BadRequest("You are already not following the user");
+                    }
+                }
+                else
+                {
+                    return NotFound("Follower user not found");
+                }
             }
 
             Response.ContentType = "application/json";
