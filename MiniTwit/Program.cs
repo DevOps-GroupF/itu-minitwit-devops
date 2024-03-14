@@ -2,8 +2,10 @@ using System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
+using MiniTwit.Areas.Api.Metrics;
 using MiniTwit.Data;
 using MiniTwit.Models.DataModels;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 /* builder.Services.AddIdentityCore<MiniTwit.Models.User>(); */
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.AddMetrics();
 
 var app = builder.Build();
 
@@ -45,6 +48,9 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseMetricServer();
+app.UseHttpMetrics();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -73,5 +79,8 @@ app.MapAreaControllerRoute(
     areaName: "Api",
     pattern: "api/{controller}/{action=Index}"
 );
+app.UseMiddleware<CounterMetricMiddleware>();
+app.UseMiddleware<RequestInFlightMiddleware>();
+app.UseMiddleware<ResponseTimeMiddleware>();
 
 app.Run();

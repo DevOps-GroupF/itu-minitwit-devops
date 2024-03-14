@@ -8,7 +8,7 @@ RUN dotnet restore
 # Build and publish a release
 RUN dotnet publish -c Release -o out
 
-COPY ./minitwit.db /App/out/
+COPY minitwit.db /datavol/minitwit.db
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
