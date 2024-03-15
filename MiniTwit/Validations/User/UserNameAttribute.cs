@@ -42,6 +42,7 @@ namespace MiniTwit.Validations.User {
                 "logout",
                 "follow", 
                 "flw",
+                "metrics",
             };
         }
     }
