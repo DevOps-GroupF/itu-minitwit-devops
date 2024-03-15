@@ -17,7 +17,7 @@ COPY MiniTwitTests/. /MiniTwitTests/
 RUN dotnet test /MiniTwitTests/
 
 # COPY DATABASE
-COPY MiniTwit/minitwit.db /datavol/minitwit.db
+COPY /MiniTwit/minitwit.db /datavol/minitwit.db
 
 # GENERATE IMAGE
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
