@@ -23,7 +23,10 @@ if (!builder.Environment.IsDevelopment())
     string? connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvVar);
 
     builder.Services.AddDbContext<MiniTwitContext>(options =>
-        options.UseSqlServer(connectionString)
+        options.UseSqlServer(
+            connectionString,
+            providerOptions => providerOptions.EnableRetryOnFailure()
+        )
     );
 }
 else
