@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.KeyPerFile;
 using MiniTwit.Data;
 using MiniTwit.Models.DataModels;
@@ -15,13 +16,12 @@ builder.Services.AddDistributedMemoryCache();
 
 if (!builder.Environment.IsDevelopment())
 {
+    string? ConnectionStringKey = builder.Configuration["DbConnectionStringSecretName"];
+    string? connectionString = builder.Configuration.GetConnectionString(ConnectionStringKey);
+
     builder.Configuration.AddKeyPerFile(directoryPath: builder.Configuration["SecretsDir"]);
     builder.Services.AddDbContext<MiniTwitContext>(options =>
-        options.UseSqlServer(
-            builder.Configuration.GetConnectionString(
-                builder.Configuration["DbConnectionStringSecretName"]
-            )
-        )
+        options.UseSqlServer(connectionString)
     );
 }
 else
@@ -30,6 +30,7 @@ else
         options.UseSqlServer(builder.Configuration.GetConnectionString("MinitwitSqlServer"))
     );
 }
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(3); // Set session timeout
@@ -43,21 +44,18 @@ builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 var app = builder.Build();
 
-//builder.Services.AddDbContext<MiniTwit.Data.MiniTwitContext>();
-
-/* builder.Services.AddDbContext<MiniTwitContext>(options => */
-/*     options.UseSqlite( */
-/*         builder.Configuration.GetConnectionString("MiniTwitContext") */
-/*             ?? throw new InvalidOperationException("Connection string 'MiniTwitContext' not found.") */
-/*     ) */
-/* ); */
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<MiniTwitContext>();
+    db.Database.Migrate();
 }
 
 app.UseHttpsRedirection();
