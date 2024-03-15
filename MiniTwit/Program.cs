@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
+using Microsoft.Extensions.Configuration.KeyPerFile;
 using MiniTwit.Data;
 using MiniTwit.Models.DataModels;
 
@@ -12,10 +13,23 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDistributedMemoryCache();
 
-builder.Services.AddDbContext<MiniTwitContext>(options =>
-    options.UseSqlite("Data Source=../datavol/minitwit.db")
-);
-
+if (!builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddKeyPerFile(directoryPath: builder.Configuration["SecretsDir"]);
+    builder.Services.AddDbContext<MiniTwitContext>(options =>
+        options.UseSqlServer(
+            builder.Configuration.GetConnectionString(
+                builder.Configuration["DbConnectionStringSecretName"]
+            )
+        )
+    );
+}
+else
+{
+    builder.Services.AddDbContext<MiniTwitContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("MinitwitSqlServer"))
+    );
+}
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(3); // Set session timeout

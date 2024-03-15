@@ -1,6 +1,21 @@
 services:
+  minitwit-database:
+    container_name: minitwit-database
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - MSSQL_PID=Developer
+      - MSSQL_SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - 1433:1433
+
   minitwit-service:
     container_name: minitwit-container
-    image: ghcr.io/DevOps-GroupF/itu-minitwit-devops:main
+    depends_on:
+      - minitwit-database
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
+    build: .
     ports:
       - 8080:8080
