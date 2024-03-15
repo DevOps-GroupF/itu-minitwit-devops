@@ -19,10 +19,9 @@ builder.Services.AddDistributedMemoryCache();
 
 if (!builder.Environment.IsDevelopment())
 {
-    string? ConnectionStringKey = builder.Configuration["DbConnectionStringSecretName"];
-    string? connectionString = builder.Configuration.GetConnectionString(ConnectionStringKey);
+    string? ConnectionStringEnvVar = builder.Configuration["DbConnectionStringEnvVar"];
+    string? connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvVar);
 
-    builder.Configuration.AddKeyPerFile(directoryPath: builder.Configuration["SecretsDir"]);
     builder.Services.AddDbContext<MiniTwitContext>(options =>
         options.UseSqlServer(connectionString)
     );
