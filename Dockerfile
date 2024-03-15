@@ -27,7 +27,6 @@ WORKDIR /app
 USER $APP_UID
 
 COPY --from=build /app .
-COPY --chown=$APP_UID --from=build /datavol /datavol
 
 ENTRYPOINT ["./MiniTwit"]
 
