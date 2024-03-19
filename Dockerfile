@@ -16,9 +16,6 @@ RUN dotnet publish --no-restore -o /app /MiniTwit/
 COPY MiniTwitTests/. /MiniTwitTests/
 RUN dotnet test /MiniTwitTests/
 
-# COPY DATABASE
-COPY /MiniTwit/minitwit.db /datavol/minitwit.db
-
 # GENERATE IMAGE
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 EXPOSE 8080
