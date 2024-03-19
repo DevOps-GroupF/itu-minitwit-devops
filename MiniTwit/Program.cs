@@ -17,24 +17,24 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDistributedMemoryCache();
 
+string? connectionString;
+
 if (!builder.Environment.IsDevelopment())
 {
     string? ConnectionStringEnvVar = builder.Configuration["DbConnectionStringEnvVar"];
-    string? connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvVar);
-
-    builder.Services.AddDbContext<MiniTwitContext>(options =>
-        options.UseSqlServer(
-            connectionString,
-            providerOptions => providerOptions.EnableRetryOnFailure()
-        )
-    );
+    connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvVar);
 }
 else
 {
-    builder.Services.AddDbContext<MiniTwitContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("MinitwitSqlServer"))
-    );
+    connectionString = builder.Configuration.GetConnectionString("MinitwitSqlServer");
 }
+
+builder.Services.AddDbContext<MiniTwitContext>(options =>
+    options.UseSqlServer(
+        connectionString,
+        providerOptions => providerOptions.EnableRetryOnFailure()
+    )
+);
 
 builder.Services.AddSession(options =>
 {
@@ -100,7 +100,11 @@ if (!app.Environment.IsDevelopment())
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<MiniTwitContext>();
-    db.Database.Migrate();
+
+    if (db.Database.CanConnect())
+    {
+        db.Database.Migrate();
+    }
 }
 
 app.MapPrometheusScrapingEndpoint();
