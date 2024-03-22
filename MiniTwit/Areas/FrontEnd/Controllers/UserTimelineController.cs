@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -114,11 +115,45 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
 
             if (!await Follower.DoesFollowerExistAsync(loggedInUser.Id, whomUser.Id, _context))
             {
-                string sqlQuery = $"INSERT INTO Follower VALUES ({loggedInUser.Id}, {whomUser.Id})";
-                await _context.Database.ExecuteSqlRawAsync(sqlQuery);
-            }
+                var newFollower = new Follower { WhoId = loggedInUser.Id, WhomId = whomUser.Id };
 
-            TempData["message"] = $"You are now following \"{whomUser.UserName}\"";
+                var validationContext = new ValidationContext(newFollower);
+                var ValidationResult = new List<ValidationResult>();
+
+                if (
+                    !Validator.TryValidateObject(
+                        newFollower,
+                        validationContext,
+                        ValidationResult,
+                        true
+                    )
+                )
+                {
+                    TempData["message"] = $"You can't follow yourself!";
+                    //return BadRequest(new { Message = "Custom validation error!", Errors = ValidationResult.Select(r => r.ErrorMessage) });
+                    //return BadRequest();
+                }
+                else
+                {
+                    _context.Followers.Add(newFollower);
+
+                    try
+                    {
+                        await _context.SaveChangesAsync();
+                        TempData["message"] = $"You are now following \"{whomUser.UserName}\"";
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        // Handle any exceptions that might occur during save changes
+                        Console.WriteLine($"Error adding follower: {ex.Message}");
+                    }
+                }
+
+                // Add the newFollower to the Followers DbSet
+                //string sqlQuery = $"INSERT INTO Follower VALUES ({loggedInUser.Id}, {whomUser.Id})";
+                //int res = await _context.Database.ExecuteSqlRawAsync(sqlQuery);
+                //await _context.SaveChangesAsync();
+            }
 
             return RedirectToAction("Index", username);
         }
@@ -151,15 +186,22 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
                 _context
             );
 
-            if (await Follower.DoesFollowerExistAsync(loggedInUser.Id, whomUser.Id, _context))
+            var followerToDelete = _context.Followers.FirstOrDefault(f =>
+                f.WhoId == loggedInUser.Id && f.WhomId == whomUser.Id
+            );
+            if (followerToDelete != null)
             {
-                string sqlQuery =
-                    $"DELETE FROM Follower WHERE who_id={loggedInUser.Id} AND whom_id={whomUser.Id}";
+                // Remove the follower from the context
+                _context.Followers.Remove(followerToDelete);
 
-                await _context.Database.ExecuteSqlRawAsync(sqlQuery);
+                // Save changes to the database
+                await _context.SaveChangesAsync();
+                TempData["message"] = $"You are no longer following \"{whomUser.UserName}\"";
             }
-
-            TempData["message"] = $"You are no longer following \"{whomUser.UserName}\"";
+            else
+            {
+                TempData["message"] = $"You are already not following \"{whomUser.UserName}\"";
+            }
 
             return RedirectToAction("Index", username);
         }
