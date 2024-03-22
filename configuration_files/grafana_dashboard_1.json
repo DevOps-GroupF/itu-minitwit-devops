@@ -1,5 +1,4 @@
 {
-  "title": "minitwit_main_dashboard",
   "annotations": {
     "list": [
       {
@@ -19,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 3,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -464,9 +463,10 @@
             "type": "mssql",
             "uid": "minitwit-database"
           },
-          "editorMode": "builder",
+          "editorMode": "code",
           "format": "table",
-          "rawSql": "SELECT TOP(50) COUNT(*) ",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) FROM dbo.follower",
           "refId": "A",
           "sql": {
             "columns": [
@@ -553,9 +553,10 @@
             "type": "mssql",
             "uid": "minitwit-database"
           },
-          "editorMode": "builder",
+          "editorMode": "code",
           "format": "table",
-          "rawSql": "SELECT TOP(50) COUNT(*) ",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) FROM dbo.message",
           "refId": "A",
           "sql": {
             "columns": [
@@ -709,9 +710,10 @@
             "type": "mssql",
             "uid": "minitwit-database"
           },
-          "editorMode": "builder",
+          "editorMode": "code",
           "format": "table",
-          "rawSql": "SELECT TOP(50) COUNT(*) ",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) FROM dbo.[user]",
           "refId": "A",
           "sql": {
             "columns": [
@@ -851,7 +853,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "uid": "e24c4483-738f-4bd5-8a10-fe288df33ae4",
-  "version": 7,
+  "title": "minitwit_main_dashboard",
+  "uid": "f6d5a14c-f7dc-4977-aadf-6bfe2c93efac",
+  "version": 4,
   "weekStart": ""
 }
