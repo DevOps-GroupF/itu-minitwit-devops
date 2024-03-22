@@ -48,44 +48,44 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddMetrics();
 
-builder
-    .Services.AddOpenTelemetry()
-    .WithMetrics(builder =>
-    {
-        builder.AddPrometheusExporter();
+// builder
+//     .Services.AddOpenTelemetry()
+//     .WithMetrics(builder =>
+//     {
+//         builder.AddPrometheusExporter();
 
-        builder.AddMeter(
-            "Microsoft.AspNetCore.Hosting",
-            "Microsoft.AspNetCore.Server.Kestrel",
-            "Microsoft.AspNetCore.Routing",
-            "Microsoft.AspNetCore.Diagnostics"
-        );
+//         builder.AddMeter(
+//             "Microsoft.AspNetCore.Hosting",
+//             "Microsoft.AspNetCore.Server.Kestrel",
+//             "Microsoft.AspNetCore.Routing",
+//             "Microsoft.AspNetCore.Diagnostics"
+//         );
 
-        builder.AddView(
-            "http.server.request.duration",
-            new ExplicitBucketHistogramConfiguration
-            {
-                Boundaries = new double[]
-                {
-                    0,
-                    0.005,
-                    0.01,
-                    0.025,
-                    0.05,
-                    0.075,
-                    0.1,
-                    0.25,
-                    0.5,
-                    0.75,
-                    1,
-                    2.5,
-                    5,
-                    7.5,
-                    10
-                }
-            }
-        );
-    });
+//         builder.AddView(
+//             "http.server.request.duration",
+//             new ExplicitBucketHistogramConfiguration
+//             {
+//                 Boundaries = new double[]
+//                 {
+//                     0,
+//                     0.005,
+//                     0.01,
+//                     0.025,
+//                     0.05,
+//                     0.075,
+//                     0.1,
+//                     0.25,
+//                     0.5,
+//                     0.75,
+//                     1,
+//                     2.5,
+//                     5,
+//                     7.5,
+//                     10
+//                 }
+//             }
+//         );
+//     });
 
 var app = builder.Build();
 
@@ -107,7 +107,7 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.MapPrometheusScrapingEndpoint();
+// app.MapPrometheusScrapingEndpoint();
 
 app.UseMetricServer();
 app.UseHttpMetrics();

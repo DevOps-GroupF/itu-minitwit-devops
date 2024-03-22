@@ -101,10 +101,44 @@ namespace MiniTwit.Areas.Api.Controllers
                     throw new ArgumentException(e.Message);
                 }
 
-                string sqlQuery = $"INSERT INTO Follower VALUES ({user.Id}, {whom.Id})";
-                await _context.Database.ExecuteSqlRawAsync(sqlQuery);
+                if (user != null && whom != null)
+                {
+                    var newFollower = new Follower
+                    {
+                        WhoId = user.Id,
+                        WhomId = whom.Id
+                    };
+
+                    var validationContext = new ValidationContext(newFollower);
+                    var ValidationResult = new List<ValidationResult>();
+
+                    if (!Validator.TryValidateObject(newFollower, validationContext, ValidationResult, true))
+                    {
+                        return BadRequest("You can not follow yourself");
+                    }
+                    else
+                    {
+                        _context.Followers.Add(newFollower);
+                        try
+                        {
+                            await _context.SaveChangesAsync();
+                            return new NoContentResult();
+
+                        }
+                        catch (DbUpdateException ex)
+                        {
+                            // Handle any exceptions that might occur during save changes
+                            Console.WriteLine($"Error adding follower: {ex.Message}");
+                        }
+                    }
+                }
+                else
+                {
+                    return NotFound("User not found");
+                }
 
                 return new NoContentResult();
+
             }
             else if (dataDic.ContainsKey("unfollow"))
             {
@@ -121,11 +155,27 @@ namespace MiniTwit.Areas.Api.Controllers
                     throw new ArgumentException(e.Message);
                 }
 
-                string sqlQuery =
-                    $"DELETE FROM Follower WHERE who_id={user.Id} AND whom_id={whom.Id}";
-                await _context.Database.ExecuteSqlRawAsync(sqlQuery);
+                if (user != null && whom != null)
+                {
+                    var followerToDelete = _context.Followers.FirstOrDefault(f => f.WhoId == user.Id && f.WhomId == whom.Id);
+                    if (followerToDelete != null)
+                    {
+                        // Remove the follower from the context
+                        _context.Followers.Remove(followerToDelete);
 
-                return new NoContentResult();
+                        // Save changes to the database
+                        await _context.SaveChangesAsync();
+                        return new NoContentResult();
+                    }
+                    else
+                    {
+                        return BadRequest("You are already not following the user");
+                    }
+                }
+                else
+                {
+                    return NotFound("Follower user not found");
+                }
             }
 
             Response.ContentType = "application/json";
