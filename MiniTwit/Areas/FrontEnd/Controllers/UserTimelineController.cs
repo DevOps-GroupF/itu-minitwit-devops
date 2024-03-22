@@ -115,16 +115,19 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
 
             if (!await Follower.DoesFollowerExistAsync(loggedInUser.Id, whomUser.Id, _context))
             {
-                var newFollower = new Follower
-                {
-                    WhoId = loggedInUser.Id,
-                    WhomId = whomUser.Id
-                };
+                var newFollower = new Follower { WhoId = loggedInUser.Id, WhomId = whomUser.Id };
 
                 var validationContext = new ValidationContext(newFollower);
                 var ValidationResult = new List<ValidationResult>();
 
-                if (!Validator.TryValidateObject(newFollower, validationContext, ValidationResult, true))
+                if (
+                    !Validator.TryValidateObject(
+                        newFollower,
+                        validationContext,
+                        ValidationResult,
+                        true
+                    )
+                )
                 {
                     TempData["message"] = $"You can't follow yourself!";
                     //return BadRequest(new { Message = "Custom validation error!", Errors = ValidationResult.Select(r => r.ErrorMessage) });
@@ -132,14 +135,12 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
                 }
                 else
                 {
-
                     _context.Followers.Add(newFollower);
 
                     try
                     {
                         await _context.SaveChangesAsync();
                         TempData["message"] = $"You are now following \"{whomUser.UserName}\"";
-
                     }
                     catch (DbUpdateException ex)
                     {
@@ -153,7 +154,6 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
                 //int res = await _context.Database.ExecuteSqlRawAsync(sqlQuery);
                 //await _context.SaveChangesAsync();
             }
-
 
             return RedirectToAction("Index", username);
         }
@@ -186,7 +186,9 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
                 _context
             );
 
-            var followerToDelete = _context.Followers.FirstOrDefault(f => f.WhoId == loggedInUser.Id && f.WhomId == whomUser.Id);
+            var followerToDelete = _context.Followers.FirstOrDefault(f =>
+                f.WhoId == loggedInUser.Id && f.WhomId == whomUser.Id
+            );
             if (followerToDelete != null)
             {
                 // Remove the follower from the context
