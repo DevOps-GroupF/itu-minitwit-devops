@@ -17,10 +17,13 @@ namespace MiniTwit.Areas.Api.Controllers
         private readonly IMemoryCache _memoryCache;
         public string cacheKey = "latest";
 
-        public FollowController(MiniTwitContext context, IMemoryCache memoryCache)
+        private readonly ILogger<FollowController> _logger;
+
+        public FollowController(ILogger<FollowController> logger, MiniTwitContext context, IMemoryCache memoryCache)
         {
             _context = context;
             _memoryCache = memoryCache;
+            _logger = logger;
         }
 
         /// <summary>
@@ -86,6 +89,7 @@ namespace MiniTwit.Areas.Api.Controllers
 
             Response.ContentType = "application/json";
 
+            _logger.LogInformation("Follow a user");
             if (dataDic.ContainsKey("follow"))
             {
                 // followed person
