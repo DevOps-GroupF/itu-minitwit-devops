@@ -2,15 +2,8 @@
 
 ## Decision Log
 
-### Framework Choice
+Our decisions are recorded in the [repository wiki](https://github.com/DevOps-GroupF/itu-minitwit-devops/wiki).
 
-We chose to base or refactoring on ASP.NET Core Razor pages for the following reasons:
-
-- Multiple group members are familiar with C# and ASP.NET 
-- All group members are familiar with OOP
-- Razor Pages are relatively simple to implement and have a good separation of concerns
-- Since we are in the .NET world, we can widely expand our system later in the course; we are not constrained to a small framework, and as such, we won't have to change much to scale up the system.
-- ASP.NET comes with EF Core, which allowed us to use the database mostly without writing SQL-code, which made implementing the data layer a quick affair.
 
 ## Building
 ```bash
