@@ -48,13 +48,17 @@ namespace MiniTwit.Areas.Api.Controllers
             }
             catch (ArgumentException e)
             {
+                _logger.LogError(e, "GetFollow: Error occurred while getting followers");
                 throw new ArgumentException(e.Message);
             }
 
             if (user == null)
             {
+                _logger.LogWarning("User not found");
                 return NotFound();
             }
+
+            _logger.LogInformation($"Follow: Try to get followers of {username}");
 
             var followingIds = _context
                 .Followers.Where(f => f.WhoId == user.Id)
@@ -68,6 +72,7 @@ namespace MiniTwit.Areas.Api.Controllers
                 .ToList();
             d.Add("follows", followerUsernames);
 
+            _logger.LogInformation($"GetFollow: Get followers of {username} successful");
             Response.ContentType = "application/json";
             return d;
         }
@@ -89,7 +94,6 @@ namespace MiniTwit.Areas.Api.Controllers
 
             Response.ContentType = "application/json";
 
-            _logger.LogInformation("Follow a user");
             if (dataDic.ContainsKey("follow"))
             {
                 // followed person
@@ -102,6 +106,7 @@ namespace MiniTwit.Areas.Api.Controllers
                 }
                 catch (ArgumentException e)
                 {
+                    _logger.LogError(e, "Error occurred while processing follow request");
                     throw new ArgumentException(e.Message);
                 }
 
@@ -113,11 +118,14 @@ namespace MiniTwit.Areas.Api.Controllers
                         WhomId = whom.Id
                     };
 
+                    _logger.LogInformation($"Follow: {user.Id} tries to follow {whom.Id}");
+
                     var validationContext = new ValidationContext(newFollower);
                     var ValidationResult = new List<ValidationResult>();
 
                     if (!Validator.TryValidateObject(newFollower, validationContext, ValidationResult, true))
                     {
+                        _logger.LogWarning("Follow: You can't follow yourself");
                         return BadRequest("You can not follow yourself");
                     }
                     else
@@ -126,18 +134,21 @@ namespace MiniTwit.Areas.Api.Controllers
                         try
                         {
                             await _context.SaveChangesAsync();
+                            _logger.LogInformation($"Follow: {user.Id} follows {whom.Id}");
                             return new NoContentResult();
 
                         }
                         catch (DbUpdateException ex)
                         {
                             // Handle any exceptions that might occur during save changes
+                            _logger.LogError(ex, "Follow: Error occurred while following user");
                             Console.WriteLine($"Error adding follower: {ex.Message}");
                         }
                     }
                 }
                 else
                 {
+                    _logger.LogWarning("Follow: User not found");
                     return NotFound("User not found");
                 }
 
@@ -156,11 +167,13 @@ namespace MiniTwit.Areas.Api.Controllers
                 }
                 catch (ArgumentException e)
                 {
+                    _logger.LogError(e, "Unfollow: Error while unfollowing user");
                     throw new ArgumentException(e.Message);
                 }
 
                 if (user != null && whom != null)
                 {
+                    _logger.LogInformation($"Unfollow: {user.Id} tries to unfollow {whom.Id}");
                     var followerToDelete = _context.Followers.FirstOrDefault(f => f.WhoId == user.Id && f.WhomId == whom.Id);
                     if (followerToDelete != null)
                     {
@@ -169,20 +182,24 @@ namespace MiniTwit.Areas.Api.Controllers
 
                         // Save changes to the database
                         await _context.SaveChangesAsync();
+                        _logger.LogInformation($"Unfollow: {user} unfollowed {whom}");
                         return new NoContentResult();
                     }
                     else
                     {
+                        _logger.LogWarning("Unfollow: You are already not following the user");
                         return BadRequest("You are already not following the user");
                     }
                 }
                 else
                 {
+                    _logger.LogWarning("Unfollow: Follower user not found");
                     return NotFound("Follower user not found");
                 }
             }
 
             Response.ContentType = "application/json";
+            _logger.LogError("Unfollow: Error occured");
             return "Error Eccour";
         }
     }
