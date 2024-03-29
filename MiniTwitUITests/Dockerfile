@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /source
 
 # COPY TESTS
-COPY . /MiniTwitOldTests/
+COPY . /MiniTwitUITests/
 
 # Set command to run tests when container is run
 CMD ["sleep", "20"]
