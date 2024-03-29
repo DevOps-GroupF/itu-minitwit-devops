@@ -10,8 +10,14 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: devops-groupf/itu-minitwit-devops
 
-# There is a single job in this workflow. It's configured to run on the latest available version of Ubuntu.
 jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the application, test it, and create a Docker image
+      run: docker-compose -f compose-test.yml up --force-recreate --abort-on-container-exit --exit-code-from minitwit-uitests
+
   build-and-push-image:
     runs-on: ubuntu-latest
     # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
