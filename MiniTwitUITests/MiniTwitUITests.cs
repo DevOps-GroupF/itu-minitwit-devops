@@ -62,7 +62,7 @@ public class MiniTwitUITests
             new KeyValuePair<string, string>("text", text)
         });
 
-        return await _client.PostAsync($"{BaseUrl}/add_message", content);
+        return await _client.PostAsync($"{BaseUrl}/Home/AddMessage", content);
     }
 
     [Fact]
