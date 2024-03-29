@@ -12,16 +12,30 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
     [Area("FrontEnd")]
     public class LogoutController : Controller
     {
-        public LogoutController() { }
+        private readonly ILogger<LogoutController> _logger;
+        public LogoutController(ILogger<LogoutController> logger)
+        {
+            _logger = logger;
+        }
 
         public IActionResult Index()
         {
-            HttpContext.Session.Remove(Authentication.AuthUsername);
-            HttpContext.Session.Remove(Authentication.AuthId);
-            HttpContext.Session.Remove(Authentication.AuthuserEmail);
-            TempData["message"] = "You were logged out";
+            try
+            {
 
-            return RedirectToAction(controllerName: "Home", actionName: "Index");
+                HttpContext.Session.Remove(Authentication.AuthUsername);
+                HttpContext.Session.Remove(Authentication.AuthId);
+                HttpContext.Session.Remove(Authentication.AuthuserEmail);
+                TempData["message"] = "You were logged out";
+
+                _logger.LogInformation("User logged out successfully");
+                return RedirectToAction(controllerName: "Home", actionName: "Index");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while processing Logout action");
+                throw;
+            }
         }
     }
 }

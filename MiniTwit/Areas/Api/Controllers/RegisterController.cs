@@ -17,16 +17,19 @@ namespace MiniTwit.Areas.Api.Controllers
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IMemoryCache _memoryCache;
         public string cacheKey = "latest";
+        private readonly ILogger<RegisterController> _logger;
 
         public RegisterController(
             MiniTwitContext context,
             IPasswordHasher<User> passwordHasher,
-            IMemoryCache memoryCache
+            IMemoryCache memoryCache,
+            ILogger<RegisterController> logger
         )
         {
             _context = context;
             _passwordHasher = passwordHasher;
             _memoryCache = memoryCache;
+            _logger = logger;
 
             /*
             username = string.Empty;
@@ -40,42 +43,51 @@ namespace MiniTwit.Areas.Api.Controllers
         {
             _memoryCache.Set(cacheKey, latest.ToString());
 
-            string body;
-            using (StreamReader stream = new StreamReader(HttpContext.Request.Body))
+            try
             {
-                body = await stream.ReadToEndAsync();
+                string body;
+                using (StreamReader stream = new StreamReader(HttpContext.Request.Body))
+                {
+                    body = await stream.ReadToEndAsync();
+                }
+
+                Dictionary<string, string> dataDic = JsonConvert.DeserializeObject<
+                    Dictionary<string, string>
+                >(body);
+
+                string username = dataDic["username"].ToString();
+                string email = dataDic["email"].ToString();
+                string pwd = dataDic["pwd"].ToString();
+
+                var user = _context.Users.FirstOrDefault(u => u.UserName == username);
+                if (user != null)
+                {
+                    _logger.LogWarning($"Register: User registration failed. Username '{username}' is already taken.");
+                    return StatusCode(403, "The username is already taken"); // works!
+                }
+
+                var newUser = new User
+                {
+                    UserName = username, // Set the user properties here
+                    Email = email,
+                    PasswordHash = pwd
+                };
+
+                string hashedPassword = _passwordHasher.HashPassword(newUser, newUser.PasswordHash);
+                newUser.PasswordHash = hashedPassword;
+
+                await _context.Users.AddAsync(newUser);
+                await _context.SaveChangesAsync();
+
+                Response.ContentType = "application/json";
+                _logger.LogInformation($"Register: User '{username}' registered successfully.");
+                return new NoContentResult();
             }
-
-            Dictionary<string, string> dataDic = JsonConvert.DeserializeObject<
-                Dictionary<string, string>
-            >(body);
-
-            string username = dataDic["username"].ToString();
-            string email = dataDic["email"].ToString();
-            string pwd = dataDic["pwd"].ToString();
-
-            var user = _context.Users.FirstOrDefault(u => u.UserName == username);
-            if (user != null)
+            catch (Exception ex)
             {
-                return StatusCode(403, "The username is already taken"); // works!
+                _logger.LogError(ex, "Error registering user");
+                return StatusCode(500); // Or return appropriate response for server error
             }
-
-            var newUser = new User
-            {
-                UserName = username, // Set the user properties here
-                Email = email,
-                PasswordHash = pwd
-            };
-
-            string hashedPassword = _passwordHasher.HashPassword(newUser, newUser.PasswordHash);
-            newUser.PasswordHash = hashedPassword;
-
-            await _context.Users.AddAsync(newUser);
-            await _context.SaveChangesAsync();
-
-            Response.ContentType = "application/json";
-
-            return new NoContentResult();
         }
 
         /*

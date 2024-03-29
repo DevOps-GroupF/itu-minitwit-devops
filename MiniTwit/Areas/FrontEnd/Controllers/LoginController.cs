@@ -13,23 +13,33 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
     {
         private readonly MiniTwitContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly ILogger<LoginController> _logger;
 
-        public LoginController(MiniTwitContext context, IPasswordHasher<User> passwordHasher)
+        public LoginController(MiniTwitContext context, IPasswordHasher<User> passwordHasher, ILogger<LoginController> logger)
         {
             _context = context;
             _passwordHasher = passwordHasher;
+            _logger = logger;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var tempData = TempData["message"];
-            if (tempData != null)
+            try
             {
-                ViewData["message"] = tempData.ToString();
-            }
+                var tempData = TempData["message"];
+                if (tempData != null)
+                {
+                    ViewData["message"] = tempData.ToString();
+                }
 
-            return View();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while processing GET request for Index action");
+                throw;
+            }
         }
 
         [HttpPost]
@@ -44,11 +54,18 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
             try
             {
                 user = _context.Users.Where(x => x.UserName == fieldName).First();
+                if (user == null)
+                {
+                    _logger.LogWarning($"User '{fieldName}' not found");
+                    ViewData["error"] = "Invalid username";
+                    return View();
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                ViewData["error"] = "Invalid username";
-                return View();
+                _logger.LogError(ex, "Error occurred while retrieving user information from the database");
+                throw;
+                //return View();
             }
 
             PasswordVerificationResult passwordVerificationResult;
@@ -74,6 +91,7 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
 
             if (passwordVerificationResult == PasswordVerificationResult.Failed)
             {
+                _logger.LogWarning($"Invalid password for user '{fieldName}'");
                 ViewData["error"] = "Invalid password";
                 return View();
             }
@@ -83,7 +101,7 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
             HttpContext.Session.SetString(Authentication.AuthuserEmail, user.Email);
 
             TempData["message"] = "You were logged in";
-
+            _logger.LogInformation($"User '{fieldName}' logged in successfully");
             return RedirectToAction(controllerName: "Home", actionName: "Index");
         }
     }

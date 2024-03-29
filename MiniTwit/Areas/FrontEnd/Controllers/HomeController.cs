@@ -24,112 +24,132 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
     {
         private readonly int PER_PAGE = 30;
         private readonly MiniTwitContext _context;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(MiniTwitContext context)
+        public HomeController(MiniTwitContext context, ILogger<HomeController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            if (!await Utility.ValidUserIsLoggedIn(HttpContext, _context))
+            try
             {
-                return RedirectToAction(actionName: "Index", controllerName: "Public");
+                if (!await Utility.ValidUserIsLoggedIn(HttpContext, _context))
+                {
+                    return RedirectToAction(actionName: "Index", controllerName: "Public");
+                }
+                /* HttpContext.Session.SetString(Security.Authentication.AuthId, user.Id.ToString()); */
+                /* HttpContext.Session.SetString(Security.Authentication.AuthuserEmail, user.Email); */
+
+                int loggedInUserIdFromSesssion = Utility.GetUserIdFromHttpSession(HttpContext);
+
+                User loggedInUser = await Models.DataModels.User.GetUserFromUserIdAsync(
+                    loggedInUserIdFromSesssion,
+                    _context
+                );
+
+                var followingIds = await _context
+                    .Followers.Where(f => f.WhoId == loggedInUser.Id)
+                    .Select(f => f.WhomId)
+                    .ToListAsync();
+
+                var sample = await _context
+                    .Twits.Where(x =>
+                        x.AuthorId.ToString() == loggedInUser.Id.ToString()
+                        || followingIds.Contains(x.AuthorId)
+                    )
+                    .OrderByDescending(x => x.PubDate)
+                    .Take(PER_PAGE)
+                    .ToListAsync();
+
+                var outcome = sample
+                    .Join(
+                        _context.Users,
+                        message => message.AuthorId,
+                        user => user.Id,
+                        (message, user) =>
+                            new TwitViewModel
+                            {
+                                AuthorUsername = user.UserName,
+                                Text = message.Text,
+                                PubDate = message.PubDate,
+                                GravatarString = Utility.GetGravatar(user.Email, 48)
+                            }
+                    )
+                    .ToList();
+
+                ViewData["twits"] = outcome;
+
+                if (TempData.ContainsKey("message"))
+                {
+                    ViewData["message"] = TempData["message"];
+                }
+
+                return View();
             }
-            /* HttpContext.Session.SetString(Security.Authentication.AuthId, user.Id.ToString()); */
-            /* HttpContext.Session.SetString(Security.Authentication.AuthuserEmail, user.Email); */
-
-            int loggedInUserIdFromSesssion = Utility.GetUserIdFromHttpSession(HttpContext);
-
-            User loggedInUser = await Models.DataModels.User.GetUserFromUserIdAsync(
-                loggedInUserIdFromSesssion,
-                _context
-            );
-
-            var followingIds = await _context
-                .Followers.Where(f => f.WhoId == loggedInUser.Id)
-                .Select(f => f.WhomId)
-                .ToListAsync();
-
-            var sample = await _context
-                .Twits.Where(x =>
-                    x.AuthorId.ToString() == loggedInUser.Id.ToString()
-                    || followingIds.Contains(x.AuthorId)
-                )
-                .OrderByDescending(x => x.PubDate)
-                .Take(PER_PAGE)
-                .ToListAsync();
-
-            var outcome = sample
-                .Join(
-                    _context.Users,
-                    message => message.AuthorId,
-                    user => user.Id,
-                    (message, user) =>
-                        new TwitViewModel
-                        {
-                            AuthorUsername = user.UserName,
-                            Text = message.Text,
-                            PubDate = message.PubDate,
-                            GravatarString = Utility.GetGravatar(user.Email, 48)
-                        }
-                )
-                .ToList();
-
-            ViewData["twits"] = outcome;
-
-            if (TempData.ContainsKey("message"))
+            catch (Exception ex)
             {
-                ViewData["message"] = TempData["message"];
+                _logger.LogError(ex, "Error occurred while processing Index action");
+                throw;
             }
-
-            return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> AddMessage(IFormCollection request)
         {
-            Console.WriteLine("MEssage starting to add");
-
-            bool validUserIsLoggedIn = await Utility.ValidUserIsLoggedIn(HttpContext, _context);
-
-            if (!validUserIsLoggedIn)
+            try
             {
-                return new UnauthorizedResult();
-            }
+                Console.WriteLine("MEssage starting to add");
+                _logger.LogInformation("Message addition process started");
+                bool validUserIsLoggedIn = await Utility.ValidUserIsLoggedIn(HttpContext, _context);
 
-            int loggedInUserIdFromSesssion = Utility.GetUserIdFromHttpSession(HttpContext);
-
-            User loggedInUser = await Models.DataModels.User.GetUserFromUserIdAsync(
-                loggedInUserIdFromSesssion,
-                _context
-            );
-
-            // Method for getting form fields
-            var formCollection = Request.Form;
-            string fieldText = formCollection["text"].ToString();
-
-            if (fieldText.Length > 200)
-            {
-                return new BadRequestResult();
-            }
-
-            Twit newTwit =
-                new()
+                if (!validUserIsLoggedIn)
                 {
-                    AuthorId = loggedInUser.Id,
-                    Text = fieldText,
-                    PubDate = (int)DateTimeOffset.Now.ToUnixTimeSeconds(),
-                    Flagged = 0
-                };
+                    _logger.LogWarning("Unauthorized access attempt to AddMessage action");
+                    return new UnauthorizedResult();
+                }
 
-            await _context.Twits.AddAsync(newTwit);
-            await _context.SaveChangesAsync();
+                int loggedInUserIdFromSesssion = Utility.GetUserIdFromHttpSession(HttpContext);
 
-            TempData["Message"] = "Your message was recorded";
+                User loggedInUser = await Models.DataModels.User.GetUserFromUserIdAsync(
+                    loggedInUserIdFromSesssion,
+                    _context
+                );
 
-            return RedirectToAction("Index");
+                // Method for getting form fields
+                var formCollection = Request.Form;
+                string fieldText = formCollection["text"].ToString();
+
+                if (fieldText.Length > 200)
+                {
+                    _logger.LogWarning("Message length exceeds 200 characters");
+                    return new BadRequestResult();
+                }
+
+                Twit newTwit =
+                    new()
+                    {
+                        AuthorId = loggedInUser.Id,
+                        Text = fieldText,
+                        PubDate = (int)DateTimeOffset.Now.ToUnixTimeSeconds(),
+                        Flagged = 0
+                    };
+
+                await _context.Twits.AddAsync(newTwit);
+                await _context.SaveChangesAsync();
+
+                TempData["Message"] = "Your message was recorded";
+                _logger.LogInformation("Message added successfully");
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while processing AddMessage action");
+                throw;
+            }
         }
     }
 }
