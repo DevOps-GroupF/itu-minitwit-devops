@@ -12,6 +12,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the application, test it, and create a Docker image
-      run: docker build -t minitwit .
-    
-    
+      run: docker-compose -f compose-test.yml up --force-recreate --abort-on-container-exit --exit-code-from minitwit-uitests
