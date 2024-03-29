@@ -1,0 +1,38 @@
+networks:
+  itu-minitwit-network:
+    external: false
+    name: itu-minitwit-network
+
+services:
+  minitwit-database:
+    container_name: minitwit-database
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - MSSQL_PID=Developer
+      - MSSQL_SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - 1433:1433
+    networks:
+      - itu-minitwit-network
+
+  minitwit-service:
+    container_name: minitwit-service
+    depends_on:
+      - minitwit-database
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
+    build: .
+    ports:
+      - 8080:8080
+    networks:
+      - itu-minitwit-network
+
+  minitwit-uitests:
+    container_name: minitwit-uitests
+    depends_on:
+      - minitwit-service
+    build: MiniTwitUITests
+    networks:
+      - itu-minitwit-network
