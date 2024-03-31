@@ -34,5 +34,5 @@ jobs:
       uses: dotnet/code-analysis@d3a5cb6ef8547e36e87c4378cc3e982d9fe1afe7
       id: code-analysis
       with:
-        project: MiniTwit
+        project: MiniTwit/MiniTwit.csproj
         build-breaking: true
