@@ -31,7 +31,7 @@ jobs:
     - name: Run NuGet restore
       run: dotnet restore <%path_to_project_or_solution%>
     - name: Run .NET Code Analysis
-      uses: dotnet/code-analysis@latest
+      uses: dotnet/code-analysis
       id: code-analysis
       with:
         build-breaking: true
