@@ -24,10 +24,13 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
   lint-dotnet:
-    runs-on: node12
+    runs-on: ubuntu-latest
     steps: 
     - name: Checkout
       uses: actions/checkout@master
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.0' 
     - name: Run NuGet restore
       run: dotnet restore MiniTwit
     - name: Run .NET Code Analysis
