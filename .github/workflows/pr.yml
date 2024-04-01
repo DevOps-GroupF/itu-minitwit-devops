@@ -13,6 +13,8 @@ jobs:
   
   lint-dockerfile:
     runs-on: ubuntu-latest
+    permissions:
+      checks:write
     steps: 
     - name: Checkout
       uses: actions/checkout@master
