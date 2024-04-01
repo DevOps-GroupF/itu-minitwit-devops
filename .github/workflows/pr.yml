@@ -13,8 +13,6 @@ jobs:
   
   lint-dockerfile:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps: 
     - name: Checkout
       uses: actions/checkout@master
@@ -22,7 +20,7 @@ jobs:
       uses: luke142367/Docker-Lint-Action@v1.0.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        target: Dockerfile
+        TARGET: Dockerfile
   
   lint-dotnet:
     runs-on: windows-latest
