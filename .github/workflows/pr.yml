@@ -31,7 +31,7 @@ jobs:
       uses: actions/checkout@master
     - uses: actions/setup-dotnet@v4.0.0
       with:
-        dotnet-version: '8.0.3' 
+        dotnet-version: '8.0.203' 
     - name: Run NuGet restore
       run: dotnet restore MiniTwit
     - name: Run .NET Code Analysis
