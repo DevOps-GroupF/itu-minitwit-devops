@@ -42,3 +42,5 @@ jobs:
         env:
           # To report GitHub Actions status checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # We only lint C# files
+          VALIDATE_CSHARP: true
