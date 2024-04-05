@@ -24,19 +24,21 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         TARGET: Dockerfile
   
-  lint-dotnet:
-    runs-on: windows-latest
-    steps: 
-    - name: Checkout
-      uses: actions/checkout@master
-    - uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '3.1.0' 
-    - name: Run NuGet restore
-      run: dotnet restore MiniTwit
-    - name: Run .NET Code Analysis
-      uses: dotnet/code-analysis@d3a5cb6ef8547e36e87c4378cc3e982d9fe1afe7
-      id: code-analysis
-      with:
-        project: MiniTwit/MiniTwit.csproj
-        build-breaking: true
+  super-linter:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Super-linter
+        uses: super-linter/super-linter@v6.3.1
+        env:
+          # To report GitHub Actions status checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
