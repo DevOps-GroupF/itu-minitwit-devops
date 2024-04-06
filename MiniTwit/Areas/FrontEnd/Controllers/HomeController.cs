@@ -102,7 +102,7 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
         {
             try
             {
-                Console.WriteLine("MEssage starting to add");
+                Console.WriteLine("Message starting to add");
                 _logger.LogInformation("Message addition process started");
                 bool validUserIsLoggedIn = await Utility.ValidUserIsLoggedIn(HttpContext, _context);
 

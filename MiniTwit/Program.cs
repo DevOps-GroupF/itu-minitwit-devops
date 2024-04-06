@@ -13,6 +13,8 @@ using Prometheus;
 using Serilog;
 using Serilog.Exceptions;
 using Serilog.Sinks.Elasticsearch;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -171,7 +173,7 @@ void configureLogging()
         .CreateLogger();
 }
 
-ElasticsearchSinkOptions ConfigureElasticSink(IConfigurationRoot configuration, string environment)
+static ElasticsearchSinkOptions ConfigureElasticSink(IConfigurationRoot configuration, string environment)
 {
     return new ElasticsearchSinkOptions(new Uri(configuration["ElasticConfiguration:Uri"]))
     {
