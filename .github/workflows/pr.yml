@@ -11,19 +11,6 @@ jobs:
     - name: Build the application, test it, and create a Docker image
       run: docker-compose -f compose-test.yml up --force-recreate --abort-on-container-exit --exit-code-from minitwit-uitests
   
-  lint-dockerfile:
-    runs-on: ubuntu-latest
-    permissions:
-      checks: write
-    steps: 
-    - name: Checkout
-      uses: actions/checkout@master
-    - name: lint
-      uses: luke142367/Docker-Lint-Action@v1.0.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TARGET: Dockerfile
-  
   super-linter:
     runs-on: ubuntu-latest
     permissions:
@@ -44,3 +31,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # We only lint C# files
           VALIDATE_CSHARP: true
+          VALIDATE_DOCKERFILE_HADOLINT: true
