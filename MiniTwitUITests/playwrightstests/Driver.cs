@@ -25,7 +25,7 @@ public class Driver : IDisposable
 
         return await playwright.APIRequest.NewContextAsync(new APIRequestNewContextOptions
         {
-            BaseURL = "http://localhost:8080/api/",
+            BaseURL = "http://minitwit-service:8080/api/",
             IgnoreHTTPSErrors = true
         });
     }

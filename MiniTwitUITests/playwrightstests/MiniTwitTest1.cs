@@ -19,7 +19,7 @@ public class Tests
 
         //Page
         var page = await browser.NewPageAsync();
-        await page.GotoAsync("http://localhost:8080/Public");
+        await page.GotoAsync("http://minitwit-service:8080/Public");
       
         var isExist = await page.Locator("text='MiniTwit'").IsVisibleAsync();
         Assert.True(isExist);
