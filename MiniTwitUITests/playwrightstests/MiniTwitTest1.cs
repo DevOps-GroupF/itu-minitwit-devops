@@ -14,7 +14,7 @@ public class Tests
         //Browser
         await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
         {
-            Headless = false
+            Headless = true
         });
 
         //Page
