@@ -3,6 +3,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
+namespace MiniTwitUITests;
+
 public class MiniTwitUITests
 {
     private readonly HttpClient _client;
