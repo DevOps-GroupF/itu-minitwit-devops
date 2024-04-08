@@ -56,7 +56,7 @@ namespace MiniTwit.Areas.Api.Controllers
 
             Response.ContentType = "application/json";
 
-            return Ok(new { Message = "Your message was recorded" });
+            return new NoContentResult();
         }
 
         // get latest messages of the user
@@ -96,6 +96,7 @@ namespace MiniTwit.Areas.Api.Controllers
             {
                 return NotFound(); // Or return appropriate response if there are no messages
             }
+
             return Ok(latestMessages);
         }
 
@@ -123,6 +124,7 @@ namespace MiniTwit.Areas.Api.Controllers
             {
                 return NotFound(); // Or return appropriate response if there are no messages
             }
+
             return Ok(latestMessages);
         }
     }

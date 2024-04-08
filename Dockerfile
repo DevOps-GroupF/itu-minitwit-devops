@@ -16,9 +16,6 @@ RUN dotnet publish --no-restore -o /app /MiniTwit/
 COPY MiniTwitTests/. /MiniTwitTests/
 RUN dotnet test /MiniTwitTests/
 
-# COPY DATABASE
-COPY MiniTwit/minitwit.db /datavol/minitwit.db
-
 # GENERATE IMAGE
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 EXPOSE 8080
@@ -27,7 +24,6 @@ WORKDIR /app
 USER $APP_UID
 
 COPY --from=build /app .
-COPY --chown=$APP_UID --from=build /datavol /datavol
 
 ENTRYPOINT ["./MiniTwit"]
 

@@ -8,7 +8,7 @@ on:
 # Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: devops-groupf/itu-minitwit-devops
 
 # There is a single job in this workflow. It's configured to run on the latest available version of Ubuntu.
 jobs:
@@ -43,7 +43,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v.${{ github.ref_name }}.${{ github.sha }}, ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           labels: ${{ steps.meta.outputs.labels }}
 
 
@@ -85,6 +85,6 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
     - name: connect and pull
-      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && echo ${{ secrets.GITHUB_TOKEN }} | sudo docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin && sudo docker compose pull && sudo docker compose up -d && exit"
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
     - name: cleanup
       run: rm -rf ~/.ssh

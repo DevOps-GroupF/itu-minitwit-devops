@@ -1,6 +1,54 @@
+networks:
+  itu-minitwit-network:
+    external: false
+    name: itu-minitwit-network
+
 services:
+  minitwit-database:
+    container_name: minitwit-database
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - MSSQL_PID=Developer
+      - MSSQL_SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - 1433:1433
+    networks:
+      - itu-minitwit-network
+
   minitwit-service:
     container_name: minitwit-container
-    image: ghcr.io/DevOps-GroupF/itu-minitwit-devops:main
+    depends_on:
+      - minitwit-database
+      - grafana
+      - prometheus
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
+    build: .
     ports:
       - 8080:8080
+    networks:
+      - itu-minitwit-network
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - itu-minitwit-network
+
+  grafana:
+    image: grafana/grafana:10.2.4
+    ports:
+      - "3000:3000"
+    networks:
+      - itu-minitwit-network
+    volumes:
+      - ./configuration_files/grafana_dashboard_setup.yaml:/etc/grafana/provisioning/dashboards/grafana_dashboard_setup.yaml
+      - ./configuration_files/grafana_dashboard_0.json:/var/lib/grafana/dashboards/grafana_dashboard_0.json
+      - ./configuration_files/grafana_dashboard_1.json:/var/lib/grafana/dashboards/grafana_dashboard_1.json
+      - ./configuration_files/prometheus_datasource.yaml:/etc/grafana/provisioning/datasources/prometheus_datasource.yaml
