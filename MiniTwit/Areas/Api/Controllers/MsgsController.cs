@@ -15,11 +15,13 @@ namespace MiniTwit.Areas.Api.Controllers
 
         private readonly IMemoryCache _memoryCache;
         public string cacheKey = "latest";
+        private readonly ILogger<MsgsController> _logger;
 
-        public MsgsController(MiniTwitContext context, IMemoryCache memoryCache)
+        public MsgsController(MiniTwitContext context, IMemoryCache memoryCache, ILogger<MsgsController> logger) // Added ILogger
         {
             _context = context;
             _memoryCache = memoryCache;
+            _logger = logger; // Initialized ILogger
         }
 
         //create an new message
@@ -39,6 +41,7 @@ namespace MiniTwit.Areas.Api.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error creating message");
                 ModelState.AddModelError("Username", "User does not exist");
                 return "User does not exist";
             }
@@ -55,7 +58,7 @@ namespace MiniTwit.Areas.Api.Controllers
             await _context.SaveChangesAsync();
 
             Response.ContentType = "application/json";
-
+            _logger.LogInformation($"Message created by user: {username}");
             return new NoContentResult();
         }
 
@@ -76,6 +79,7 @@ namespace MiniTwit.Areas.Api.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error retrieving latest user messages");
                 ModelState.AddModelError("Username", "User does not exist");
                 return NotFound("User does not exist");
             }
@@ -94,9 +98,10 @@ namespace MiniTwit.Areas.Api.Controllers
 
             if (latestMessages == null)
             {
+                _logger.LogWarning("Warning latest message not found");
                 return NotFound(); // Or return appropriate response if there are no messages
             }
-
+            _logger.LogInformation($"Retrieved latest messages of user: {username}");
             return Ok(latestMessages);
         }
 
@@ -108,24 +113,32 @@ namespace MiniTwit.Areas.Api.Controllers
         )
         {
             _memoryCache.Set(cacheKey, latest.ToString());
-
-            var latestMessages = await _context
-                .Twits.OrderByDescending(t => t.PubDate)
-                .Take(no)
-                .Join(
-                    _context.Users,
-                    twit => twit.AuthorId,
-                    user => user.Id,
-                    (twit, user) => new MessageResponse(twit.Text, user.UserName)
-                )
-                .ToListAsync();
-
-            if (latestMessages == null)
+            try
             {
-                return NotFound(); // Or return appropriate response if there are no messages
-            }
+                var latestMessages = await _context
+                    .Twits.OrderByDescending(t => t.PubDate)
+                    .Take(no)
+                    .Join(
+                        _context.Users,
+                        twit => twit.AuthorId,
+                        user => user.Id,
+                        (twit, user) => new MessageResponse(twit.Text, user.UserName)
+                    )
+                    .ToListAsync();
 
-            return Ok(latestMessages);
+                if (latestMessages == null)
+                {
+                    _logger.LogWarning("Warning latest messages of all messages not foung");
+                    return NotFound();
+                }
+                _logger.LogInformation("Retrieved latest messages of all users");
+                return Ok(latestMessages);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving latest messages of all messages");
+                return StatusCode(500);
+            }
         }
     }
 
