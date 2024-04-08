@@ -93,8 +93,12 @@ builder.Services.AddMetrics();
 //         );
 //     });
 
-configureLogging();
-builder.Host.UseSerilog();
+try
+{
+    configureLogging();
+    builder.Host.UseSerilog();
+}
+catch (Exception e) { }
 
 var app = builder.Build();
 
