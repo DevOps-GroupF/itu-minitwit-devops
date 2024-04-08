@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   curator:
@@ -11,6 +11,6 @@ services:
     environment:
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
     networks:
-      - elk
+      - itu-minitwit-network
     depends_on:
       - elasticsearch

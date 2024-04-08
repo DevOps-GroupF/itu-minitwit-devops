@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 # Example of Fleet-enrolled Elastic Agent pre-configured with an agent policy
 # for running the APM Server integration (see kibana.yml).
@@ -19,9 +19,9 @@ services:
     volumes:
       - apm-server:/usr/share/elastic-agent/state:Z
     environment:
-      FLEET_ENROLL: '1'
+      FLEET_ENROLL: "1"
       FLEET_TOKEN_POLICY_NAME: Agent Policy APM Server
-      FLEET_INSECURE: '1'
+      FLEET_INSECURE: "1"
       FLEET_URL: http://fleet-server:8220
       # Enrollment.
       # (a) Auto-enroll using basic authentication
@@ -35,7 +35,7 @@ services:
     # Elastic Agent does not retry failed connections to Kibana upon the initial enrollment phase.
     restart: on-failure
     networks:
-      - elk
+      - itu-minitwit-network
     depends_on:
       - elasticsearch
       - kibana

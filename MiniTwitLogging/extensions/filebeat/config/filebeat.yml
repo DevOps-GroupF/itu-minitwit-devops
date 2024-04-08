@@ -41,27 +41,28 @@ monitoring:
     password: ${BEATS_SYSTEM_PASSWORD}
 
 output.elasticsearch:
-  hosts: [ http://elasticsearch:9200 ]
+  hosts: [http://elasticsearch:9200]
   username: filebeat_internal
   password: ${FILEBEAT_INTERNAL_PASSWORD}
   indices:
-      - index: "filebeat-elastic-%{[agent.version]}-%{+yyyy.MM.dd}"
-        when.or:
-          - equals:
-              container.image.name: docker-elk-filebeat
-          - equals:
-              container.image.name: docker-elk-elasticsearch
-          - equals:
-              container.image.name: docker-elk-kibana
-      - index: "filebeat-minitwit-%{[agent.version]}-%{+yyyy.MM.dd}"
-        when.or:
-            - equals:
-                container.image.name: docker-elk-minitwitserver
-            - equals:
-                container.image.name: docker-elk-minitwitclient
-      - index: "filebeat-ngix-%{[agent.version]}-%{+yyyy.MM.dd}"
-        when.equals:
-          container.image.name: nginx
+    - index: "filebeat-elastic-%{[agent.version]}-%{+yyyy.MM.dd}"
+      when.or:
+        - equals:
+            container.image.name: itu-minitwit-devops-filebeat
+        - equals:
+            container.image.name: itu-minitwit-devops-elasticsearch
+        - equals:
+            container.image.name: itu-minitwit-devops-kibana
+    - index: "filebeat-minitwit-%{[agent.version]}-%{+yyyy.MM.dd}"
+      when.or:
+        - equals:
+            container.name: minitwit-container
+    - index: "filebeat-ngix-%{[agent.version]}-%{+yyyy.MM.dd}"
+      when.equals:
+        container.image.name: nginx
+    - index: "filebeat-mssql-%{[agent.version]}-%{+yyyy.MM.dd}"
+      when.equals:
+        container.name: minitwit-database
 ## HTTP endpoint for health checking
 ## https://www.elastic.co/guide/en/beats/filebeat/current/http-endpoint.html
 #
@@ -69,4 +70,3 @@ output.elasticsearch:
 http:
   enabled: true
   host: 0.0.0.0
-

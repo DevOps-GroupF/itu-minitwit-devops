@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   heartbeat:
@@ -19,6 +19,6 @@ services:
       HEARTBEAT_INTERNAL_PASSWORD: ${HEARTBEAT_INTERNAL_PASSWORD:-}
       BEATS_SYSTEM_PASSWORD: ${BEATS_SYSTEM_PASSWORD:-}
     networks:
-      - elk
+      - itu-minitwit-network
     depends_on:
       - elasticsearch
