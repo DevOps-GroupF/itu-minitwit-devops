@@ -7,5 +7,4 @@ WORKDIR /source
 COPY . /MiniTwitUITests/
 
 # Set command to run tests when container is run
-CMD ["sleep", "20"]
 CMD ["dotnet", "test", "/MiniTwitUITests/"]
