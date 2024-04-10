@@ -1,10 +1,12 @@
 using System;
 using System.Reflection;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.KeyPerFile;
+using Microsoft.Extensions.Hosting;
 using MiniTwit.Areas.Api.Metrics;
 using MiniTwit.Data;
 using MiniTwit.Models.DataModels;
@@ -13,8 +15,6 @@ using Prometheus;
 using Serilog;
 using Serilog.Exceptions;
 using Serilog.Sinks.Elasticsearch;
-using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,10 +36,7 @@ else
 }
 
 builder.Services.AddDbContext<MiniTwitContext>(options =>
-    options.UseSqlServer(
-        connectionString,
-        providerOptions => providerOptions.EnableRetryOnFailure()
-    )
+    options.UseNpgsql(connectionString, providerOptions => providerOptions.EnableRetryOnFailure())
 );
 
 builder.Services.AddSession(options =>
@@ -177,13 +174,18 @@ void configureLogging()
         .CreateLogger();
 }
 
-static ElasticsearchSinkOptions ConfigureElasticSink(IConfigurationRoot configuration, string environment)
+static ElasticsearchSinkOptions ConfigureElasticSink(
+    IConfigurationRoot configuration,
+    string environment
+)
 {
     return new ElasticsearchSinkOptions(new Uri(configuration["ElasticConfiguration:Uri"]))
     {
         AutoRegisterTemplate = true,
-        IndexFormat = $"{Assembly.GetExecutingAssembly().GetName().Name.ToLower().Replace(".", "-")}-{environment.ToLower()}-{DateTime.UtcNow:yyyy-MM}",
+        IndexFormat =
+            $"{Assembly.GetExecutingAssembly().GetName().Name.ToLower().Replace(".", "-")}-{environment.ToLower()}-{DateTime.UtcNow:yyyy-MM}",
         NumberOfReplicas = 1,
         NumberOfShards = 2
     };
 }
+
