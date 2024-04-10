@@ -1,21 +1,17 @@
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using MiniTwit.Data;
 using MiniTwit.Data;
 using MiniTwit.Models.DataModels;
-using MiniTwit.Models.DataModels;
 using MiniTwit.Models.ViewModels;
-using MiniTwit.Models.ViewModels;
+using Newtonsoft.Json;
 
 namespace MiniTwit.Areas.FrontEnd.Controllers
 {
@@ -151,5 +147,61 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
                 throw;
             }
         }
+
+        [HttpPost]
+        [Route("/msgs/{username}")]
+        public async Task<IActionResult> AddMessageSimulator(string username, int latest)
+        {   
+            string? _header = HttpContext.Request.Headers.Authorization.ToString();
+            bool canAccess = _header == "Basic c2ltdWxhdG9yOnN1cGVyX3NhZmUh";
+            if(!canAccess) return new UnauthorizedResult();
+
+            try
+            {
+                User user = await Models.DataModels.User.GetUserFromUsernameAsync(
+                    username,
+                    _context
+                );
+
+                string body;
+                using (StreamReader stream = new StreamReader(HttpContext.Request.Body))
+                {
+                    body = await stream.ReadToEndAsync();
+                }
+
+            Dictionary<string, string> dataDic = JsonConvert.DeserializeObject<
+                Dictionary<string, string>
+            >(body);
+
+                string fieldText = dataDic["content"]; 
+                if (fieldText.Length > 200)
+                {
+                    _logger.LogWarning("Message length exceeds 200 characters");
+                    return new BadRequestResult();
+                }
+
+                Twit newTwit =
+                    new()
+                    {
+                        AuthorId = user.Id,
+                        Text = fieldText,
+                        PubDate = (int)DateTimeOffset.Now.ToUnixTimeSeconds(),
+                        Flagged = 0
+                    };
+
+                await _context.Twits.AddAsync(newTwit);
+                await _context.SaveChangesAsync();
+
+                TempData["Message"] = "Your message was recorded";
+                _logger.LogInformation("Message added successfully");
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while processing AddMessage action");
+                throw;
+            }
+        }
+
     }
 }

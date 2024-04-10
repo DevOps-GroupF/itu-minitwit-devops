@@ -49,6 +49,27 @@ namespace MiniTwit.Models.DataModels
             return user;
         }
 
+        public static async Task<User> GetUserFromUsernameAsync(string userName, Data.MiniTwitContext miniTwitContext)
+        {
+            User user;
+
+            try
+            {
+                user = await miniTwitContext.Users.FirstOrDefaultAsync(u => u.UserName == userName);
+            }
+            catch (Exception e)
+            {
+                throw new System.Security.Authentication.AuthenticationException(e.Message);
+            }
+
+            if (user == null)
+            {
+                throw new System.Security.Authentication.AuthenticationException("User not found");
+            }
+
+            return user;
+        }
+
         public static async Task<bool> UserWithIdExists(
             int userId,
             Data.MiniTwitContext miniTwitContext

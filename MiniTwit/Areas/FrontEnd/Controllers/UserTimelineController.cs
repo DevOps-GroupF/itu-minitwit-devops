@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using MiniTwit.Data;
 using MiniTwit.Models.DataModels;
 using MiniTwit.Models.ViewModels;
+using Newtonsoft.Json;
 
 namespace MiniTwit.Areas.FrontEnd.Controllers
 {
@@ -94,7 +95,7 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
         }
 
         [HttpGet]
-        [Route("{username}/Follow")]
+        [Route("Follow/{username}")]
         public async Task<IActionResult> Follow(string username)
         {
             try
@@ -182,7 +183,7 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
         }
 
         [HttpGet]
-        [Route("{username}/Unfollow")]
+        [Route("Unfollow/{username}")]
         public async Task<IActionResult> Unfollow(string username)
         {
             try
@@ -242,5 +243,136 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
                 throw;
             }
         }
+
+
+        [HttpPost]
+        [Route("fllws/{username}")]
+        public async Task<IActionResult> SimulatorFollow(string username, int latest)
+        {   
+
+            string? _header = HttpContext.Request.Headers.Authorization.ToString();
+            bool canAccess = _header == "Basic c2ltdWxhdG9yOnN1cGVyX3NhZmUh";
+            if(!canAccess) return new UnauthorizedResult();
+
+            try
+            {
+                string body;
+                using (StreamReader stream = new StreamReader(HttpContext.Request.Body))
+                {
+                    body = await stream.ReadToEndAsync();
+                }
+
+                Dictionary<string, string> dataDic = JsonConvert.DeserializeObject<
+                    Dictionary<string, string>
+                >(body);
+
+                var action =  dataDic.ContainsKey("follow") ? "follow" : "unfollow";
+
+                string whoUserString = dataDic[action]; 
+
+                User whomUser;
+                _logger.LogInformation($"GET request received for Follow action by user with username: {username}");
+                whomUser = await _context.Users.FirstOrDefaultAsync(u => u.UserName == whoUserString);
+
+                if (whomUser == null)
+                {
+                    _logger.LogWarning($"Whom user {whomUser} not found");
+                    return new NotFoundResult();
+                }
+
+                User loggedInUser;
+                loggedInUser =  await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
+
+                if(action == "follow") 
+                {
+                    await SimulatorFollowAction(loggedInUser, whomUser);
+                } else {
+                     await SimulatorUnFollowAction(loggedInUser, whomUser);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while processing GET request for Follow action by user with username: {username}");
+                throw;
+            }
+            return RedirectToAction("Index", username);
+            
+        }
+
+        private async Task<IActionResult> SimulatorFollowAction(User username, User whomUser)
+        {
+            if (!await Follower.DoesFollowerExistAsync(username.Id, whomUser.Id, _context))
+            {
+                var newFollower = new Follower { WhoId = username.Id, WhomId = whomUser.Id };
+                var validationContext = new ValidationContext(newFollower);
+                var ValidationResult = new List<ValidationResult>();
+
+                if (
+                    !Validator.TryValidateObject(
+                        newFollower,
+                        validationContext,
+                        ValidationResult,
+                        true
+                    )
+                )
+                {
+                    TempData["message"] = $"You can't follow yourself!";
+                    _logger.LogWarning($"User with username {username.UserName} attempted to follow themselves");
+                }
+                else
+                {
+                    _context.Followers.Add(newFollower);
+                }
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    TempData["message"] = $"You are now following \"{whomUser.UserName}\"";
+                    _logger.LogInformation($"User with username {username.UserName} followed user with username {whomUser.UserName}");
+                }
+                catch (DbUpdateException ex)
+                {
+                    // Handle any exceptions that might occur during save changes
+                    _logger.LogError(ex, $"Error occurred while following user with username: {whomUser.UserName}");
+                    Console.WriteLine($"Error adding follower: {ex.Message}");
+                }
+
+            }
+            return RedirectToAction("Index", username);
+        }
+
+
+
+
+
+
+        private async Task<IActionResult> SimulatorUnFollowAction(User username, User whomUser)
+        {
+            var followerToDelete = _context.Followers.FirstOrDefault(f =>
+                f.WhoId == username.Id && f.WhomId == whomUser.Id
+            );
+            if (followerToDelete != null)
+            {
+                // Remove the follower from the context
+                _context.Followers.Remove(followerToDelete);
+
+                // Save changes to the database
+                await _context.SaveChangesAsync();
+                TempData["message"] = $"You are no longer following \"{whomUser.UserName}\"";
+                _logger.LogInformation($"User with username {username.UserName} unfollowed user with username {whomUser.UserName}");
+            }
+            else
+            {
+                TempData["message"] = $"You are already not following \"{whomUser.UserName}\"";
+                _logger.LogWarning($"User with username {username.UserName} attempted to unfollow user with username {whomUser.UserName} whom they were not following");
+            }
+
+            return RedirectToAction("Index", username);
+           
+        }
+
     }
+
+    
 }

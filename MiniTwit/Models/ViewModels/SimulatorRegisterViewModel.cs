@@ -9,7 +9,7 @@ using MiniTwit.Validations.User;
 
 namespace MiniTwit.Models.ViewModels
 {
-    public class RegisterViewModel
+    public class SimulatorRegisterViewModel
     {   
         [UserName]
         [BindProperty]
@@ -17,23 +17,17 @@ namespace MiniTwit.Models.ViewModels
          ErrorMessage = "Characters are not allowed.")]
         [StringLength(16)]
         [Required(ErrorMessage = "You have to enter a username")]
-        public string Username { get; set; }
+        public string username { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "You have to enter a valid email address")]
         [StringLength(32)]
         [EmailAddress(ErrorMessage = "You have to enter a valid email address")]
-        public string Email { get; set; }
+        public string email { get; set; }
 
         [BindProperty]
         [StringLength(32)]
         [Required(ErrorMessage = "You have to enter a password")]
-        public string Pwd { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "Please confirm your password")]
-        [StringLength(32)]
-        [Compare(nameof(Pwd), ErrorMessage = "The two passwords do not match")]
-        public string Pwd2 { get; set; }
+        public string pwd { get; set; }
     }
 }
