@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -14,23 +15,24 @@ namespace MiniTwit.Migrations
                 name: "follower",
                 columns: table => new
                 {
-                    who_id = table.Column<int>(type: "int", nullable: false),
-                    whom_id = table.Column<int>(type: "int", nullable: false)
+                    who_id = table.Column<int>(type: "integer", nullable: false),
+                    whom_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_follower", x => new { x.who_id, x.whom_id });
                 });
 
             migrationBuilder.CreateTable(
                 name: "message",
                 columns: table => new
                 {
-                    message_id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    author_id = table.Column<int>(type: "int", nullable: false),
-                    text = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    pub_date = table.Column<int>(type: "int", nullable: false),
-                    flagged = table.Column<int>(type: "int", nullable: false)
+                    message_id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    author_id = table.Column<int>(type: "integer", nullable: false),
+                    text = table.Column<string>(type: "text", nullable: false),
+                    pub_date = table.Column<int>(type: "integer", nullable: false),
+                    flagged = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,11 +43,11 @@ namespace MiniTwit.Migrations
                 name: "user",
                 columns: table => new
                 {
-                    user_id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    pw_hash = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    user_id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    username = table.Column<string>(type: "text", nullable: false),
+                    email = table.Column<string>(type: "text", nullable: false),
+                    pw_hash = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
