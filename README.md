@@ -20,8 +20,7 @@ dotnet run
 ### With Docker
 
 ```bash
-docker build -t minitwit-image
-docker run -p 8080:8080 minitwit-image
+docker-compose up
 ```
 
 

@@ -4,14 +4,31 @@ on:
   pull_request
 
 jobs:
-
-  build:
-
+  build-test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Build the application, test it, and create a Docker image
-      run: docker build -t minitwit .
-    
-    
+      run: docker-compose -f compose-test.yml up --force-recreate --abort-on-container-exit --exit-code-from minitwit-uitests
+  
+  super-linter:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Super-linter
+        uses: super-linter/super-linter@v6.3.1
+        env:
+          # To report GitHub Actions status checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # We only lint C# files
+          VALIDATE_CSHARP: true
+          VALIDATE_DOCKERFILE_HADOLINT: true

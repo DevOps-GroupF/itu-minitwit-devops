@@ -3,12 +3,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
-public class MiniTwitOldTests
+namespace MiniTwitUITests;
+
+public class MiniTwitUITests
 {
     private readonly HttpClient _client;
-    private const string BaseUrl = "http://localhost:8080";
+    private const string BaseUrl = "http://minitwit-service:8080";
 
-    public MiniTwitOldTests()
+    public MiniTwitUITests()
     {
         var handler = new HttpClientHandler { 
             AllowAutoRedirect = true,
@@ -62,7 +64,7 @@ public class MiniTwitOldTests
             new KeyValuePair<string, string>("text", text)
         });
 
-        return await _client.PostAsync($"{BaseUrl}/add_message", content);
+        return await _client.PostAsync($"{BaseUrl}/Home/AddMessage", content);
     }
 
     [Fact]
