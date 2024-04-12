@@ -14,41 +14,50 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
     {
         private readonly int PER_PAGE = 30;
         private readonly MiniTwitContext _context;
+        private readonly ILogger<PublicController> _logger;
 
-        public PublicController(MiniTwitContext context)
+        public PublicController(MiniTwitContext context, ILogger<PublicController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            Console.WriteLine("HEEEYYYYYYYY");
-            var sample = _context.Twits.OrderByDescending(x => x.PubDate).Take(PER_PAGE).ToList();
-
-            var outcome = sample
-                .Join(
-                    _context.Users,
-                    message => message.AuthorId,
-                    user => user.Id,
-                    (message, user) =>
-                        new TwitViewModel
-                        {
-                            AuthorUsername = user.UserName,
-                            Text = message.Text,
-                            PubDate = message.PubDate,
-                            GravatarString = Utility.GetGravatar(user.Email, 48)
-                        }
-                )
-                .ToList();
-
-            if (TempData.ContainsKey("message"))
+            try
             {
-                ViewData["message"] = TempData["message"];
-            }
-            ViewData["twits"] = outcome;
+                var sample = _context.Twits.OrderByDescending(x => x.PubDate).Take(PER_PAGE).ToList();
 
-            return View();
+                var outcome = sample
+                    .Join(
+                        _context.Users,
+                        message => message.AuthorId,
+                        user => user.Id,
+                        (message, user) =>
+                            new TwitViewModel
+                            {
+                                AuthorUsername = user.UserName,
+                                Text = message.Text,
+                                PubDate = message.PubDate,
+                                GravatarString = Utility.GetGravatar(user.Email, 48)
+                            }
+                    )
+                    .ToList();
+
+                if (TempData.ContainsKey("message"))
+                {
+                    ViewData["message"] = TempData["message"];
+                }
+                ViewData["twits"] = outcome;
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while processing Index action");
+                throw;
+            }
         }
     }
 }

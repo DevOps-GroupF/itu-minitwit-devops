@@ -1,14 +1,20 @@
 using System;
+using System.Reflection;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.KeyPerFile;
+using Microsoft.Extensions.Hosting;
 using MiniTwit.Areas.Api.Metrics;
 using MiniTwit.Data;
 using MiniTwit.Models.DataModels;
 using OpenTelemetry.Metrics;
 using Prometheus;
+using Serilog;
+using Serilog.Exceptions;
+using Serilog.Sinks.Elasticsearch;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,10 +36,7 @@ else
 }
 
 builder.Services.AddDbContext<MiniTwitContext>(options =>
-    options.UseSqlServer(
-        connectionString,
-        providerOptions => providerOptions.EnableRetryOnFailure()
-    )
+    options.UseNpgsql(connectionString, providerOptions => providerOptions.EnableRetryOnFailure())
 );
 
 builder.Services.AddSession(options =>
@@ -86,6 +89,13 @@ builder.Services.AddMetrics();
 //             }
 //         );
 //     });
+
+try
+{
+    configureLogging();
+    builder.Host.UseSerilog();
+}
+catch (Exception e) { }
 
 var app = builder.Build();
 
@@ -144,3 +154,38 @@ app.UseMiddleware<RequestInFlightMiddleware>();
 app.UseMiddleware<ResponseTimeMiddleware>();
 
 app.Run();
+
+void configureLogging()
+{
+    var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+    var configuration = new ConfigurationBuilder()
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddJsonFile($"appsettings.{environment}.json", optional: true)
+        .Build();
+
+    Log.Logger = new LoggerConfiguration()
+        .Enrich.FromLogContext()
+        .Enrich.WithExceptionDetails()
+        .WriteTo.Debug()
+        .WriteTo.Console()
+        .WriteTo.Elasticsearch(ConfigureElasticSink(configuration, environment))
+        .Enrich.WithProperty("Environment", environment)
+        .ReadFrom.Configuration(configuration)
+        .CreateLogger();
+}
+
+static ElasticsearchSinkOptions ConfigureElasticSink(
+    IConfigurationRoot configuration,
+    string environment
+)
+{
+    return new ElasticsearchSinkOptions(new Uri(configuration["ElasticConfiguration:Uri"]))
+    {
+        AutoRegisterTemplate = true,
+        IndexFormat =
+            $"{Assembly.GetExecutingAssembly().GetName().Name.ToLower().Replace(".", "-")}-{environment.ToLower()}-{DateTime.UtcNow:yyyy-MM}",
+        NumberOfReplicas = 1,
+        NumberOfShards = 2
+    };
+}
+
