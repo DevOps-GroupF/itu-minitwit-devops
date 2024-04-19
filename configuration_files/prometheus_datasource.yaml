@@ -58,24 +58,21 @@ datasources:
     # Grafana UI.
     editable: true
 
-  - name: Minitwit-database
-    type: mssql
-    access: proxy
+  - name: minitwit-postgres
+    type: postgres
+    uid: minitwit-postgres
+    url: minitwit-database:5432
     orgId: 1
-    uid: minitwit-database
-    url: minitwit-database:1433
-    user: sa
-    database:
-      master
-    basicAuth:
-      false
-    basicAuthUser:
-      sa
-    withCredentials:
-    isDefault:
-      false
-    jsonData:
+    user: example
     secureJsonData:
-      password: Pass@word
-    version: 1
-    editable: true
+      password: 'example'
+    jsonData:
+      database: postgres
+      sslmode: 'disable' # disable/require/verify-ca/verify-full
+      maxOpenConns: 100 # Grafana v5.4+
+      maxIdleConns: 100 # Grafana v5.4+
+      maxIdleConnsAuto: true # Grafana v9.5.1+
+      connMaxLifetime: 14400 # Grafana v5.4+
+      postgresVersion: 903 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
+      timescaledb: false
+

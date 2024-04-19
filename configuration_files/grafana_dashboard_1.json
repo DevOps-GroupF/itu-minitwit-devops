@@ -18,7 +18,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -408,8 +407,8 @@
     },
     {
       "datasource": {
-        "type": "mssql",
-        "uid": "minitwit-database"
+        "type": "grafana-postgresql-datasource",
+        "uid": "minitwit-postgres"
       },
       "description": "The amount of people follow other people",
       "fieldConfig": {
@@ -460,24 +459,18 @@
       "targets": [
         {
           "datasource": {
-            "type": "mssql",
-            "uid": "minitwit-database"
+            "type": "grafana-postgresql-datasource",
+            "uid": "minitwit-postgres"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(*) FROM dbo.follower",
+          "rawSql": "SELECT COUNT(*) FROM follower ",
           "refId": "A",
           "sql": {
             "columns": [
               {
-                "name": "COUNT",
-                "parameters": [
-                  {
-                    "name": "*",
-                    "type": "functionParameter"
-                  }
-                ],
+                "parameters": [],
                 "type": "function"
               }
             ],
@@ -490,8 +483,7 @@
               }
             ],
             "limit": 50
-          },
-          "table": "dbo.follower"
+          }
         }
       ],
       "title": "Total followers ",
@@ -499,8 +491,8 @@
     },
     {
       "datasource": {
-        "type": "mssql",
-        "uid": "minitwit-database"
+        "type": "grafana-postgresql-datasource",
+        "uid": "minitwit-postgres"
       },
       "fieldConfig": {
         "defaults": {
@@ -550,13 +542,13 @@
       "targets": [
         {
           "datasource": {
-            "type": "mssql",
-            "uid": "minitwit-database"
+            "type": "grafana-postgresql-datasource",
+            "uid": "minitwit-postgres"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(*) FROM dbo.message",
+          "rawSql": "SELECT COUNT(*) FROM message",
           "refId": "A",
           "sql": {
             "columns": [
@@ -581,7 +573,7 @@
             ],
             "limit": 50
           },
-          "table": "dbo.message"
+          "table": "message"
         }
       ],
       "title": "Total tweets",
@@ -656,8 +648,8 @@
     },
     {
       "datasource": {
-        "type": "mssql",
-        "uid": "minitwit-database"
+        "type": "grafana-postgresql-datasource",
+        "uid": "minitwit-postgres"
       },
       "fieldConfig": {
         "defaults": {
@@ -707,24 +699,18 @@
       "targets": [
         {
           "datasource": {
-            "type": "mssql",
-            "uid": "minitwit-database"
+            "type": "grafana-postgresql-datasource",
+            "uid": "minitwit-postgres"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(*) FROM dbo.[user]",
+          "rawSql": "SELECT COUNT(*) FROM user",
           "refId": "A",
           "sql": {
             "columns": [
               {
-                "name": "COUNT",
-                "parameters": [
-                  {
-                    "name": "*",
-                    "type": "functionParameter"
-                  }
-                ],
+                "parameters": [],
                 "type": "function"
               }
             ],
@@ -737,8 +723,7 @@
               }
             ],
             "limit": 50
-          },
-          "table": "dbo.user"
+          }
         }
       ],
       "title": "Total users",
@@ -855,6 +840,6 @@
   "timezone": "",
   "title": "minitwit_main_dashboard",
   "uid": "f6d5a14c-f7dc-4977-aadf-6bfe2c93efac",
-  "version": 4,
+  "version": 1,
   "weekStart": ""
 }
