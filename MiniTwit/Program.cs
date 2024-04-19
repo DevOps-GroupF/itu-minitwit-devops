@@ -32,7 +32,7 @@ if (!builder.Environment.IsDevelopment())
 }
 else
 {
-    connectionString = builder.Configuration.GetConnectionString("MinitwitSqlServer");
+    connectionString = builder.Configuration.GetConnectionString("MinitwitPostgresServer");
 }
 
 builder.Services.AddDbContext<MiniTwitContext>(options =>
@@ -188,4 +188,3 @@ static ElasticsearchSinkOptions ConfigureElasticSink(
         NumberOfShards = 2
     };
 }
-

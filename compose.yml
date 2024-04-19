@@ -7,13 +7,13 @@ networks:
 services:
   minitwit-database:
     container_name: minitwit-database
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: postgres
+    restart: always
     environment:
-      - MSSQL_PID=Developer
-      - MSSQL_SA_PASSWORD=Pass@word
-      - ACCEPT_EULA=Y
+      - POSTGRES_PASSWORD=example
+      - POSTGRES_USER=example
     ports:
-      - 1433:1433
+      - 5432:5432
     networks:
       - itu-minitwit-network
 
