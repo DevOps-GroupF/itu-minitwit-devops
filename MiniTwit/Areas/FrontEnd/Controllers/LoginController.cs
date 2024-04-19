@@ -64,8 +64,8 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while retrieving user information from the database");
-                throw;
-                //return View();
+                ViewData["error"] = "that combination of username and password does not exists.";
+                return View();
             }
 
             PasswordVerificationResult passwordVerificationResult;
