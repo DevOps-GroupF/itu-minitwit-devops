@@ -13,9 +13,20 @@ services:
       - POSTGRES_PASSWORD=example
       - POSTGRES_USER=example
     ports:
-      - 5432:5432
+      - 3356:5432
     networks:
       - itu-minitwit-network
+    depends_on:
+      - fluentd
+    volumes:
+      - ./logs/minitwit_dotnet:/app/logs
+    logging:
+      driver: fluentd
+      options:
+        fluentd-async-connect: "true"
+        fluentd-retry-wait: 1s
+        fluentd-max-retries: 30
+        tag: minitwit_database
 
   minitwit-service:
     container_name: minitwit-container
@@ -23,6 +34,7 @@ services:
       - minitwit-database
       - grafana
       - prometheus
+      - fluentd
     environment:
       - DOTNET_ENVIRONMENT=Development
       - ASPNETCORE_ENVIRONMENT=Development
@@ -31,6 +43,13 @@ services:
       - 8080:8080
     networks:
       - itu-minitwit-network
+    logging:
+      driver: fluentd
+      options:
+        fluentd-async-connect: "true"
+        fluentd-retry-wait: 1s
+        fluentd-max-retries: 30
+        tag: minitwit_service
 
   prometheus:
     image: prom/prometheus
@@ -41,6 +60,15 @@ services:
       - "9090:9090"
     networks:
       - itu-minitwit-network
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-async-connect: "true"
+        fluentd-retry-wait: 1s
+        fluentd-max-retries: 30
+        tag: prometheus
 
   grafana:
     image: grafana/grafana:10.2.4
@@ -53,102 +81,22 @@ services:
       - ./configuration_files/grafana_dashboard_0.json:/var/lib/grafana/dashboards/grafana_dashboard_0.json
       - ./configuration_files/grafana_dashboard_1.json:/var/lib/grafana/dashboards/grafana_dashboard_1.json
       - ./configuration_files/prometheus_datasource.yaml:/etc/grafana/provisioning/datasources/prometheus_datasource.yaml
-
-  setup:
-    profiles:
-      - setup
-    build:
-      context: ./MiniTwitLogging/setup/
-      args:
-        ELASTIC_VERSION: ${ELASTIC_VERSION}
-    init: true
-    volumes:
-      - ./MiniTwitLogging/setup/entrypoint.sh:/entrypoint.sh:ro,Z
-      - ./MiniTwitLogging/setup/lib.sh:/lib.sh:ro,Z
-      - ./MiniTwitLogging/setup/roles:/roles:ro,Z
-    environment:
-      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
-      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
-      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
-      METRICBEAT_INTERNAL_PASSWORD: ${METRICBEAT_INTERNAL_PASSWORD:-}
-      FILEBEAT_INTERNAL_PASSWORD: ${FILEBEAT_INTERNAL_PASSWORD:-}
-      HEARTBEAT_INTERNAL_PASSWORD: ${HEARTBEAT_INTERNAL_PASSWORD:-}
-      MONITORING_INTERNAL_PASSWORD: ${MONITORING_INTERNAL_PASSWORD:-}
-      BEATS_SYSTEM_PASSWORD: ${BEATS_SYSTEM_PASSWORD:-}
-    networks:
-      - itu-minitwit-network
     depends_on:
-      - elasticsearch
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-async-connect: "true"
+        fluentd-retry-wait: 1s
+        fluentd-max-retries: 30
+        tag: grafana
 
-  elasticsearch:
-    build:
-      context: ./MiniTwitLogging/elasticsearch/
-      args:
-        ELASTIC_VERSION: ${ELASTIC_VERSION}
+  fluentd:
+    image: fluent/fluentd:v1.12-debian
     volumes:
-      - ./MiniTwitLogging/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
-      - elasticsearch:/usr/share/elasticsearch/data:Z
+      - ./configuration_files/fluent.conf:/fluentd/etc/fluent.conf
     ports:
-      - 9200:9200
-      - 9300:9300
-    environment:
-      node.name: elasticsearch
-      ES_JAVA_OPTS: -Xms512m -Xmx512m
-      # Bootstrap password.
-      # Used to initialize the keystore during the initial startup of
-      # Elasticsearch. Ignored on subsequent runs.
-      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
-      # Use single node discovery in order to disable production mode and avoid bootstrap checks.
-      # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
-      discovery.type: single-node
+      - "24224:24224"
+      - "24224:24224/udp"
     networks:
       - itu-minitwit-network
-    restart: unless-stopped
-
-  logstash:
-    build:
-      context: ./MiniTwitLogging/logstash/
-      args:
-        ELASTIC_VERSION: ${ELASTIC_VERSION}
-    volumes:
-      - ./MiniTwitLogging/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
-      - ./MiniTwitLogging/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
-    ports:
-      - 5044:5044
-      - 50000:50000/tcp
-      - 50000:50000/udp
-      - 9600:9600
-    environment:
-      LS_JAVA_OPTS: -Xms256m -Xmx256m
-      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
-    networks:
-      - itu-minitwit-network
-    depends_on:
-      - elasticsearch
-    restart: unless-stopped
-
-  filebeat:
-    extends:
-      file: ./MiniTwitLogging/extensions/filebeat/filebeat-compose.yml
-      service: filebeat
-
-  kibana:
-    build:
-      context: ./MiniTwitLogging/kibana/
-      args:
-        ELASTIC_VERSION: ${ELASTIC_VERSION}
-    volumes:
-      - ./MiniTwitLogging/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
-    ports:
-      - 5601:5601
-    environment:
-      #- ELASTICSEARCH_URL=http://localhost:9200
-      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
-    networks:
-      - itu-minitwit-network
-    depends_on:
-      - elasticsearch
-    restart: unless-stopped
-
-volumes:
-  elasticsearch:
