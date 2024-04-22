@@ -53,6 +53,15 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
             User user;
             try
             {
+                IEnumerable<User> users = _context.Users;
+
+                if (!users.Any())
+                {
+                    _logger.LogWarning($"User '{fieldName}' not found");
+                    ViewData["error"] = "Invalid username";
+                    return View();
+                }
+
                 user = _context.Users.Where(x => x.UserName == fieldName).First();
                 if (user == null)
                 {
@@ -63,8 +72,11 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while retrieving user information from the database");
-                ViewData["error"] = "that combination of username and password does not exists.";
+                _logger.LogError(
+                    ex,
+                    "Error occurred while retrieving user information from the database"
+                );
+                ViewData["error"] = "Error logging in";
                 return View();
             }
 
