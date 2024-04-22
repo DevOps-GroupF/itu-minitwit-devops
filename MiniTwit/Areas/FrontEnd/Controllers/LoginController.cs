@@ -69,7 +69,9 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
                     return View();
                 }
 
-                user = _context.Users.Where(x => x.UserName == fieldName).First();
+                user = _context
+                    .Users.Where(x => x.UserName == fieldName)
+                    .FirstOrDefault(defaultValue: null);
                 if (user == null)
                 {
                     _logger.LogWarning($"User '{fieldName}' not found");
