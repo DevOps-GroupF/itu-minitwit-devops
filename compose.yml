@@ -13,7 +13,7 @@ services:
       - POSTGRES_PASSWORD=example
       - POSTGRES_USER=example
     ports:
-      - 3356:5432
+      - 5432:5432
     networks:
       - itu-minitwit-network
     depends_on:
