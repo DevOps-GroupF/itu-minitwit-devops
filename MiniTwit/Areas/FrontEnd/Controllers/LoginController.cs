@@ -15,7 +15,11 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly ILogger<LoginController> _logger;
 
-        public LoginController(MiniTwitContext context, IPasswordHasher<User> passwordHasher, ILogger<LoginController> logger)
+        public LoginController(
+            MiniTwitContext context,
+            IPasswordHasher<User> passwordHasher,
+            ILogger<LoginController> logger
+        )
         {
             _context = context;
             _passwordHasher = passwordHasher;
@@ -37,7 +41,10 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while processing GET request for Index action");
+                _logger.LogError(
+                    ex,
+                    "Error occurred while processing GET request for Index action"
+                );
                 throw;
             }
         }
