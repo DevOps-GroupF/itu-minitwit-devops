@@ -1,6 +1,6 @@
 using Microsoft.Playwright;
 
-namespace MiniTwitUITests.playwrightstests; 
+namespace MiniTwitUITests.playwrightstests;
 
 public class Driver : IDisposable
 {
@@ -18,15 +18,17 @@ public class Driver : IDisposable
         _requestContext?.Dispose();
     }
 
-
     private async Task<IAPIRequestContext?> CreateApiContext()
     {
         var playwright = await Playwright.CreateAsync();
 
-        return await playwright.APIRequest.NewContextAsync(new APIRequestNewContextOptions
-        {
-            BaseURL = "http://minitwit-service:8080/api/",
-            IgnoreHTTPSErrors = true
-        });
+        return await playwright.APIRequest.NewContextAsync(
+            new APIRequestNewContextOptions
+            {
+                BaseURL = "http://minitwit-service:8080/api/",
+                IgnoreHTTPSErrors = true
+            }
+        );
     }
 }
+
