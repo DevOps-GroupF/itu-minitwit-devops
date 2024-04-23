@@ -15,7 +15,11 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly ILogger<LoginController> _logger;
 
-        public LoginController(MiniTwitContext context, IPasswordHasher<User> passwordHasher, ILogger<LoginController> logger)
+        public LoginController(
+            MiniTwitContext context,
+            IPasswordHasher<User> passwordHasher,
+            ILogger<LoginController> logger
+        )
         {
             _context = context;
             _passwordHasher = passwordHasher;
@@ -37,7 +41,10 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while processing GET request for Index action");
+                _logger.LogError(
+                    ex,
+                    "Error occurred while processing GET request for Index action"
+                );
                 throw;
             }
         }
@@ -53,7 +60,19 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
             User user;
             try
             {
-                user = _context.Users.Where(x => x.UserName == fieldName).First();
+                IEnumerable<User> users = _context.Users;
+
+                if (!users.Any())
+                {
+                    _logger.LogWarning($"User '{fieldName}' not found");
+                    ViewData["error"] = "Invalid username";
+                    return View();
+                }
+
+                var usersWithUsername = users.Where(x => x.UserName == fieldName);
+
+                user = usersWithUsername.FirstOrDefault(defaultValue: null);
+
                 if (user == null)
                 {
                     _logger.LogWarning($"User '{fieldName}' not found");
@@ -63,9 +82,12 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while retrieving user information from the database");
-                throw;
-                //return View();
+                _logger.LogError(
+                    ex,
+                    "Error occurred while retrieving user information from the database"
+                );
+                ViewData["error"] = "Error logging in";
+                return View();
             }
 
             PasswordVerificationResult passwordVerificationResult;
