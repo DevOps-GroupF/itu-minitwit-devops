@@ -7,3 +7,5 @@ RUN >>/var/spool/cron/crontabs/nobody \
 
 ENTRYPOINT ["crond"]
 CMD ["-f", "-d8"]
+
+USER guest
