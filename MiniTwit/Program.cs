@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.Threading;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -110,6 +111,12 @@ if (!app.Environment.IsDevelopment())
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<MiniTwitContext>();
+
+    while (!db.Database.CanConnect())
+    {
+        Console.WriteLine("Waiting for DB connection");
+        Thread.Sleep(1000);
+    }
 
     if (db.Database.CanConnect())
     {
