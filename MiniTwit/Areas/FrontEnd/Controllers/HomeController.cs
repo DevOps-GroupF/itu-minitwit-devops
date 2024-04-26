@@ -142,7 +142,7 @@ namespace MiniTwit.Areas.FrontEnd.Controllers
                 await _context.SaveChangesAsync();
 
                 TempData["Message"] = "Your message was recorded";
-                _logger.LogInformation("Message added successfully");
+                _logger.LogInformation($"Message added successfully by user id: {loggedInUser.Id}; Message: {fieldText}");
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
