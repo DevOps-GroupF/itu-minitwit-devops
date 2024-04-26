@@ -24,8 +24,8 @@ services:
       driver: fluentd
       options:
         fluentd-async-connect: "true"
-        fluentd-retry-wait: 1s
-        fluentd-max-retries: 30
+        fluentd-retry-wait: "1s"
+        fluentd-max-retries: "30"
         tag: minitwit_database
 
   minitwit-service:
@@ -47,8 +47,8 @@ services:
       driver: fluentd
       options:
         fluentd-async-connect: "true"
-        fluentd-retry-wait: 1s
-        fluentd-max-retries: 30
+        fluentd-retry-wait: "1s"
+        fluentd-max-retries: "30"
         tag: minitwit_service
 
   prometheus:
@@ -66,8 +66,8 @@ services:
       driver: fluentd
       options:
         fluentd-async-connect: "true"
-        fluentd-retry-wait: 1s
-        fluentd-max-retries: 30
+        fluentd-retry-wait: "1s"
+        fluentd-max-retries: "30"
         tag: prometheus
 
   grafana:
@@ -87,8 +87,8 @@ services:
       driver: fluentd
       options:
         fluentd-async-connect: "true"
-        fluentd-retry-wait: 1s
-        fluentd-max-retries: 30
+        fluentd-retry-wait: "1s"
+        fluentd-max-retries: "30"
         tag: grafana
 
   fluentd:
