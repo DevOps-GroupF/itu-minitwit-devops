@@ -95,6 +95,7 @@ services:
     image: fluent/fluentd:v1.12-debian
     volumes:
       - ./configuration_files/fluent.conf:/fluentd/etc/fluent.conf
+      #- ./fluentd/logs:/fluentd/log
     ports:
       - "24224:24224"
       - "24224:24224/udp"
