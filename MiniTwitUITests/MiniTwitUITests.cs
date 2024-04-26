@@ -12,36 +12,42 @@ public class MiniTwitUITests
 
     public MiniTwitUITests()
     {
-        var handler = new HttpClientHandler { 
-            AllowAutoRedirect = true,
-            UseCookies = true 
-        };
+        var handler = new HttpClientHandler { AllowAutoRedirect = true, UseCookies = true };
         _client = new HttpClient(handler);
     }
 
-    private async Task<HttpResponseMessage> Register(string username, string password, string password2 = null, string email = null)
+    private async Task<HttpResponseMessage> Register(
+        string username,
+        string password,
+        string password2 = null,
+        string email = null
+    )
     {
         password2 ??= password;
         email ??= $"{username}@example.com";
 
-        var content = new FormUrlEncodedContent(new[]
-        {
-            new KeyValuePair<string, string>("username", username),
-            new KeyValuePair<string, string>("password", password),
-            new KeyValuePair<string, string>("password2", password2),
-            new KeyValuePair<string, string>("email", email)
-        });
+        var content = new FormUrlEncodedContent(
+            new[]
+            {
+                new KeyValuePair<string, string>("username", username),
+                new KeyValuePair<string, string>("password", password),
+                new KeyValuePair<string, string>("password2", password2),
+                new KeyValuePair<string, string>("email", email)
+            }
+        );
 
         return await _client.PostAsync($"{BaseUrl}/register", content);
     }
 
     private async Task<HttpResponseMessage> Login(string username, string password)
     {
-        var content = new FormUrlEncodedContent(new[]
-        {
-            new KeyValuePair<string, string>("username", username),
-            new KeyValuePair<string, string>("password", password)
-        });
+        var content = new FormUrlEncodedContent(
+            new[]
+            {
+                new KeyValuePair<string, string>("username", username),
+                new KeyValuePair<string, string>("password", password)
+            }
+        );
 
         return await _client.PostAsync($"{BaseUrl}/login", content);
     }
@@ -59,10 +65,9 @@ public class MiniTwitUITests
 
     private async Task<HttpResponseMessage> AddMessage(string text)
     {
-        var content = new FormUrlEncodedContent(new[]
-        {
-            new KeyValuePair<string, string>("text", text)
-        });
+        var content = new FormUrlEncodedContent(
+            new[] { new KeyValuePair<string, string>("text", text) }
+        );
 
         return await _client.PostAsync($"{BaseUrl}/Home/AddMessage", content);
     }
@@ -105,7 +110,7 @@ public class MiniTwitUITests
     public async Task TestMessageRecording()
     {
         await RegisterAndLogin("user1", "default");
-        
+
         var response = await AddMessage("test message 1");
         var responseContent = await response.Content.ReadAsStringAsync();
         Assert.Contains("Your message was recorded", responseContent);
@@ -173,3 +178,4 @@ public class MiniTwitUITests
         Assert.Contains("the message by bar", responseContent7);
     }
 }
+

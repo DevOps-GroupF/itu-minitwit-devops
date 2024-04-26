@@ -10,11 +10,10 @@ using MiniTwit.Validations.User;
 namespace MiniTwit.Models.ViewModels
 {
     public class RegisterViewModel
-    {   
+    {
         [UserName]
         [BindProperty]
-        [RegularExpression(@"^[a-zA-Z0-9_ ]+$", 
-         ErrorMessage = "Characters are not allowed.")]
+        [RegularExpression(@"^[a-zA-Z0-9_ ]+$", ErrorMessage = "Characters are not allowed.")]
         [StringLength(16)]
         [Required(ErrorMessage = "You have to enter a username")]
         public string Username { get; set; }
