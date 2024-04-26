@@ -24,6 +24,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '3.1.x' 
+          
       - name: Run .NET Code Analysis
         uses: dotnet/code-analysis@d3a5cb6ef8547e36e87c4378cc3e982d9fe1afe7
         id: code-analysis
