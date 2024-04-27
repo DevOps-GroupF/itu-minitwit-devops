@@ -1,11 +1,13 @@
 using System;
 using Microsoft.Playwright;
+using Npgsql; 
 
 namespace MiniTwitUITests.playwrightstests;
 
 public class Tests 
 {   
     private static string baseURL = Driver.BASEURL;
+    private static string CS = "Host=localhost;Port=5432;Username=example;Password=example;Database=postgres;";
 
     public async Task<IPage> getPage()
     {
@@ -60,7 +62,10 @@ public class Tests
         string username = Driver.RandomString(8);
         
         Page = await PerformSignUp(Page, username);
-        var isExist = await Page.GetByText("You were successfully registered and can login now").First.IsVisibleAsync();        
+        var isExist = await Page.GetByText("You were successfully registered and can login now").First.IsVisibleAsync();     
+        var existsInDatabase = UserExistInDatabase(username);
+        isExist = isExist && existsInDatabase; // Test the user also exists in the database. 
+
         Assert.True(isExist);
     }
     
@@ -73,7 +78,6 @@ public class Tests
         
         await Page.Locator("[type=submit]").ClickAsync();
         return Page;
-
     }
 
      [Fact]
@@ -141,7 +145,9 @@ public class Tests
 
         var isExist = await Page.GetByText("You are now following \""+FollowingUsername+"\"").First.IsVisibleAsync();  
 
-       Assert.True(isExist); 
+        var followInDatabase = UserFollwerAnotherUser(FollowingUsername, FollowerUsername);
+
+       Assert.True(isExist && followInDatabase); 
     }
 
 
@@ -165,5 +171,70 @@ public class Tests
         bool containKey = json.Contains("latest"); 
         Assert.True(containKey);
     }
+
+    private bool UserExistInDatabase(string username)
+    {
+        string sql = "SELECT username FROM \"user\" WHERE username = '"+username+"' limit 1;";
+        var result = ConnectToDatabase(sql);
+        return result != "";
+    }   
+
+    private bool UserFollwerAnotherUser(string followerUsername, string followingUsername)
+    {
+        var cs = CS;
+        var con = new NpgsqlConnection(cs);
+        con.Open();
+
+        string sql = "SELECT who_id from follower where who_id IN (SELECT user_id FROM \"user\" WHERE username = '"+followingUsername+"' limit 1) AND whom_id IN (SELECT user_id FROM \"user\" WHERE username = '"+followerUsername+"' limit 1);";
+        var cmd = new NpgsqlCommand(sql, con);
+
+        NpgsqlDataReader rdr = cmd.ExecuteReader();
+
+        rdr.Read();
+        int result;
+        try 
+        {
+            result = rdr.GetInt32(0);
+        
+        } catch (Exception ex)
+        {
+            result = -1;
+            Console.WriteLine(ex);
+        }
+
+        con.Close();
+        return result != -1;
+
+    }   
+    
+
+
+    private string ConnectToDatabase(string sql) 
+    {
+        var cs = CS;
+        var con = new NpgsqlConnection(cs);
+        con.Open();
+
+        var cmd = new NpgsqlCommand(sql, con);
+
+        NpgsqlDataReader rdr = cmd.ExecuteReader();
+
+        rdr.Read();
+        string result;
+        try
+        {
+            result = rdr.GetString(0);
+        } catch 
+        {
+           result = "";
+        }
+
+        con.Close();
+        return result;
+    }
+    
+
+
+
 }
 
