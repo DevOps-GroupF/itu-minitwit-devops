@@ -46,13 +46,15 @@ public class Tests
         Assert.True(isExist);
     }
 
-     [Fact]
+    [Fact]
     public async Task TestUserCanSignUp()
-    {   
+    {
         // Playwright
         using var playwright = await Playwright.CreateAsync();
         //Browser
-        await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = true });
+        await using var browser = await playwright.Chromium.LaunchAsync(
+            new BrowserTypeLaunchOptions { Headless = true }
+        );
         //Page
         var Page = await browser.NewPageAsync();
         await Page.GotoAsync(Driver.BASEURL + "/Public");
@@ -60,33 +62,36 @@ public class Tests
         // Perform the test
         await Page.ClickAsync("text='sign up'");
         string username = Driver.RandomString(8);
-        
+
         Page = await PerformSignUp(Page, username);
-        var isExist = await Page.GetByText("You were successfully registered and can login now").First.IsVisibleAsync();     
+        var isExist = await Page.GetByText("You were successfully registered and can login now")
+            .First.IsVisibleAsync();
         var existsInDatabase = UserExistInDatabase(username);
-        isExist = isExist && existsInDatabase; // Test the user also exists in the database. 
+        isExist = isExist && existsInDatabase; // Test the user also exists in the database.
 
         Assert.True(isExist);
     }
-    
+
     public async Task<IPage> PerformSignUp(IPage Page, string username)
-    {   
+    {
         await Page.FillAsync("#Username", username);
-        await Page.FillAsync("#Email", username+"@live.dk");
+        await Page.FillAsync("#Email", username + "@live.dk");
         await Page.FillAsync("#Password", "password");
         await Page.FillAsync("#Password2", "password");
-        
+
         await Page.Locator("[type=submit]").ClickAsync();
         return Page;
     }
 
-     [Fact]
+    [Fact]
     public async Task TestUserCanSignIn()
     {
         // Playwright
         using var playwright = await Playwright.CreateAsync();
         //Browser
-        await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = true });
+        await using var browser = await playwright.Chromium.LaunchAsync(
+            new BrowserTypeLaunchOptions { Headless = true }
+        );
         //Page
         var Page = await browser.NewPageAsync();
         await Page.GotoAsync(Driver.BASEURL + "/Public");
@@ -96,25 +101,26 @@ public class Tests
         string username = Driver.RandomString(8);
 
         Page = await PerformSignUp(Page, username);
-        var isExist = await Page.GetByText("You were successfully registered and can login now").First.IsVisibleAsync();        
-        
-        if(!isExist) Assert.True(!isExist);
-        
+        var isExist = await Page.GetByText("You were successfully registered and can login now")
+            .First.IsVisibleAsync();
+
+        if (!isExist)
+            Assert.True(!isExist);
+
         Page = await PerformSignIn(Page, username);
 
-        isExist = await Page.GetByText("You were logged in").First.IsVisibleAsync();        
-        
-        Assert.True(isExist);    
+        isExist = await Page.GetByText("You were logged in").First.IsVisibleAsync();
+
+        Assert.True(isExist);
     }
 
-     public async Task<IPage> PerformSignIn(IPage Page, string username)
-    {   
+    public async Task<IPage> PerformSignIn(IPage Page, string username)
+    {
         await Page.FillAsync("[name='username']", username);
         await Page.FillAsync("[name='password']", "password");
         await Page.Locator("[type=submit]").ClickAsync();
         return Page;
     }
-
 
     [Fact]
     public async Task TestUserCanFollowAnotherUser()
@@ -122,9 +128,11 @@ public class Tests
         // Playwright
         using var playwright = await Playwright.CreateAsync();
         //Browser
-        await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = true });
+        await using var browser = await playwright.Chromium.LaunchAsync(
+            new BrowserTypeLaunchOptions { Headless = true }
+        );
         //Page
-        
+
         var Page = await browser.NewPageAsync();
         string FollowingUsername = Driver.RandomString(8);
         string FollowerUsername = Driver.RandomString(8);
@@ -143,14 +151,13 @@ public class Tests
 
         await Page.ClickAsync("text='Follow user'");
 
-        var isExist = await Page.GetByText("You are now following \""+FollowingUsername+"\"").First.IsVisibleAsync();  
+        var isExist = await Page.GetByText("You are now following \"" + FollowingUsername + "\"")
+            .First.IsVisibleAsync();
 
         var followInDatabase = UserFollwerAnotherUser(FollowingUsername, FollowerUsername);
 
-       Assert.True(isExist && followInDatabase); 
+        Assert.True(isExist && followInDatabase);
     }
-
-
 
     [Fact]
     public async Task TestSiteAPIIsUpAndRunning2()
@@ -168,16 +175,16 @@ public class Tests
         )!;
         var data = await response.JsonAsync();
         var json = data.Value.ToString();
-        bool containKey = json.Contains("latest"); 
+        bool containKey = json.Contains("latest");
         Assert.True(containKey);
     }
 
     private bool UserExistInDatabase(string username)
     {
-        string sql = "SELECT username FROM \"user\" WHERE username = '"+username+"' limit 1;";
+        string sql = "SELECT username FROM \"user\" WHERE username = '" + username + "' limit 1;";
         var result = ConnectToDatabase(sql);
         return result != "";
-    }   
+    }
 
     private bool UserFollwerAnotherUser(string followerUsername, string followingUsername)
     {
@@ -185,18 +192,23 @@ public class Tests
         var con = new NpgsqlConnection(cs);
         con.Open();
 
-        string sql = "SELECT who_id from follower where who_id IN (SELECT user_id FROM \"user\" WHERE username = '"+followingUsername+"' limit 1) AND whom_id IN (SELECT user_id FROM \"user\" WHERE username = '"+followerUsername+"' limit 1);";
+        string sql =
+            "SELECT who_id from follower where who_id IN (SELECT user_id FROM \"user\" WHERE username = '"
+            + followingUsername
+            + "' limit 1) AND whom_id IN (SELECT user_id FROM \"user\" WHERE username = '"
+            + followerUsername
+            + "' limit 1);";
         var cmd = new NpgsqlCommand(sql, con);
 
         NpgsqlDataReader rdr = cmd.ExecuteReader();
 
         rdr.Read();
         int result;
-        try 
+        try
         {
             result = rdr.GetInt32(0);
-        
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             result = -1;
             Console.WriteLine(ex);
@@ -204,12 +216,9 @@ public class Tests
 
         con.Close();
         return result != -1;
+    }
 
-    }   
-    
-
-
-    private string ConnectToDatabase(string sql) 
+    private string ConnectToDatabase(string sql)
     {
         var cs = CS;
         var con = new NpgsqlConnection(cs);
@@ -224,17 +233,13 @@ public class Tests
         try
         {
             result = rdr.GetString(0);
-        } catch 
+        }
+        catch
         {
-           result = "";
+            result = "";
         }
 
         con.Close();
         return result;
     }
-    
-
-
-
 }
-

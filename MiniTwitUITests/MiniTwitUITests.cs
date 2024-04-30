@@ -178,4 +178,3 @@ public class MiniTwitUITests
         Assert.Contains("the message by bar", responseContent7);
     }
 }
-
