@@ -1,13 +1,14 @@
 using System;
 using Microsoft.Playwright;
-using Npgsql; 
+using Npgsql;
 
 namespace MiniTwitUITests.playwrightstests;
 
-public class Tests 
-{   
-    private static string baseURL = Driver.BASEURL;
-    private static string CS = "Host=localhost;Port=5432;Username=example;Password=example;Database=postgres;";
+public class Tests
+{
+    private static readonly string dbHost = Driver.DB_HOST;
+    private static readonly string CS =
+        $"Host={Driver.DB_HOST};Port={Driver.DB_PORT};Username={Driver.DB_USERNAME};Password={Driver.DB_PASSWORD};Database={Driver.DB_NAME};";
 
     public async Task<IPage> getPage()
     {
@@ -21,8 +22,8 @@ public class Tests
 
         //Page
         var page = await browser.NewPageAsync();
-        await page.GotoAsync(baseURL+"/Public");
-        
+        await page.GotoAsync(Driver.BASEURL + "/Public");
+
         return page;
     }
 
@@ -39,8 +40,7 @@ public class Tests
 
         //Page
         var page = await browser.NewPageAsync();
-        await page.GotoAsync(baseURL+"/Public");
-       
+        await page.GotoAsync(Driver.BASEURL + "/Public");
 
         var isExist = await page.Locator("text='MiniTwit'").IsVisibleAsync();
         Assert.True(isExist);
@@ -55,8 +55,8 @@ public class Tests
         await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = true });
         //Page
         var Page = await browser.NewPageAsync();
-        await Page.GotoAsync(baseURL+"/Public");
-        
+        await Page.GotoAsync(Driver.BASEURL + "/Public");
+
         // Perform the test
         await Page.ClickAsync("text='sign up'");
         string username = Driver.RandomString(8);
@@ -89,7 +89,7 @@ public class Tests
         await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = true });
         //Page
         var Page = await browser.NewPageAsync();
-        await Page.GotoAsync(baseURL+"/Public");
+        await Page.GotoAsync(Driver.BASEURL + "/Public");
 
         // Perform the test
         await Page.ClickAsync("text='sign up'");
@@ -128,18 +128,18 @@ public class Tests
         var Page = await browser.NewPageAsync();
         string FollowingUsername = Driver.RandomString(8);
         string FollowerUsername = Driver.RandomString(8);
-        
-        await Page.GotoAsync(baseURL+"/Register");
+
+        await Page.GotoAsync(Driver.BASEURL + "/Register");
         Page = await PerformSignUp(Page, FollowingUsername);
 
-        await Page.GotoAsync(baseURL+"/Register");
+        await Page.GotoAsync(Driver.BASEURL + "/Register");
         Page = await PerformSignUp(Page, FollowerUsername);
 
-        await Page.GotoAsync(baseURL+"/Login");
+        await Page.GotoAsync(Driver.BASEURL + "/Login");
 
         Page = await PerformSignIn(Page, FollowerUsername);
 
-        await Page.GotoAsync(baseURL+"/"+FollowingUsername);
+        await Page.GotoAsync(Driver.BASEURL + "/" + FollowingUsername);
 
         await Page.ClickAsync("text='Follow user'");
 

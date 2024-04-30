@@ -6,8 +6,18 @@ public class Driver : IDisposable
 {
     private readonly Task<IAPIRequestContext?>? _requestContext;
 
-    public static string BASEURL = "http://minitwit-service:8080";
-     
+    public static readonly string BASEURL = Environment.GetEnvironmentVariable(
+        "MINITWIT_SERVICE_URL"
+    );
+    public static readonly string DB_HOST = Environment.GetEnvironmentVariable("MINITWIT_DB_HOST");
+    public static readonly string DB_PORT = Environment.GetEnvironmentVariable("MINITWIT_DB_PORT");
+    public static readonly string DB_USERNAME = Environment.GetEnvironmentVariable(
+        "MINITWIT_DB_USERNAME"
+    );
+    public static readonly string DB_PASSWORD = Environment.GetEnvironmentVariable(
+        "MINITWIT_DB_PASSWORD"
+    );
+    public static readonly string DB_NAME = Environment.GetEnvironmentVariable("MINITWIT_DB_NAME");
 
     public Driver()
     {
