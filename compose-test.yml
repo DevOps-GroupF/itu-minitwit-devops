@@ -37,3 +37,10 @@ services:
     build: MiniTwitUITests
     networks:
       - itu-minitwit-network
+    environment:
+      - MINITWIT_SERVICE_URL=http://minitwit-service:8080
+      - MINITWIT_DB_HOST=minitwit-database
+      - MINITWIT_DB_PORT=5432
+      - MINITWIT_DB_USERNAME=example
+      - MINITWIT_DB_PASSWORD=example
+      - MINITWIT_DB_NAME=postgres
