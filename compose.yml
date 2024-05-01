@@ -99,3 +99,21 @@ services:
       - "24224:24224/udp"
     networks:
       - itu-minitwit-network
+
+  cypress:
+    image: cypress/included:12.3.0
+    container_name: minitwit-cypress
+    volumes:
+      - ./MiniTwit:/e2e
+    working_dir: /e2e
+    depends_on:
+      - minitwit-service
+    networks:
+      - itu-minitwit-network
+    command:
+      [
+        "./node_modules/.bin/cypress",
+        "run",
+        "--spec",
+        "cypress/integration/**/*.spec.js",
+      ]
