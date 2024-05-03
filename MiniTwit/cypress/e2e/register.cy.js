@@ -32,8 +32,8 @@ describe('Register Page', () => {
   
     it('should register a new user with valid input', () => {
       // Fill the form with valid data
-      cy.get('form input[name="Username"]').type('testuser');
-      cy.get('form input[name="Email"]').type('test@example.com');
+      cy.get('form input[name="Username"]').type('testuser2');
+      cy.get('form input[name="Email"]').type('test2@example.com');
       cy.get('form input[name="Password"]').type('StrongPassword123');
       cy.get('form input[name="Password2"]').type('StrongPassword123');
   
@@ -41,6 +41,6 @@ describe('Register Page', () => {
       cy.get('form button[type="submit"]').click();
   
       // Verify that user is redirected to the login
-      cy.url().should('include', '/login'); 
+      cy.url().should('include', '/Login'); 
     });
   });

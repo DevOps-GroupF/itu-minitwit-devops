@@ -26,13 +26,13 @@ describe('Login Page', () => {
   
     it('should login with valid credentials', () => {
       // Fill the form with valid credentials
-      cy.get('form input[name="testuser"]').type('valid_username');
-      cy.get('form input[name="StrongPassword123"]').type('valid_password');
+      cy.get('form input[name="username"]').type('testuser2');
+      cy.get('form input[name="password"]').type('StrongPassword123');
   
       // Submit the form
       cy.get('form input[type="submit"]').click();
   
-      // Verify that user is redirected to the public timeline
-      cy.url().should('include', '/Public'); 
+    
+      cy.contains('You were logged in').should('be.visible');
     });
   });
