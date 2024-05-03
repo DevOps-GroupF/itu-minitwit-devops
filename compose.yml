@@ -112,11 +112,3 @@ services:
       - minitwit-service
     networks:
       - itu-minitwit-network
-    command: [
-        "./node_modules/.bin/cypress",
-        "run",
-        "--spec",
-        "/e2e/cypress/e2e/register.cy.js",
-        #"--spec",
-        #"/e2e/cypress/e2e/login.cy.js",
-      ]

@@ -32,8 +32,8 @@ describe('Register Page', () => {
   
     it('should register a new user with valid input', () => {
       // Fill the form with valid data
-      cy.get('form input[name="Username"]').type('testuser2');
-      cy.get('form input[name="Email"]').type('test2@example.com');
+      cy.get('form input[name="Username"]').type('testuser3');
+      cy.get('form input[name="Email"]').type('test3@example.com');
       cy.get('form input[name="Password"]').type('StrongPassword123');
       cy.get('form input[name="Password2"]').type('StrongPassword123');
   
