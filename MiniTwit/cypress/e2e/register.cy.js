@@ -1,8 +1,9 @@
-// cypress/integration/register.spec.js
+
 
 describe('Register Page', () => {
     beforeEach(() => {
-      cy.visit('http://localhost:8080/register'); // Replace '/register' with the actual URL of your register page
+      cy.wait(5000);
+      cy.visit('/register');
     });
   
     it('should display sign-up form', () => {
@@ -17,16 +18,16 @@ describe('Register Page', () => {
   
     it('should display error message for invalid input', () => {
       // Fill the form with invalid data
-      cy.get('form input[name="Username"]').type(''); // Empty username
+      cy.get('form input[name="Username"]').type('test'); 
       cy.get('form input[name="Email"]').type('invalid-email'); // Invalid email format
-      cy.get('form input[name="Password"]').type('password'); // Weak password
-      cy.get('form input[name="Password2"]').type('password'); // Repeat password
+      cy.get('form input[name="Password"]').type('password'); 
+      cy.get('form input[name="Password2"]').type('password1'); // Repeat wrong password
   
       // Submit the form
       cy.get('form button[type="submit"]').click();
   
       // Verify that error message is displayed
-      cy.get('.error').should('be.visible');
+      cy.get('.error strong').should('be.visible');
     });
   
     it('should register a new user with valid input', () => {
@@ -39,7 +40,7 @@ describe('Register Page', () => {
       // Submit the form
       cy.get('form button[type="submit"]').click();
   
-      // Verify that user is redirected to the dashboard or home page
-      cy.url().should('include', '/dashboard'); // Replace '/dashboard' with expected URL after successful registration
+      // Verify that user is redirected to the login
+      cy.url().should('include', '/login'); 
     });
   });

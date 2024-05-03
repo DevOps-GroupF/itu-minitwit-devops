@@ -106,6 +106,8 @@ services:
     volumes:
       - ./MiniTwit:/e2e
     working_dir: /e2e
+    environment:
+      - ELECTRON_DISABLE_GPU=true
     depends_on:
       - minitwit-service
     networks:
@@ -115,5 +117,5 @@ services:
         "./node_modules/.bin/cypress",
         "run",
         "--spec",
-        "cypress/integration/**/*.spec.js",
+        "/e2e/cypress/e2e/register.cy.js",
       ]

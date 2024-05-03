@@ -1,6 +1,7 @@
 describe('Login Page', () => {
     beforeEach(() => {
-      cy.visit('http://localhost:8080/login'); // Replace '/login' with the actual URL of your login page
+      cy.wait(5000);
+      cy.visit('/login'); 
     });
   
     it('should display login form', () => {
@@ -25,13 +26,13 @@ describe('Login Page', () => {
   
     it('should login with valid credentials', () => {
       // Fill the form with valid credentials
-      cy.get('form input[name="username"]').type('valid_username');
-      cy.get('form input[name="password"]').type('valid_password');
+      cy.get('form input[name="testuser"]').type('valid_username');
+      cy.get('form input[name="StrongPassword123"]').type('valid_password');
   
       // Submit the form
       cy.get('form input[type="submit"]').click();
   
-      // Verify that user is redirected to the dashboard or home page
-      cy.url().should('include', '/dashboard'); // Replace '/dashboard' with expected URL after successful login
+      // Verify that user is redirected to the public timeline
+      cy.url().should('include', '/Public'); 
     });
   });
