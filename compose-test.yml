@@ -4,7 +4,6 @@ networks:
     name: itu-minitwit-network
 
 services:
-
   minitwit-database:
     container_name: minitwit-database
     image: postgres
@@ -44,3 +43,16 @@ services:
       - MINITWIT_DB_USERNAME=example
       - MINITWIT_DB_PASSWORD=example
       - MINITWIT_DB_NAME=postgres
+
+  minitwit-e2etests:
+    image: cypress/included:12.3.0
+    container_name: minitwit-e2etests
+    volumes:
+      - ./MiniTwit:/e2e
+    working_dir: /e2e
+    environment:
+      - ELECTRON_DISABLE_GPU=true
+    depends_on:
+      - minitwit-service
+    networks:
+      - itu-minitwit-network

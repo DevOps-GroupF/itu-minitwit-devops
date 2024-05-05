@@ -26,7 +26,7 @@ describe('Login Page', () => {
   
     it('should login with valid credentials', () => {
       // Fill the form with valid credentials
-      cy.get('form input[name="username"]').type('testuser3');
+      cy.get('form input[name="username"]').type('testUser');
       cy.get('form input[name="password"]').type('StrongPassword123');
   
       // Submit the form
