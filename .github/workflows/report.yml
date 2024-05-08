@@ -5,8 +5,8 @@ on:
     branches: ['main']
     paths:
       - 'report/main.tex'
-      - 'report/sections'
-      - 'report/images'
+      - 'report/sections/**'
+      - 'report/images/**'
 
 
 jobs:
