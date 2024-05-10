@@ -29,17 +29,15 @@ services:
     networks:
       - itu-minitwit-network
 
-  minitwit-uitests:
-    container_name: minitwit-uitests
+  minitwit-e2etests:
+    image: cypress/included:12.3.0
+    container_name: minitwit-e2etests
+    volumes:
+      - ./CypressGHA:/e2e
+    working_dir: /e2e
+    environment:
+      - ELECTRON_DISABLE_GPU=true
     depends_on:
       - minitwit-service
-    build: MiniTwitUITests
     networks:
       - itu-minitwit-network
-    environment:
-      - MINITWIT_SERVICE_URL=http://minitwit-service:8080
-      - MINITWIT_DB_HOST=minitwit-database
-      - MINITWIT_DB_PORT=5432
-      - MINITWIT_DB_USERNAME=example
-      - MINITWIT_DB_PASSWORD=example
-      - MINITWIT_DB_NAME=postgres
