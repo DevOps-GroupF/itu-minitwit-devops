@@ -1,0 +1,54 @@
+name: Generate Report PDF
+
+on:
+  push:
+    branches: ['main']
+    paths:
+      - 'report/main.tex'
+      - 'report/sections/**'
+      - 'report/images/**'
+
+
+jobs:
+  converttopdf:
+    name: Build PDF
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./report
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Ensure creation on build directory
+        run: |-
+          mkdir -p build
+
+      - name: Install texlive
+        run: |-
+          sudo apt-get install texlive-latex-recommended texlive-fonts-recommended -yq
+
+      - name: Generate PDF
+        run: |-
+          echo; echo "Generating PDF"
+
+          pdflatex --halt-on-error -output-directory=./build -jobname=MSc_group_f main.tex
+
+          echo; echo "Output Folder Listing"
+          pwd
+          ls
+
+
+      - name: Push Report
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: './report/build/*.pdf'
+          commit: --signoff
+          default_author: github_actor
+          committer_name: Minitwit Github Action
+          fetch: false
+          pathspec_error_handling: ignore
+

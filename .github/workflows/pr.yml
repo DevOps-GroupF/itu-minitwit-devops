@@ -1,6 +1,11 @@
 name: Pull Request Workflow
 
-on: pull_request
+on:
+  pull_request:
+    paths-ignore:
+      - 'report/**'
+
+
 
 jobs:
   build-test:
