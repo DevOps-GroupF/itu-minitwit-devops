@@ -13,6 +13,8 @@
 \usepackage{float}
 \usepackage[hidelinks]{hyperref}
 
+\graphicspath{ {./img/} }
+
 \title{DevOps Report}
 \author{Group F \\ (insert names)}
 \date{May 2024}
@@ -22,16 +24,24 @@
 \tableofcontents
 \listoffigures
 
-
-
+\chapter{Introduction}
 \input{sections/intro.tex}
 
+\chapter{System Perspective}
+\input{sections/system_perspective/intro.tex}
 \input{sections/system_perspective/dependencies.tex}
+
+\chapter{Process Perspective}
+\input{sections/process_perspective/intro.tex}
 \input{sections/process_perspective/logging.tex}
 \input{sections/process_perspective/monitoring.tex}
+\input{sections/process_perspective/ai.tex}
 
+\chapter{Lessons Learned}
+\input{sections/lessons_learned/intro.tex}
 
-\chapter{architectue overview}
+\chapter{Reflection and conclusion}
+\input{sections/reflection_conclusion/intro.tex}
 
 %\appendix
 %\chapter{Appendix?}

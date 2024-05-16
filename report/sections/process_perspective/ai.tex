@@ -1,16 +1,10 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = en_GB
 \section{AI-Systems used during the project}
 \subsection{Reflection on ChatGPT}
+\paragraph{} People would assume that using AI like ChatGPT would make developing software much easier and faster, which we think is only partially true. 
+A positive aspect of using ChatGPT is for example it assists very well when learning a new programming language. It is much faster to learn the right syntax by asking ChatGPT rather than googling. It is also very good at explaining code, which makes it easier to understand what other people did. Another positive use is for fixing simple errors by just copying the code with the error message. Usually it resolves the mistake pretty good which also safes some time then.\
 
-People would assume that using AI like ChatGPT would make developing software much easier and faster, which we think is only partially true. 
-A positive aspect of using ChatGPT is for example it assists very well when learning a new programming language. It is much faster to learn the right syntax 
-by asking ChatGPT rather than googling. It is also very good at explaining code, which makes it easier to understand what other people did. 
-Another positive use is for fixing simple errors by just copying the code with the error message. Usually it resolves the mistake pretty good which also safes some time then.\
+\paragraph{} The problem is when there are more complex errors, especially when it is between two or more systems. ChatGPT makes a first guess and then tends to try to find solutions within the area of the first suggestion. This on the other hand can lead to lose a lot of time because the fix of the problem lies somewhere completely else. An example for this was the implementation of our e2e tests with Cypress. When mounting the docker for cypress we had an error that it could not find the test files, which were in the correct directory. ChatGPT suggested that the volume mounting was wrong and kept suggesting to fix this issue within our compose file. However after some quick research on stackoverflow it was clear that the naming of the test files were wrong, which then could be fixed pretty quick.
 
-The problem is when there are more complex errors, especially when it is between two or more systems. ChatGPT makes a first guess and then tends to try to find solutions within
-the area of the first suggestion. This on the other hand can lead to lose a lot of time because the fix of the problem lies somewhere completely else. 
-An example for this was the implementation of our e2e tests with Cypress. When mounting the docker for cypress we had an error that it could not find the test files, 
-which were in the correct directory. ChatGPT suggested that the volume mounting was wrong and kept suggesting to fix this issue within our compose file. 
-However after some quick research on stackoverflow it was clear that the naming of the test files were wrong, which then could be fixed pretty quick.\
-
-As a conclusion, the use of ai-systems can safe time and make development efficient, if used in the right places. When ChatGPT doesn't give the correct answer within 
-the first tries it is a good advice to stop using it and try to resolve the issue by your self. 
+\paragraph{} As a conclusion, the use of ai-systems can safe time and make development efficient, if used in the right places. When ChatGPT doesn't give the correct answer within the first tries it is a good advice to stop using it and try to resolve the issue by your self. 
