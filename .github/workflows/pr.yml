@@ -6,14 +6,28 @@ on:
       - 'report/**'
 
 
+
 jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the application, test it, and create a Docker image
-      run: docker-compose -f compose-test.yml up --force-recreate --abort-on-container-exit --exit-code-from minitwit-uitests
-  
+      - uses: actions/checkout@v3
+      - name: Build the application, test it, and create a Docker image
+        run: |-
+          docker-compose -f compose-test.yml up --force-recreate --abort-on-container-exit --exit-code-from minitwit-uitests
+          docker-compose -f compose-e2etest.yml up --force-recreate --abort-on-container-exit --exit-code-from minitwit-e2etests
+
+  #cypress-run:
+  #  runs-on: ubuntu-22.04
+  #  steps:
+  #    - name: Checkout
+  #      uses: actions/checkout@v4
+
+  # Run Cypress tests
+  #    - name: Cypress run
+  #      uses: cypress-io/github-action@v6
+  #      working-directory: CypressGHA
+
   super-linter:
     runs-on: ubuntu-latest
     permissions:
