@@ -35,3 +35,8 @@ During the execution of the pipeline we need to use some secrets, f.e. to SSH in
 	\caption{Diagram with the different steps executed by the pipeline when a PR is opened or updated.}
 	\label{fig:ci-pr}
 \end{figure}
+
+\paragraph{} We also use the Maintainability and Technical Debt estimation tool SonarCube, which provides us reports of our code quality directly in GitHub. However, this tool is managed in its own website, and it is not configured as part of GH Actions.
+
+\subsection{Report compilation}
+\paragraph{} We also have an additional GH Action, which is only triggered by pushes which modify files in the "report" subfolder. This action then compiles the \LaTeX project located in that subfolder and generates a PDF, which then commits to the "report/build" subfolder.
