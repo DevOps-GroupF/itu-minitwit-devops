@@ -2,20 +2,13 @@
 % !TeX spellcheck = en_GB
 \section{Design and Architecture}\label{sec:design-arch}
 
-Our final implementation of MiniTwit takes the form of a monolith, where all the busineess logic of the system system in production is contained in one component: \texttt{MiniTwit}. We will refere to this component as the \textit{app} throughout the remainder of this report
+Our final implementation of MiniTwit takes the form of a monolith, where all the busineess logic of the system system in production is contained in one component: \texttt{MiniTwit}. We will refer to this component as the \textit{app} throughout the remainder of this report
 However, all the auxilliary components, such as monitoring, logging etc. are deployed as seperate services that operate in adjecency the the app component.
-
-\begin{figure}
-  \begin{center}
-    \includegraphics[width=0.50\textwidth]{img/deployment.pdf}
-  \end{center}
-  \caption{Deployment view of our system.}\label{fig:deployment}
-\end{figure}
 
 
 \subsection{App Component}
 
-The monolithic app is implemented as a ASP.NET MVC web server. It is delegated into two parts, or *areas*, as they are referred to in the .NET-universe:
+The monolithic app is implemented as a ASP.NET MVC web server. It is delegated into two parts, or \textit{areas}, as they are referred to in the .NET-universe:
 
 \begin{itemize}
     \item \texttt{Api}: Provides a RESTFUL API in accordance with the specifications provided by the course. It consists solely of controllers, that handle various endpoints.
