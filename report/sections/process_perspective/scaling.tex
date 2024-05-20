@@ -1,4 +1,4 @@
-\section{Strategy for Scaling and Updates}
+\section{Strategy for Scaling and Updates}\label{sec:scaling}
 
 Our strategy for scaling and updates is based on our choice of deploying the app and the auxilliary services through an container orchestration platform, namely \textit{Docker Swarm}. We chose Docker Swarm specifically because installation of Docker was already a part of our automated provisioning procedure, so it would reuire no extra installations.
 As such, we could readily migrate from our initial Docker Compose-setup to Docker Swarm.
@@ -38,5 +38,10 @@ Here, we specify that at most one worker-node must be under update. This ensures
 Furthermore, we also specifiy that, in the case of failure of a new update, rollbacks should also only be performed on one node at the time
 Furthermore, we also specifiy that, in the case of a need to revert a new update, rollbacks should also only be performed on one node at the time.
 While both these choices have the consequence of out-of-date versions of the system being online for a non-minimal amount of time, we prioritize system performances over the speed of version changes.
+
+
+
+
+
 
 
