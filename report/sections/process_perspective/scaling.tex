@@ -12,7 +12,7 @@ Currently, our provisioning script creates four virtual machines for a fresh pro
 
 The three worker nodes run a replica of the app.
 The manager-node runs all the auxilliary services, and provides load balancing to the three worker nodes.
-This setup works well, because we want to centralize or logging and monitoring, as they are not under variable load from the public internet: It's only the system owners and administrators that need to access those.
+This setup works well, because we want to centralize our logging and monitoring, as they are not under variable load from the public internet: It's only the system owners and administrators that need to access those.
 Furthermore, it is trivial to store the logs on the disk of the single manager-node, which is otherwise a challenge in Docker Swarm environments.
 
 However, we have not implemented an automatic scaling strategy. For now, the strategy is to monitor the traffic and manually provision more worker nodes if needed.
