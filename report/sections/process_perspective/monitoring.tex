@@ -5,7 +5,14 @@
 
 \subsubsection{Decision Log}
 \paragraph{} Prometheus is a powerful and widely used open-source tool for systems monitoring. We chose this tool for its open-souce nature, ease of use, powerful query language and simple interoperability with Grafana. Prometheus was used as a docker container running on our VMs and it was used for quering monitoring data about our running .NET minitwit application
-\paragraph{} Setting up Prometheus really was as easy as just getting a docker image of it running. All the data source configuring was done through Grafana, including all visualization of the data itself.
+\paragraph{} Setting up Prometheus really was as easy as just getting a docker image of it running. All the data source configuring was done through Grafana, including all visualization of the data itself. This ease of use was very evident and convenient.
 
 \subsection{Grafana}
 \subsubsection{Decision Log}
+\paragraph{} Grafana perfectly compliments Prometheus for its powerful and intuitive ability for data visualization. Its also an open-souce tool, that we decided to use for its ability to visualize all our required metrics. In addition, multiple data sources can be easily set up for a single visualization dashboard, making the monitoring of our application easy.
+
+\paragraph{} Together, Prometheus and Grafana form a comprehensive monitoring solution that addresses both data collection and visualization needs. Prometheus's robust data collection, combined with Grafana's powerful visualization and dashboarding features, provide a seamless and efficient way to monitor and manage all our systems.
+
+\subsection{Implementation of monitoring} 
+\paragraph{} A docker container of Prometheus and Grafana is running on the manager node in our docker swarm. Prometheus has been programmed through Grafana to gather mertics on all minitwit instances in all worker nodes and display them on the manager nodes Grafana dashboard. In addition, Grafana gathers data from a managed Digitalocean database, and displays metrics such as total followers and total tweets.
+\paragraph{} The following figure describes how monitoring was implemented.
