@@ -5,12 +5,7 @@
 
 \paragraph{} We have configured two different variants of the pipeline: one that is executed when a PR is opened or updated, and one that is triggered on pushes to main, which, in practice, is only triggered on PR merges to main, since we never push directly to main. The tasks performed by the pipeline are as follows:
 \begin{enumerate}
-	\item \textbf{Build and test the application}: In this step we build the application, run the unit tests, UI test and end-to-end tests. The unit test are run during the building of the image, while the UI and end-to-end tests are each run by using a specially-crafted compose.yml file, which allows us to run the application, the database, and the UI or E2E tests simultaneously. We then instruct docker compose to use the exit code from the container executing the tests, which makes the pipeline fail if any of the tests has failed. This step is executed both when PR and opened or updated, and when a push is made to main. The tests are made using the following tools:
-	\begin{itemize}
-		\item Unit tests: XUnit
-		\item UI tests: PlayWright
-		\item E2E tests: Cypress
-	\end{itemize}
+	\item \textbf{Build and test the application}: In this step we build the application, run the unit tests, UI test and end-to-end tests. The unit test are run during the building of the image, while the UI and end-to-end tests are each run by using a specially-crafted compose.yml file, which allows us to run the application, the database, and the UI or E2E tests simultaneously. We then instruct docker compose to use the exit code from the container executing the tests, which makes the pipeline fail if any of the tests has failed. This step is executed both when PR and opened or updated, and when a push is made to main.
 	\item \textbf{Linting}: In this step we execute linters for our code and Dockerfiles, with the use of the third-party GH action "super-linter". If problems are detected, this part of the pipeline reports an error. This step is only executed when a PR is opened or updated.
 	\item \textbf{Build and push image}: In this step, a production docker image is build and pushed to our image repository. This image will then be used on the deployment step. This step is only executed when a push is made to main. 
 	\item \textbf{Create release}: In this step, a release is created on the GH repository, with the contents of the commit triggering the pipeline. This step is only executed when a push is made to main. 
@@ -40,8 +35,3 @@ During the execution of the pipeline we need to use some secrets, f.e. to SSH in
 	\caption{Diagram with the different steps executed by the pipeline when a PR is opened or updated.}
 	\label{fig:ci-pr}
 \end{figure}
-
-\paragraph{} We also use the Maintainability and Technical Debt estimation tool SonarCube, which provides us reports of our code quality directly in GitHub. However, this tool is managed in its own website, and it is not configured as part of GH Actions.
-
-\subsection{Report compilation}
-\paragraph{} We also have an additional GH Action, which is only triggered by pushes which modify files in the "report" subfolder. This action then compiles the \LaTeX project located in that subfolder and generates a PDF, which then commits to the "report/build" subfolder.
