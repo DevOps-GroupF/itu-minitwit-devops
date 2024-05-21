@@ -36,7 +36,8 @@ jobs:
           echo; echo "Generating PDF"
 
           pdflatex --halt-on-error -output-directory=./build -jobname=MSc_group_f main.tex
-
+          pdflatex --halt-on-error -output-directory=./build -jobname=MSc_group_f main.tex
+          
           echo; echo "Output Folder Listing"
           pwd
           ls
