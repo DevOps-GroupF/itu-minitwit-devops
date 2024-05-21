@@ -15,7 +15,7 @@
 \subsection{Implementation of monitoring} 
 \paragraph{} A docker container of Prometheus and Grafana is running on the manager node in our docker swarm. Prometheus has been programmed through Grafana to gather mertics on all minitwit instances in all worker nodes and display them on the manager nodes Grafana dashboard. In addition, Grafana gathers data from a managed Digitalocean database, and displays metrics such as total followers and total tweets.
 \paragraph{} The following figure describes how monitoring was implemented.
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{Monitoring2.png}
 	\caption{Diagram describing our monitoring implementation}
