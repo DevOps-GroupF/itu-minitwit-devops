@@ -16,3 +16,20 @@
 \subsection{Implementation of monitoring} 
 \paragraph{} A docker container of Prometheus and Grafana is running on the manager node in our docker swarm. Prometheus has been programmed through Grafana to gather mertics on all minitwit instances in all worker nodes and display them on the manager nodes Grafana dashboard. In addition, Grafana gathers data from a managed Digitalocean database, and displays metrics such as total followers and total tweets.
 \paragraph{} The following figure describes how monitoring was implemented.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{Monitoring2.png}
+	\caption{Diagram describing our implementation of fluentd}
+	\label{fig:Monitoring2}
+\end{figure}
+
+\subsection{Monitoring configuration}
+\paragraph{} Grafana and Prometheus are configured in a way, so that when initiating a docker swarm of with a manager nodes running docker images of them, then all necessary configuration gets set up automatically.
+
+\subsubsection{Prometheus configuration}
+\paragraph{} Prometheus gets configured using a yml file that gets inserted into the manager nodes Prometheus Docker image as a volume through a compose.yml file.
+
+\subsubsection{Grafana configuration}
+\paragraph{} Grafana data sources are set up using a .yml file that gets inserted into the manager into the manager nodes Grafana Docker image using volumes. The data source yml file contains variables about how to set up a Postgres database connection and a Prometheus monitoring connection.
+\paragraph{} Additionally, two dashboards get added to the Grafana Docker image as json files. They contain all the variables and setup parameters required to automatically set up the required dashboards.
+\paragraph{} Users are set up using a shell script. After the Grafana Docker image is running, a shell script sends a curl API call to the running Docker image every 5 seconds until success. The API call contains the users that are needed to set up automatically.
