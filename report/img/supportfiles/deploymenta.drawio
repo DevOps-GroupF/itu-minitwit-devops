@@ -1,0 +1,71 @@
+<mxfile host="app.diagrams.net" modified="2024-05-20T16:31:39.279Z" agent="Mozilla/5.0 (X11; Linux x86_64; rv:126.0) Gecko/20100101 Firefox/126.0" etag="N_LiqfS26LXJaVE2W1nx" compressed="false" version="24.0.7" type="device">
+  <diagram name="Page-1" id="tfMJVQ3wojYNE6ftyGFj">
+    <mxGraphModel dx="1343" dy="750" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="600" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;backgroundOutline=0;" edge="1" parent="1" source="KcxyrFXpWRzxBZJvNXxI-2" target="KcxyrFXpWRzxBZJvNXxI-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;backgroundOutline=0;" edge="1" parent="1" source="KcxyrFXpWRzxBZJvNXxI-2" target="KcxyrFXpWRzxBZJvNXxI-16">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="100" y="100" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-2" value="Swarm Manager" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;backgroundOutline=0;" vertex="1" parent="1">
+          <mxGeometry x="255" y="60" width="250" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-13" value="Grafana" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;backgroundOutline=0;" vertex="1" parent="1">
+          <mxGeometry x="270" y="110" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-14" value="Prometheus" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;backgroundOutline=0;" vertex="1" parent="1">
+          <mxGeometry x="270" y="180" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-15" value="Fluentd" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;backgroundOutline=0;" vertex="1" parent="1">
+          <mxGeometry x="380" y="110" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-21" value="" style="group;backgroundOutline=0;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="310" y="360" width="180" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-5" value="Swarm Worker" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;backgroundOutline=0;" vertex="1" parent="KcxyrFXpWRzxBZJvNXxI-21">
+          <mxGeometry width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-11" value="MiniTwit" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;backgroundOutline=0;" vertex="1" parent="KcxyrFXpWRzxBZJvNXxI-21">
+          <mxGeometry x="30" y="40" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-22" value="" style="group;backgroundOutline=0;" vertex="1" connectable="0" parent="KcxyrFXpWRzxBZJvNXxI-21">
+          <mxGeometry x="-20" y="20" width="180" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-23" value="Swarm Worker" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;backgroundOutline=0;" vertex="1" parent="KcxyrFXpWRzxBZJvNXxI-22">
+          <mxGeometry width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-24" value="MiniTwit" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;backgroundOutline=0;" vertex="1" parent="KcxyrFXpWRzxBZJvNXxI-22">
+          <mxGeometry x="30" y="40" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-25" value="" style="group;backgroundOutline=0;" vertex="1" connectable="0" parent="KcxyrFXpWRzxBZJvNXxI-22">
+          <mxGeometry x="-20" y="20" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-26" value="Swarm Worker" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;backgroundOutline=0;" vertex="1" parent="KcxyrFXpWRzxBZJvNXxI-25">
+          <mxGeometry width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-27" value="MiniTwit" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;backgroundOutline=0;" vertex="1" parent="KcxyrFXpWRzxBZJvNXxI-25">
+          <mxGeometry x="30" y="40" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;backgroundOutline=0;" edge="1" parent="1" source="KcxyrFXpWRzxBZJvNXxI-26" target="KcxyrFXpWRzxBZJvNXxI-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-29" value="" style="group;backgroundOutline=0;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="10" y="210" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-16" value="DigitalOcean Managed Database" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;backgroundOutline=0;" vertex="1" parent="KcxyrFXpWRzxBZJvNXxI-29">
+          <mxGeometry width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="KcxyrFXpWRzxBZJvNXxI-17" value="Postgres" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;backgroundOutline=0;" vertex="1" parent="KcxyrFXpWRzxBZJvNXxI-29">
+          <mxGeometry x="30" y="50" width="100" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
