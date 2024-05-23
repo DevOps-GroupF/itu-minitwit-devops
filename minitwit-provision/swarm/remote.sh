@@ -8,7 +8,7 @@ SCRIPT_PATH="./deploy.sh"
 
 echo "----Cloning server repo...----"
 rm -rf $CLONE_PATH
-git clone --single-branch --branch swarm https://$GH_USER:$GH_PASS@$GH_URL $CLONE_PATH
+git clone https://$GH_USER:$GH_PASS@$GH_URL $CLONE_PATH
 cd $CLONE_PATH
 
 echo "----Executing deploy.sh script----"
