@@ -1,20 +1,19 @@
 \subsection{Operation}
 
 Our significant operative issues were all caused by our reliance on student credits for our infrastructure needs.
-
-The first major hurdle occurred when we unexexpectedly depleted our credits on Azure,
+The first hurdle occurred when we unexexpectedly depleted our credits on Azure,
 %This was caused directly by adding a managed database instance to our infrastructure, as credits were deducted based on the computational and I/O cost of persisting the high-frequency changes incurred from the simulator.
 %Since we only discovered this issue once our credits were depleted, our 
 which made our
 application
 %was 
-inoperable, and we were forced to find a new hosting solution for our project.
+inoperable.%, and we were forced to find a new hosting solution for our project.
 
 %While we previously were prevented from creating accounts on DigitalOcean, for some reason we were to create accounts at that later point.
 We decided to migrate to DigitalOcean.
 %Getting deployed on DigitalOcean was trivial, but 
 Since we were now very wary of the consequences of depleting our credits, we consistently opted for the cheapest resources available to us.
-This later caused major operational issues, as our DigitalOcean VM's would exhaust their storage capacity with logs, which was also unexpected by us.
+This later caused major operational issues, as our DigitalOcean VM's would exhaust their storage capacity with logs%., which was also unexpected by us.
 %While it was easy to prune the logs and redeploy, the surprising nature of the issue did affect our operation.
 %Another issue related to our frugal mentality came in the form of memory constraints, were some of the auxillairy services used so much memory, that the VM ran out of RAM and resorted to swap memory, which made the performance of the MiniTwit applicaiton grind to a halt.
 

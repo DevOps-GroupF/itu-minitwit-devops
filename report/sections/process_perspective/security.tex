@@ -9,20 +9,20 @@
 	\item The web application.
 	\item The API.
 	\item The database.
-	\item Development, debugging, and deployment tools:
-	      \begin{itemize}
-		      \item SSH.
-		      \item Graphana/Prometheus.
-		      \item GitHub.
-		      \item GitHub Actions.
-		      \item GitHub Secrets.
-		      \item DigitalOcean.
-	      \end{itemize}
+	\item Development, debugging, and deployment tools.
+	      % \begin{itemize}
+	      %  \item SSH.
+	      %  \item Graphana/Prometheus.
+	      %  \item GitHub.
+	      %  \item GitHub Actions.
+	      %  \item GitHub Secrets.
+	      %  \item DigitalOcean.
+	      % \end{itemize}
 \end{itemize}
 
 \subsubsection{Threat sources}
 % Identify threat sources (e.g. SQL injection)
-\paragraph{} Thread sources can be diverse, and attach different layers of our application:
+\paragraph{} Thread sources can be diverse, and acttack different layers of our application:
 \begin{itemize}
 	\item Vulnerabilities in our code: Among the vulnerabilities that we \textbf{could} have, these are the most relevant ones:
 	      \begin{itemize}
@@ -32,11 +32,12 @@
 	      We need to emphasise that we have checked our code for such vulnerabilities, and we haven't found any.
 	\item Missing HTTPS and firewall.
 	\item Misconfigured firewall.
-	\item Stolen SSH keys for the VM.
-	\item Stolen credentials for Graphana.
+	      % \item Stolen SSH keys for the VM.
+	      % \item Stolen credentials for Graphana.
 	\item Public Prometheus metrics.
-	\item Stolen credentials for GitHub.
-	\item Stolen credentials for DigitalOcean.
+	      % \item Stolen credentials for GitHub.
+	      % \item Stolen credentials for DigitalOcean.
+	\item Stolen credentials for all dependencies that require authentication
 	\item Vulnerabilities in the OS or Docker Images used.
 	\item Supply chain attacks.
 \end{itemize}
@@ -46,14 +47,14 @@
 \paragraph{} Some possible scenarios of attacks are as follows:
 \begin{enumerate}
 	% Note: Add only elements at the end of the list, or you'll have to modify the risk matrix below!
-	\item Attacker performs SQL injection. %to download sensitive user data.
-	\item Attacker performs XSS on web application.% to download sensitive user data or deliver malware.
-	\item Attacker snoops on user traffic.% and obtains a user's password, which then uses to impersonate them.
-	\item Attacker performs a man-in-the-middle attack.% on a user and provides them with false information.
-	\item Attacker steals SSH keys.%, connects to the VM, from there to the DB, and downloads sensitive user data or deliver malware.
+	\item SQL injection. %to download sensitive user data.
+	\item XSS on web application.% to download sensitive user data or deliver malware.
+	\item Snooping on user traffic.% and obtains a user's password, which then uses to impersonate them.
+	\item man-in-the-middle attack.% on a user and provides them with false information.
+	\item Stealing of SSH keys.%, connects to the VM, from there to the DB, and downloads sensitive user data or deliver malware.
 	\item Attacker steals Graphana credentials.%, connects to it, and learns more information about the usage of our system.
-	\item Attacker connects to \textit{/metrics} and learns more information about the usage of our system.
-	\item Attacker steals GitHub credentials and modifies our code.% or CI/CD to introduce vulnerabilities, or execute arbitrary code.
+	\item Attacker connects to \textit{/metrics} and can surveil the system.
+	\item Attacker steals GitHub credentials.% and modifies our code.% or CI/CD to introduce vulnerabilities, or execute arbitrary code.
 	\item Attacker steals DigitalOcean credentials.% and downloads sensitive user data from the DB, or use our VM to deliver malware.
 	\item Attacker steals DB credentials.% and connects directly to it, due to a firewall misconfiguration.
 	\item Attacker uses vulnerabilities of our the OS or Docker images to connect to the DB.% and download user data, or to the VM and deliver malware.
