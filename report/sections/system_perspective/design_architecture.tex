@@ -3,12 +3,11 @@
 \section{Design and Architecture}\label{sec:design-arch}
 
 Our final implementation of MiniTwit takes the form of a monolith, where all the busineess logic of the system system in production is contained in one component: The \texttt{MiniTwit} application.
-However, all the auxilliary components, such as monitoring, logging etc. are deployed as seperate services that operate in adjecency the the MiniTwit application component.
-
+However, all the auxilliary components are deployed as seperate services that operate in adjecency the the MiniTwit application component.
 
 \subsection{MiniTwit Application Component}
 
-The monolithic app is implemented as a ASP.NET MVC web server. It is delegated into two parts, or \textit{areas}, as they are referred to in the .NET-universe:
+The monolithic app is delegated into two parts, or \textit{areas}, as they are referred to in the .NET-universe:
 
 \begin{itemize}
 	\item \texttt{Api}: Provides a RESTFUL API in accordance with the specifications provided by the course. %It consists solely of controllers, that handle various endpoints.

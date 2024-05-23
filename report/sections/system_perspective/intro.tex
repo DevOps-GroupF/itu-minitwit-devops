@@ -19,11 +19,15 @@ Both options are widely used and well-maintained and documented, which were the 
 
 \subsection{Virtualization Techniques and Deployment Targets}
 
-We elected not to use a dedicated virtualization solution, as we did not find them to provide enough benefit for the time it would take to setup. Since we are already using Docker, we assessed that achieving further encapsulation of the environment was not a teneable investment.
+We elected not to use a dedicated virtualization solution,
+%as we did not find them to provide enough benefit for the time it would take to setup. 
+since we are already using Docker, and thus we assessed that achieving further encapsulation of the environment was not a teneable investment.
 
-Using Docker seemed like a very obvious choice: We avoid problems with incompatible developer machines, and it is also very easy to deploy docker images to our VM's. Furthermore, the choice of Docker paid dividends later in the project, as it allowed us to use the same Docker Compose configuration for deploying a Docker Swarm (see section \ref{sec:scaling} on page \pageref{sec:scaling}).
+Using Docker seemed like a very obvious choice: We avoid problems with incompatible developer machines, and it is also very easy to deploy docker images to our VM's. Furthermore,
+%the choice of Docker paid dividends later in the project, as 
+the choice allowed us to use the same Docker Compose configuration for deploying a Docker Swarm (see section \ref{sec:scaling} on page \pageref{sec:scaling}).
 
-Instead of a virtualization tool, we developed and evolved a custom provisioning script.%, which started as a C\# program, but ended up as a Python script.
+Instead of a virtualization tool, we developed and evolved a custom provisioning script, as we found it to be a more understandable configuration.%, which started as a C\# program, but ended up as a Python script.
 %The initial choice of C\# was based on the fact that we were using Azure as our deployment target, and Microsoft provided an Azure library for C\# that we found to be effective.
 
 %However, we quickly ran out of student credits on our Azure account after we began using the managed database offering on Azure, which resulted in our migration to Digital Ocean.
