@@ -5,29 +5,34 @@
 
 \subsection{Choice of Web framwork}
 In our project, we have choosen to work with \textit{.NET}, the Microsoft open source web framework, in conjunction with Postgres, an open source database.
-The choice of .NET is based on several factors:
+Both options are widely used and well-maintained and documented, which were the primary reasons for our choice.
+%The choice of .NET is based on several factors:
 
-\begin{enumerate}
-	\item It has the backing of Microsoft, a very large organisation, which dedicates significant resources to developing and maintaing the framework.
-	\item Besides Microsoft, the .NET-framework has a large userbase and community, which improves the probability that any issues we encounter are addresses by other users in various software delopment forums.
-	\item Microsoft provides an expansive set of templates and sample implementations for common usecases, which means that initialising a new web application is very easy and straight forward.
-	\item The main programming language of .NET, \textit{C\#} is very mature and performant. %known to be a relative fast and relable langauge which also motivate our choice of choosing Microsoft .Net solution.
-	\item Lastly, the .NET framework and C\# are popular amongst software companies in Denmark, so by choosing these technologies, we learn skills that are in need in the industry.
-\end{enumerate}
+% \begin{enumerate}
+% 	\item It has the backing of Microsoft, a very large organisation, which dedicates significant resources to developing and maintaing the framework.
+% 	\item Besides Microsoft, the .NET-framework has a large userbase and community, which improves the probability that any issues we encounter are addresses by other users in various software delopment forums.
+% 	\item Microsoft provides an expansive set of templates and sample implementations for common usecases, which means that initialising a new web application is very easy and straight forward.
+% 	\item The main programming language of .NET, \textit{C\#} is very mature and performant. %known to be a relative fast and relable langauge which also motivate our choice of choosing Microsoft .Net solution.
+% 	\item Lastly, the .NET framework and C\# are popular amongst software companies in Denmark, so by choosing these technologies, we learn skills that are in need in the industry.
+% \end{enumerate}
 
 
 \subsection{Virtualization Techniques and Deployment Targets}
 
 We elected not to use a dedicated virtualization solution, as we did not find them to provide enough benefit for the time it would take to setup. Since we are already using Docker, we assessed that achieving further encapsulation of the environment was not a teneable investment.
 
-Using Docker seemed like a very obvious choice: We avoid problems with incompatible developer machines, and it is also very easy to deploy docker images to our VM's. Furthermore, the choice of Dokcer paid dividends later in the project, as it allowed us to use the same Docker Compose configuration for deploying a Docker Swarm (see section \ref{sec:scaling} on page \pageref{sec:scaling}).
+Using Docker seemed like a very obvious choice: We avoid problems with incompatible developer machines, and it is also very easy to deploy docker images to our VM's. Furthermore, the choice of Docker paid dividends later in the project, as it allowed us to use the same Docker Compose configuration for deploying a Docker Swarm (see section \ref{sec:scaling} on page \pageref{sec:scaling}).
 
-Instead, we developed and evolved a custom provisioning script, which started as a C\# program, but ended up as a Python script.
-The initial choice of C\# was based on the fact that we were using Azure as our deployment target, and Microsoft provided an Azure library for C\# that we found to be effective.
+Instead of a virtualization tool, we developed and evolved a custom provisioning script.%, which started as a C\# program, but ended up as a Python script.
+%The initial choice of C\# was based on the fact that we were using Azure as our deployment target, and Microsoft provided an Azure library for C\# that we found to be effective.
 
-However, we quickly ran out of student credits on our Azure account after we began using the managed database offering on Azure, which resulted in our migration to Digital Ocean.
-We decided to continue using a custom provisioning script, but for Digital Ocean, we found the Digital Ocean Python binding package \texttt{pydo}\footnote{See \url{https://pypi.org/project/pydo/} (accessed on the 20th of May, 2024)} to be the most well-documented, as the offical Digital Ocean API documentation\footnote{See \url{https://docs.digitalocean.com/reference/} (accessed on the 20th of May, 2024)}.
-Also, the script-like nature of the Python language is more appropiate for the task of provisioning.
+%However, we quickly ran out of student credits on our Azure account after we began using the managed database offering on Azure, which resulted in our migration to Digital Ocean.
+%We decided to continue using a custom provisioning script, but for Digital Ocean, 
+
+%We were prevented from using DigitalOcean in the initial stage of the course, which made us chose Azure instead, since we also were entitled to student credits there. However, we ran out of credits
+We were able to get student credits on DigitalOcean, and the infrastructure was cheap enough for us to run our system throughout the course.
+Furthermore, We found the Digital Ocean Python binding package \texttt{pydo}\footnote{See \url{https://pypi.org/project/pydo/} (accessed on the 20th of May, 2024)} to be the most well-documented, as the offical Digital Ocean API documentation\footnote{See \url{https://docs.digitalocean.com/reference/} (accessed on the 20th of May, 2024)}, which lead us to write our provisioning script in Python.
+%Also, the script-like nature of the Python language is more appropiate for the task of provisioning.
 
 
 \subsection{CD/CI reason}
