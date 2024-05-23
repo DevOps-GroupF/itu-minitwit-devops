@@ -34,6 +34,6 @@ Log data is buffered using the buffer directive to handle data spikes or network
 
 A Fluentd container is defined using the fluent/fluentd:v1.12-debian image. 
 Each service in the Docker Compose file depends on the Fluentd service for logging. 
-Logging is configured to use Fluentd as the logging driver, with specific options (fluentd-async-connect, fluentd-retry-wait, fluentd-max-retries) to ensure reliable log transmission. 
+Logging is configured to use Fluentd as the logging driver, with specific options to ensure reliable log transmission. 
 %Each service specifies a unique tag to route log data to the appropriate destination, which in our case are simple log files.
 
