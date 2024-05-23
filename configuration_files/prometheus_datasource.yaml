@@ -1,11 +1,3 @@
-# apiVersion: 1
-# datasources:
-#   - name: Prometheus
-#     type: prometheus
-#     access: proxy
-#     url: http://prometheus:9090
-#     basicAuth: false
-
 # Configuration file version
 apiVersion: 1
 
@@ -58,14 +50,37 @@ datasources:
     # Grafana UI.
     editable: true
 
+# Old mssql connection, remove later
+  # - name: Minitwit-database
+  #     type: mssql
+  #     access: proxy
+  #     orgId: 1
+  #     uid: minitwit-database
+  #     url: ${DB_CONN_URL}
+  #     user: ${DB_CONN_USER}
+  #     database:
+  #       minitwit-db
+  #     basicAuth:
+  #       false
+  #     basicAuthUser:
+  #       ${DB_CONN_USER}
+  #     withCredentials:
+  #     isDefault:
+  #       false
+  #     jsonData:
+  #     secureJsonData:
+  #       password: ${DB_CONN_PASSWORD}
+  #     version: 1
+  #     editable: true
+
   - name: minitwit-postgres
     type: postgres
     uid: minitwit-postgres
-    url: minitwit-database:5432
+    url: ${DB_CONN_URL}
     orgId: 1
-    user: example
+    user: ${DB_CONN_USER}
     secureJsonData:
-      password: 'example'
+      password: ${DB_CONN_PASSWORD}
     jsonData:
       database: postgres
       sslmode: 'disable' # disable/require/verify-ca/verify-full
@@ -73,6 +88,5 @@ datasources:
       maxIdleConns: 100 # Grafana v5.4+
       maxIdleConnsAuto: true # Grafana v9.5.1+
       connMaxLifetime: 14400 # Grafana v5.4+
-      postgresVersion: 903 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
+      #postgresVersion: 903 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
       timescaledb: false
-
