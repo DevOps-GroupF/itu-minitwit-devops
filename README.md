@@ -1,5 +1,16 @@
 # Group F - MiniTwit on ASP.NET Core Razor Pages
 **Group members**: nicje, mlsc, dmon, gelu, piro.
+
+## Auxiliary Repository: Deployment
+
+We have a secondary repository: <https://github.com/DevOps-GroupF/server-files>
+
+This repository contains the logic for deploying and updating MiniTwit to production.
+
+We don't want clone the whole repository to each production server, as we only want the image to be present in production.
+However, we want version control of the deployment logic, hence the secondary repository.
+
+
 ## Decision Log
 Our decisions and other information are recorded in the [repository wiki](https://github.com/DevOps-GroupF/itu-minitwit-devops/wiki).
 
