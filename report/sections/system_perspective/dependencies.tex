@@ -2,45 +2,44 @@
 % !TeX spellcheck = en_GB
 \section{Systems dependencies}
 
-The list below, is the technolgies we are using in our application, group into categories of technogy. 
+The list below, is the technolgies we are using in our application, group into categories of technogy.
 
 \subsection*{Project Start - choose framework}
 
 \begin{itemize}
-    \item Microsoft AspNetCore v2: For basis web framework to handle, request, athentication, 
-    \item Dotnet API framework: For handling RESTFull API's 
-    \item Swagger: For dotnet API visualization
-    \item Microsoft EntityFrameworkCore version 8.x: For general handling dependency injection to a database connection. 
-    \item Postgress v.8: Choosen database servere for this project. 
-    \item Docker / Docker-compose / docker-swarm: For containerized applications 
-    \item gravatar: For provide user profile images. 
-    \item Github / Github actions/ Github secrets: For storing and deploying source code
-    \item DigitalOcean: Production server for our application 
+	\item Microsoft AspNetCore v2 as the foundational framework.
+	\item Dotnet API framework: For handling RESTFul APIs
+	\item Swagger: For dotnet API visualization
+	\item Microsoft EntityFrameworkCore version 8.x: For general handling dependency injection to a database connection.
+	\item Postgress v.8: Choosen database servere for this project.
+	\item Docker : For containerized applications
+	\item gravatar: For provide user profile images.
+	\item Github: For storing and deploying source code
+	\item DigitalOcean: Production server for our application
 \end{itemize}
-
 
 \subsection*{Monitoring}
 
 \begin{itemize}
-    \item prometheus/prometheus-net/prometheus-net.AspNetCore: For provide metrics to Grafana. 
-    \item Grafana: For Data Visualization of data from prometheus and direct data from Postgress database. 
+	\item prometheus/prometheus-net/prometheus-net.AspNetCore: For provide metrics to Grafana.
+	\item Grafana: For Data Visualization of data from prometheus and direct data from Postgress database.
 \end{itemize}
 
 \subsection*{Logging}
 
 \begin{itemize}
-    \item Serilog AspNetCore v.8: For logging.
-    \item Fluentd: For collecting logs from different sources. 
+	\item Serilog AspNetCore v.8: For logging.
+	\item Fluentd: For collecting logs from different sources.
 \end{itemize}
 
 
 \subsection*{Software quality - Testing}
 
 \begin{itemize}
-    \item Sonarqube: Static analyzer for code quality and securit issues
-    \item CodeClimate: Another static analyzer also for code quality and securit issues
-    \item Playwright: UI testing 
-    \item Cypress: End-2-end testing
-    \item Xunit: For Basic Unit testing
+	\item Sonarqube: Static analyzer for code quality and securit issues
+	\item CodeClimate: Another static analyzer also for code quality and securit issues
+	\item Playwright: UI testing
+	\item Cypress: End-2-end testing
+	\item Xunit: For Basic Unit testing
 \end{itemize}
 
