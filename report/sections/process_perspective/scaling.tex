@@ -4,11 +4,11 @@ Our strategy for scaling and updates is based on our choice of deploying the app
 %We chose Docker Swarm specifically because installation of Docker was already a part of our automated provisioning procedure, so it would reuire no extra installations.
 %As such, we could readily migrate from our initial Docker Compose-setup to Docker Swarm.
 
-Currently, our provisioning script creates four virtual machines for a fresh provisioning of our entire project:
+Currently, our provisioning script creates four virtual machines for a fresh provisioning of our entire project, as can be seen in figure \ref{fig:deployment}:
 
 \begin{itemize}
 	\item One VM for a a Docker Swarm \textit{manager}-node
-	\item Three VM's as Docker Swarm \textit{worker}-nodes
+	\item Three VMs as Docker Swarm \textit{worker}-nodes
 \end{itemize}
 
 The three worker nodes run a replica of the app.

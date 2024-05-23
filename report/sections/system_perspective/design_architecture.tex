@@ -2,8 +2,8 @@
 % !TeX spellcheck = en_GB
 \section{Design and Architecture}\label{sec:design-arch}
 
-Our final implementation of MiniTwit takes the form of a monolith.%, where all the busineess logic of the system system in production is contained in one component: The \texttt{MiniTwit} application.
-However, all the auxilliary components are deployed as seperate services that operate in adjecency the the MiniTwit application component.
+Our final implementation of MiniTwit takes the form of a monolith. %, where all the busineess logic of the system system in production is contained in one component: The \texttt{MiniTwit} application.
+However, all the auxilliary components are deployed as seperate services that operate in adjecency to the MiniTwit application component.
 
 \subsection{MiniTwit Application Component}
 
@@ -14,7 +14,7 @@ The monolithic app is delegated into two \textit{areas}:%, as they are referred 
 	\item \texttt{FrontEnd}: Provides a web-interface for the human users.% of our system. %It is structured as a classic MVC-webapp, and the views are virtually identical to the UI provided by the Flask-based Minitwit-application that was provided to us in the beginning of the course.
 \end{itemize}
 
-Both areas use the same object-relational mapping and data abstraction%:. As such, they are simply two different ways to interface with our system.
+Both areas use the same object-relational mapping and data abstraction.%:. As such, they are simply two different ways to interface with our system.
 
 \begin{figure}
 	\begin{center}

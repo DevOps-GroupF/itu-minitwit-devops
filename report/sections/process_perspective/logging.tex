@@ -26,9 +26,9 @@ A diagram describing our use and implementation of Fluentd can be seen in figure
 
 \subsubsection*{Fluentd Configuration}
 
-Fluentd is configured to listen for incoming log data.%via the forward input plugin on port 24224.
-Log data from different sources is matched using the match directive.%which specifies the destination path and format for the corresponding log data.
-Log data is buffered using the buffer directive to handle data spikes or network outages.%, ensuring reliable log collection.
+Fluentd is configured to listen for incoming log data. %via the forward input plugin on port 24224.
+Log data from different sources is matched using the match directive. %which specifies the destination path and format for the corresponding log data.
+Log data is buffered using the buffer directive to handle data spikes or network outages.
 
 \subsubsection*{Docker Compose Configuration}
 

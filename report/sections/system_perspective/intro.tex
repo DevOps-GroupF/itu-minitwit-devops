@@ -5,7 +5,7 @@
 
 \subsection{Choice of Web framwork}
 In our project, we have choosen to work with \textit{.NET}, the Microsoft open source web framework, in conjunction with Postgres, an open source database.
-Both options are widely used and well-maintained and documented, which were the primary reasons for our choice.
+Both options are widely used, well-maintained and documented, which were the primary reasons for our choice.
 %The choice of .NET is based on several factors:
 
 % \begin{enumerate}
@@ -24,7 +24,7 @@ We elected not to use a dedicated virtualization solution,
 %as we did not find them to provide enough benefit for the time it would take to setup. 
 since we are already using Docker, and thus we assessed that achieving further encapsulation of the environment was not a teneable investment.
 
-Using Docker was an easy choice: We avoid problems with incompatible developer machines, and it is also very easy to deploy docker images to our VM's. Furthermore,
+Using Docker was an easy choice: We avoid problems with incompatible developer machines, and it is also very easy to deploy docker images to our VMs. Furthermore,
 %the choice of Docker paid dividends later in the project, as 
 the choice allowed us to use the same Docker Compose configuration for deploying a Docker Swarm (see section \ref{sec:scaling} on page \pageref{sec:scaling}).
 
@@ -36,10 +36,10 @@ Instead of a virtualization tool, we developed and evolved a custom provisioning
 
 %We were prevented from using DigitalOcean in the initial stage of the course, which made us chose Azure instead, since we also were entitled to student credits there. However, we ran out of credits
 We were able to get student credits on DigitalOcean, and the infrastructure was cheap enough for us to run our system throughout the course.
-Furthermore, We found the Digital Ocean Python binding package \texttt{pydo}\footnote{See \url{https://pypi.org/project/pydo/} (accessed on the 20th of May, 2024)} to be the most well-documented, as the offical Digital Ocean API documentation\footnote{See \url{https://docs.digitalocean.com/reference/} (accessed on the 20th of May, 2024)}, which lead us to write our provisioning script in Python.
+Furthermore, we found the Digital Ocean Python binding package \texttt{pydo}\footnote{See \url{https://pypi.org/project/pydo/} (accessed on the 20th of May, 2024)} to be the most well-documented, as the offical Digital Ocean API documentation\footnote{See \url{https://docs.digitalocean.com/reference/} (accessed on the 20th of May, 2024)}, which lead us to write our provisioning script in Python.
 %Also, the script-like nature of the Python language is more appropiate for the task of provisioning.
 
 
 \subsection{CD/CI reason}
-Since we use github for storing our source code, we choose to choice github for CD/CI tool, since these two work very well together.
+Since we use Github for storing our source code, we found it natural to use Github for CD/CI tool.%, since these two work very well together.
 
