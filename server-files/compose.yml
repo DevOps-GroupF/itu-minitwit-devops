@@ -1,0 +1,122 @@
+networks:
+  itu-minitwit-network:
+    external: false
+    name: itu-minitwit-network
+
+services:
+  minitwit-service:
+    image: ghcr.io/devops-groupf/itu-minitwit-devops:latest
+    environment:
+      - DB_CONN_STRING=${DB_CONN_STRING}
+    ports:
+      - 8080:8080
+    depends_on:
+      - grafana
+      - prometheus
+      - fluentd
+    networks:
+      - itu-minitwit-network
+    logging:
+      driver: fluentd
+      options:
+        fluentd-async-connect: "true"
+        fluentd-retry-wait: "1s"
+        fluentd-max-retries: "30"
+        tag: minitwit_service
+    deploy:
+      mode: replicated
+      replicas: 3
+      endpoint_mode: vip
+      update_config:
+        parallelism: 1
+      rollback_config:
+        parallelism: 1
+      placement:
+        constraints:
+          - node.role == worker
+
+  prometheus:
+    image: prom/prometheus:v2.51.0-rc.0
+    container_name: prometheus-container
+    volumes:
+      - prometheus_data:/prometheus
+      - ./configuration_files/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - itu-minitwit-network
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-async-connect: "true"
+        fluentd-retry-wait: "1s"
+        fluentd-max-retries: "30"
+        tag: prometheus
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+            - node.role == manager
+
+  grafana:
+    image: grafana/grafana:10.2.4
+    container_name: grafana-container
+    ports:
+      - "3000:3000"
+    networks:
+      - itu-minitwit-network
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASS}
+      - DB_CONN_URL=${DB_CONN_URL}
+      - DB_CONN_USER=${DB_CONN_USER}
+      - DB_CONN_PASSWORD=${DB_CONN_PASSWORD}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - type: bind
+        source: ./configuration_files/grafana_dashboard_setup.yaml
+        target: /etc/grafana/provisioning/dashboards/grafana_dashboard_setup.yaml
+      - type: bind
+        source: ./configuration_files/grafana_dashboard_0.json
+        target: /var/lib/grafana/dashboards/grafana_dashboard_0.json
+      - type: bind
+        source: ./configuration_files/grafana_dashboard_1.json
+        target: /var/lib/grafana/dashboards/grafana_dashboard_1.json
+      - type: bind
+        source: ./configuration_files/prometheus_datasource.yaml
+        target: /etc/grafana/provisioning/datasources/prometheus_datasource.yaml
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-async-connect: "true"
+        fluentd-retry-wait: "1s"
+        fluentd-max-retries: "30"
+        tag: grafana
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+            - node.role == manager
+  
+  fluentd:
+    image: fluent/fluentd:v1.12-debian
+    container_name: fluentd-container
+    volumes:
+      - ./configuration_files/fluent.conf:/fluentd/etc/fluent.conf
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+    networks:
+      - itu-minitwit-network
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+            - node.role == manager
+
+volumes:
+  grafana_data:
+  prometheus_data:
