@@ -3,9 +3,6 @@
 \section{Logging}
 \subsection{Fluentd}
 \subsubsection{Decision Log}
-First we tried to implement our logging with kibana and elastic search, which worked on our local machines. 
-The problem with this was that we only had 1GB RAM on our web server,  which wasn't enough to run elastic search. 
-To resolve that issue we looked for other technologies like Fluentd.
 
 In order to manage difficulties like logs scattered across multiple sources or disparate log formats we decided to use Fluentd. 
 Fluentd is an open source data collector which processes the data from various sources, making it easier to manage and analyze. 
