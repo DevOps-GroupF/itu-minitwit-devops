@@ -23,7 +23,7 @@
 \end{figure}
 
 \subsubsection*{Fluentd Configuration}
-\paragraph{} Fluentd is configured to listen for incoming log data via the forward input plugin on port 24224. Log data from different sources  (minitwit-database, minitwit-service, prometheus, grafana) is matched using the match directive which specifies the destination path and format for the corresponding log data. Log data is buffered using the buffer directive to handle data spikes or network outages, ensuring reliable log collection.
+\paragraph{} Fluentd is configured to listen for incoming log data via the forward input plugin on port 24224. Log data from different sources is matched using the match directive which specifies the destination path and format for the corresponding log data. Log data is buffered using the buffer directive to handle data spikes or network outages, ensuring reliable log collection.
 
 \subsubsection*{Docker Compose Configuration}
-\paragraph{} A Fluentd container is defined using the fluent/fluentd:v1.12-debian image. Each service in the Docker Compose file depends on the Fluentd service for logging. Logging is configured to use Fluentd as the logging driver, with specific options (fluentd-async-connect, fluentd-retry-wait, fluentd-max-retries) to ensure reliable log transmission. Each service specifies a unique tag to route log data to the appropriate destination, which in our case are simple log files.
+\paragraph{} A Fluentd container is defined using the fluent/fluentd:v1.12-debian image. Each service in the Docker Compose file depends on the Fluentd service for logging. Logging is configured to use Fluentd as the logging driver, with specific options to ensure reliable log transmission. Each service specifies a unique tag to route log data to the appropriate destination, which in our case are simple log files.
