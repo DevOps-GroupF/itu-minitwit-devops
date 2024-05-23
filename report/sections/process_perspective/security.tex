@@ -6,17 +6,17 @@
 % Identify assets (e.g. web application)
 \paragraph{} We have different assets that need to be protected:
 \begin{itemize}
-	\item The web application: The web app serves and receives content from users.
-	\item The API: The API allows for software developed by third-parties (f.i. the simulator) to obtain content from our application and sent their own.
-	\item The database: The database stores all user information.
+	\item The web application.
+	\item The API.
+	\item The database.
 	\item Development, debugging, and deployment tools:
 	      \begin{itemize}
-		      \item SSH: We use SSH to connect to and configure our Ubuntu Server VM(s).
-		      \item Graphana/Prometheus: We use Graphana and Prometheus to monitor our system.
-		      \item GitHub: We use GitHub to store our code, as well as the deployment logic for our application.
-		      \item GitHub Actions: We use GitHub Actions for our CI/CD pipeline.
-		      \item GitHub Secrets: Secrets needed by the CI/CD pipeline are stored in GitHub Secrets.
-		      \item DigitalOcean: Our VM and database are provided by DigitalOcean and managed via their web interface or API.
+		      \item SSH.
+		      \item Graphana/Prometheus.
+		      \item GitHub.
+		      \item GitHub Actions.
+		      \item GitHub Secrets.
+		      \item DigitalOcean.
 	      \end{itemize}
 \end{itemize}
 
@@ -24,21 +24,21 @@
 % Identify threat sources (e.g. SQL injection)
 \paragraph{} Thread sources can be diverse, and attach different layers of our application:
 \begin{itemize}
-	\item Vulnerabilities in our code: Vulnerabilities in our code could allow attackers to access user data or send malware to users. Among the vulnerabilities that we \textbf{could} have, these are the most relevant ones:
+	\item Vulnerabilities in our code: Among the vulnerabilities that we \textbf{could} have, these are the most relevant ones:
 	      \begin{itemize}
-		      \item SQL injection: SQL injection would allow attackers to access and modify user data.
-		      \item Cross Site Scripting (XSS): Cross Site Scripting would allow attackers to potentially access and modify user data, as well as to sent malicious information to users.
+		      \item SQL injection.
+		      \item Cross Site Scripting (XSS).
 	      \end{itemize}
 	      We need to emphasise that we have checked our code for such vulnerabilities, and we haven't found any.
-	\item Missing HTTPS and firewall: The use of basic HTTP could result on attackers snooping on users and obtaining password, or on man-in-the-middle attacks.
-	\item Misconfigured firewall: A misconfigured firewall could give attackers direct access to, amongst others, the DB.
-	\item Stolen SSH keys for the VM: Stolen SSH keys for the VM would allow attackers to execute arbitrary code in our VM.
-	\item Stolen credentials for Graphana: Stolen credentials for Graphana would allow attackers to obtain access to the monitoring data of our system.
-	\item Public Prometheus metrics: Metrics from the application for Prometheus to scrap are publicly available at \textit{/metrics}. Attackers could use this information to gain information about the operations being executed on the system.
-	\item Stolen credentials for GitHub: Stolen credentials or tokens for GitHub would allow attackers to view, modify, and delete our code, CI/CD pipeline and/or deployment logic, essentially allowing them to execute arbitrary code in our VM.
-	\item Stolen credentials for DigitalOcean: Stolen credentials or API keys for DigitalOcean would allow attackers to delete and/or access our VM and database.
-	\item Vulnerabilities in the OS or Docker Images used: Vulnerabilities in the OS or Docker images used could allow attackers to take control over our system.
-	\item Supply chain attacks: Supply chain attacks could cause vulnerabilities to be introduced in the dependencies we use.
+	\item Missing HTTPS and firewall.
+	\item Misconfigured firewall.
+	\item Stolen SSH keys for the VM.
+	\item Stolen credentials for Graphana.
+	\item Public Prometheus metrics.
+	\item Stolen credentials for GitHub.
+	\item Stolen credentials for DigitalOcean.
+	\item Vulnerabilities in the OS or Docker Images used.
+	\item Supply chain attacks.
 \end{itemize}
 
 \subsubsection{Risk scenarios}
