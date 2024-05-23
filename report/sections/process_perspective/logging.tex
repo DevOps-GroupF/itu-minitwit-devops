@@ -3,9 +3,13 @@
 \section{Logging}
 \subsection{Fluentd}
 \subsubsection{Decision Log}
-\paragraph{} First we tried to implement our logging with kibana and elastic search, which worked on our local machines. The problem with this was that we only had 1GB RAM on our web server,  which wasn't enough to run elastic search. To resolve that issue we looked for other technologies like Fluentd.
+First we tried to implement our logging with kibana and elastic search, which worked on our local machines. 
+The problem with this was that we only had 1GB RAM on our web server,  which wasn't enough to run elastic search. 
+To resolve that issue we looked for other technologies like Fluentd.
 
-\paragraph{} In order to manage difficulties like logs scattered across multiple sources or disparate log formats we decided to use Fluentd. Fluentd is an open source data collector which processes the data from various sources, making it easier to manage and analyze. The following aspects show why we used Fluentd: 
+In order to manage difficulties like logs scattered across multiple sources or disparate log formats we decided to use Fluentd. 
+Fluentd is an open source data collector which processes the data from various sources, making it easier to manage and analyze. 
+The following aspects show why we used Fluentd: 
 \begin{itemize}
     \item \textbf{Unified Logging Layer:} Fluentd provides a unified platform for collecting, transforming, and routing logs from diverse sources, simplifying the log management process.
     \item \textbf{Data Agnosticism:} Regardless of the data source Fluentd seamlessly collects and processes data in a unified format.
@@ -14,7 +18,8 @@
 \end{itemize}
 
 \subsubsection{Implementation of Fluentd}
-\paragraph{} A diagram describing our use and implementation of Fluentd can be seen in figure \ref{fig:logging2}.
+
+A diagram describing our use and implementation of Fluentd can be seen in figure \ref{fig:logging2}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{Logging2.png}
@@ -23,7 +28,15 @@
 \end{figure}
 
 \subsubsection*{Fluentd Configuration}
-\paragraph{} Fluentd is configured to listen for incoming log data via the forward input plugin on port 24224. Log data from different sources  (minitwit-database, minitwit-service, prometheus, grafana) is matched using the match directive which specifies the destination path and format for the corresponding log data. Log data is buffered using the buffer directive to handle data spikes or network outages, ensuring reliable log collection.
+
+Fluentd is configured to listen for incoming log data via the forward input plugin on port 24224. 
+Log data from different sources  (minitwit-database, minitwit-service, prometheus, grafana) is matched using the match directive which specifies the destination path and format for the corresponding log data. 
+Log data is buffered using the buffer directive to handle data spikes or network outages, ensuring reliable log collection.
 
 \subsubsection*{Docker Compose Configuration}
-\paragraph{} A Fluentd container is defined using the fluent/fluentd:v1.12-debian image. Each service in the Docker Compose file depends on the Fluentd service for logging. Logging is configured to use Fluentd as the logging driver, with specific options (fluentd-async-connect, fluentd-retry-wait, fluentd-max-retries) to ensure reliable log transmission. Each service specifies a unique tag to route log data to the appropriate destination, which in our case are simple log files.
+
+A Fluentd container is defined using the fluent/fluentd:v1.12-debian image. 
+Each service in the Docker Compose file depends on the Fluentd service for logging. 
+Logging is configured to use Fluentd as the logging driver, with specific options (fluentd-async-connect, fluentd-retry-wait, fluentd-max-retries) to ensure reliable log transmission. 
+%Each service specifies a unique tag to route log data to the appropriate destination, which in our case are simple log files.
+

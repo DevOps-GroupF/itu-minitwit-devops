@@ -10,14 +10,14 @@
 	\item The API: The API allows for software developed by third-parties (f.i. the simulator) to obtain content from our application and sent their own.
 	\item The database: The database stores all user information.
 	\item Development, debugging, and deployment tools:
-	\begin{itemize}
-		\item SSH: We use SSH to connect to and configure our Ubuntu Server VM(s).
-		\item Graphana/Prometheus: We use Graphana and Prometheus to monitor our system.
-		\item GitHub: We use GitHub to store our code, as well as the deployment logic for our application.
-		\item GitHub Actions: We use GitHub Actions for our CI/CD pipeline.
-		\item GitHub Secrets: Secrets needed by the CI/CD pipeline are stored in GitHub Secrets.
-		\item DigitalOcean: Our VM and database are provided by DigitalOcean and managed via their web interface or API.
-	\end{itemize}
+	      \begin{itemize}
+		      \item SSH: We use SSH to connect to and configure our Ubuntu Server VM(s).
+		      \item Graphana/Prometheus: We use Graphana and Prometheus to monitor our system.
+		      \item GitHub: We use GitHub to store our code, as well as the deployment logic for our application.
+		      \item GitHub Actions: We use GitHub Actions for our CI/CD pipeline.
+		      \item GitHub Secrets: Secrets needed by the CI/CD pipeline are stored in GitHub Secrets.
+		      \item DigitalOcean: Our VM and database are provided by DigitalOcean and managed via their web interface or API.
+	      \end{itemize}
 \end{itemize}
 
 \subsubsection{Threat sources}
@@ -25,11 +25,11 @@
 \paragraph{} Thread sources can be diverse, and attach different layers of our application:
 \begin{itemize}
 	\item Vulnerabilities in our code: Vulnerabilities in our code could allow attackers to access user data or send malware to users. Among the vulnerabilities that we \textbf{could} have, these are the most relevant ones:
-	\begin{itemize}
-		\item SQL injection: SQL injection would allow attackers to access and modify user data.
-		\item Cross Site Scripting (XSS): Cross Site Scripting would allow attackers to potentially access and modify user data, as well as to sent malicious information to users.
-	\end{itemize}
-	We need to emphasise that we have checked our code for such vulnerabilities, and we haven't found any.
+	      \begin{itemize}
+		      \item SQL injection: SQL injection would allow attackers to access and modify user data.
+		      \item Cross Site Scripting (XSS): Cross Site Scripting would allow attackers to potentially access and modify user data, as well as to sent malicious information to users.
+	      \end{itemize}
+	      We need to emphasise that we have checked our code for such vulnerabilities, and we haven't found any.
 	\item Missing HTTPS and firewall: The use of basic HTTP could result on attackers snooping on users and obtaining password, or on man-in-the-middle attacks.
 	\item Misconfigured firewall: A misconfigured firewall could give attackers direct access to, amongst others, the DB.
 	\item Stolen SSH keys for the VM: Stolen SSH keys for the VM would allow attackers to execute arbitrary code in our VM.
@@ -67,10 +67,10 @@
 \paragraph{} A risk matrix helps visualize the possible risks in terms of impact and probability. We classified the above scenarios according to their likehood and probability on the following matrix. Note that the numbers on the matrix correspond to the numbers on the list of risk scenarions above. \\
 \begin{tabular}{|l|l|l|l|}
 	\hline
-	& \textbf{High Impact} & \textbf{Medium Impact} & \textbf{Low Impact} \\ \hline
-	\textbf{Low Likelihood} & 5,8,9,10 & - & - \\ \hline
-	\textbf{Medium Likelihood} & 11 & 1,2 & 6 \\ \hline
-	\textbf{High Likelihood} & - & 3,4 & 7 \\ \hline
+	                           & \textbf{High Impact} & \textbf{Medium Impact} & \textbf{Low Impact} \\ \hline
+	\textbf{Low Likelihood}    & 5,8,9,10             & -                      & -                   \\ \hline
+	\textbf{Medium Likelihood} & 11                   & 1,2                    & 6                   \\ \hline
+	\textbf{High Likelihood}   & -                    & 3,4                    & 7                   \\ \hline
 \end{tabular}
 
 \subsubsection{Steps to take}
@@ -87,5 +87,5 @@
 
 \subsection{Steps taken}
 % Based on your security assessment, take steps to improve the security of your system. Briefly report on the steps you took.
-\paragraph{} 
+\paragraph{}
 We encrypted our SSH key with a strong passphrase, which teams members keep separate from the key. Most GitHub and DigitalOcean accounts already had 2FA enabled, and we enabled it in all the remaining ones. We decided against hiding Grafana behind a firewall since it needs to be access by third parties, namely the professors.

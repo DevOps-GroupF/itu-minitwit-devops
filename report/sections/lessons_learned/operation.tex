@@ -2,21 +2,25 @@
 
 Our significant operative issues were all caused by our reliance on student credits for our infrastructure needs.
 
-The first major hurdle occurred when we unexexpectedly depleted our credits on Azure. This was caused directly by adding a managed database instance to our infrastructure, as credits were deducted based on the computational and I/O cost of persisting the high-frequency changes incurred from the simulator.
+The first major hurdle occurred when we unexexpectedly depleted our credits on Azure,
+%This was caused directly by adding a managed database instance to our infrastructure, as credits were deducted based on the computational and I/O cost of persisting the high-frequency changes incurred from the simulator.
+%Since we only discovered this issue once our credits were depleted, our 
+which made our
+application
+%was 
+inoperable, and we were forced to find a new hosting solution for our project.
 
-Since we only discovered this issue once our credits were depleted, our application was inoperable, and we were forced to find a new hosting solution for our project.
-
-While we previously were prevented from creating accounts on DigitalOcean, for some reason we were to create accounts at that later point.
-Getting deployed on DigitalOcean was trivial, but since we were now very wary of the consequences of depleting our credits, we consistently opted for the cheapest resources available to us.
-
+%While we previously were prevented from creating accounts on DigitalOcean, for some reason we were to create accounts at that later point.
+We decided to migrate to DigitalOcean.
+%Getting deployed on DigitalOcean was trivial, but 
+Since we were now very wary of the consequences of depleting our credits, we consistently opted for the cheapest resources available to us.
 This later caused major operational issues, as our DigitalOcean VM's would exhaust their storage capacity with logs, which was also unexpected by us.
-While it was easy to prune the logs and redeploy, the surprising nature of the issue did affect our operation.
-Another issue related to our frugal mentality came in the form of memory constraints, were some of the auxillairy services used so much memory, that the VM ran out of RAM and resorted to swap memory, which made the performance of the MiniTwit applicaiton grind to a halt.
+%While it was easy to prune the logs and redeploy, the surprising nature of the issue did affect our operation.
+%Another issue related to our frugal mentality came in the form of memory constraints, were some of the auxillairy services used so much memory, that the VM ran out of RAM and resorted to swap memory, which made the performance of the MiniTwit applicaiton grind to a halt.
 
 In retrospect, we hypothesize that, as a group, our stance on resource spenditure went from a laissez-faire approach, where we did not consider if resources were depletable, to a polar opposite position, where we were overly careful not to spend resouces.
-A review of our DigitalOcean credits show that we still have a significant left.
-
+%A review of our DigitalOcean credits show that we still have a significant left.
 The lesson learned from this is that in DevOps, one should carefully consider how to spend the resources available: Spend too much, and the lights might go out. Spend too little, and one risks suffocating the system unnecesarily.
-The right approach seems to conduct an initial analysis of the optimal allocation of the resources available, implement the findings of that analysis, and then consistently monitor the actual usage so that the scale of the infrastructure can be adjusted to the real-life cost, a cost that most likely depends on a dynamic factors such as user traffic.
+%The right approach seems to conduct an initial analysis of the optimal allocation of the resources available, implement the findings of that analysis, and then consistently monitor the actual usage so that the scale of the infrastructure can be adjusted to the real-life cost, a cost that most likely depends on a dynamic factors such as user traffic.
 
 
