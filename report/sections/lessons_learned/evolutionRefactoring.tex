@@ -1,7 +1,9 @@
 \subsection{Evolution and Refactoring}
 
-We have followed the recommendation to implement the changes in small steps, which made the whole project more manageable. 
-Nevertheless, we ran into some issues, especially with our logging. We tried to implement elastic search with Kibana, which worked perfectly on our local machines, 
-but deploying it crashed the server due to limited memory. We spent a lot of time on how we could reduce the memory usage so our server keeps up and running 
-before we decided to change to Fluentd, which in the end was the better solution. The lesson learned from this is that before implementing a new feature, 
-it is good practice to look at all available technologies and compare them to each other in order to save a lot of time. 
+%We have followed the recommendation to implement the changes in small steps, which made the whole project more manageable. 
+%Nevertheless, 
+%We ran into some issues, especially with our logging.
+We tried to implement elastic search with Kibana, which worked locally, but deploying it crashed the server due to limited memory.
+%We spent a lot of time on how we could reduce the memory usage so our server keeps up and running before 
+We decided to change to Fluentd, which in the end was the better solution.
+The lesson learned from this is that before implementing a new feature, it is good practice to look at all available technologies and compare them to each other in order to save a lot of time.

@@ -1,6 +1,6 @@
 \section{Current state of our application}
 
-We have use Sonarqube and codeclimate to analyze our code base. This section will describe the current state of our application, acording to the two analyze tools. 
+We have use Sonarqube and codeclimate to analyze our code base. This section will describe the current state of our application, acording to the two analyze tools.
 
 \subsection*{Codeclimate}
 
@@ -11,10 +11,13 @@ We have use Sonarqube and codeclimate to analyze our code base. This section wil
 	\label{fig:Code climate}
 \end{figure}
 
-Codeclimate general reports 323 code smells, and 261 duplication. Mostly of these is from the javascript lib we are using, for some reason even try to filter code, so only \texttt{C\#} code is shown, it still include it. Also it was also possible to filter critical issues, here were 6 found, but related to our used third party javascript library jquery. So nothing we can do here. 
+Codeclimate general reports 323 code smells, and 261 duplications,
+but by filtering out included implementations of JavaScript libraries, the real numbers might be reduced significantly.
+After the filtering, we found 6 critical issues, which were all related to our usage of JavaScript libraries.
+%Mostly of these is from the javascript lib we are using, for some reason even try to filter code, so only \texttt{C\#} code is shown, it still include it. Also it was also possible to filter critical issues, here were 6 found, but related to our used third party javascript library jquery. %So nothing we can do here. 
 
 \subsection*{Sonarqube}
-Sunarqube report several issues. Mostly it report security issues, because we are logging to much in our application, which could cause security issues. 
+Sunarqube report several issues. Mostly it report security issues, because we are logging to much in our application, which could cause security issues.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.75\textwidth]{sonarqube.png}

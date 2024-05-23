@@ -6,39 +6,40 @@
 % Identify assets (e.g. web application)
 \paragraph{} We have different assets that need to be protected:
 \begin{itemize}
-	\item The web application: The web app serves and receives content from users.
-	\item The API: The API allows for software developed by third-parties (f.i. the simulator) to obtain content from our application and sent their own.
-	\item The database: The database stores all user information.
-	\item Development, debugging, and deployment tools:
-	\begin{itemize}
-		\item SSH: We use SSH to connect to and configure our Ubuntu Server VM(s).
-		\item Graphana/Prometheus: We use Graphana and Prometheus to monitor our system.
-		\item GitHub: We use GitHub to store our code, as well as the deployment logic for our application.
-		\item GitHub Actions: We use GitHub Actions for our CI/CD pipeline.
-		\item GitHub Secrets: Secrets needed by the CI/CD pipeline are stored in GitHub Secrets.
-		\item DigitalOcean: Our VM and database are provided by DigitalOcean and managed via their web interface or API.
-	\end{itemize}
+	\item The web application.
+	\item The API.
+	\item The database.
+	\item Development, debugging, and deployment tools.
+	      % \begin{itemize}
+	      %  \item SSH.
+	      %  \item Graphana/Prometheus.
+	      %  \item GitHub.
+	      %  \item GitHub Actions.
+	      %  \item GitHub Secrets.
+	      %  \item DigitalOcean.
+	      % \end{itemize}
 \end{itemize}
 
 \subsubsection{Threat sources}
 % Identify threat sources (e.g. SQL injection)
-\paragraph{} Thread sources can be diverse, and attach different layers of our application:
+\paragraph{} Thread sources can be diverse, and acttack different layers of our application:
 \begin{itemize}
-	\item Vulnerabilities in our code: Vulnerabilities in our code could allow attackers to access user data or send malware to users. Among the vulnerabilities that we \textbf{could} have, these are the most relevant ones:
-	\begin{itemize}
-		\item SQL injection: SQL injection would allow attackers to access and modify user data.
-		\item Cross Site Scripting (XSS): Cross Site Scripting would allow attackers to potentially access and modify user data, as well as to sent malicious information to users.
-	\end{itemize}
-	We need to emphasise that we have checked our code for such vulnerabilities, and we haven't found any.
-	\item Missing HTTPS and firewall: The use of basic HTTP could result on attackers snooping on users and obtaining password, or on man-in-the-middle attacks.
-	\item Misconfigured firewall: A misconfigured firewall could give attackers direct access to, amongst others, the DB.
-	\item Stolen SSH keys for the VM: Stolen SSH keys for the VM would allow attackers to execute arbitrary code in our VM.
-	\item Stolen credentials for Graphana: Stolen credentials for Graphana would allow attackers to obtain access to the monitoring data of our system.
-	\item Public Prometheus metrics: Metrics from the application for Prometheus to scrap are publicly available at \textit{/metrics}. Attackers could use this information to gain information about the operations being executed on the system.
-	\item Stolen credentials for GitHub: Stolen credentials or tokens for GitHub would allow attackers to view, modify, and delete our code, CI/CD pipeline and/or deployment logic, essentially allowing them to execute arbitrary code in our VM.
-	\item Stolen credentials for DigitalOcean: Stolen credentials or API keys for DigitalOcean would allow attackers to delete and/or access our VM and database.
-	\item Vulnerabilities in the OS or Docker Images used: Vulnerabilities in the OS or Docker images used could allow attackers to take control over our system.
-	\item Supply chain attacks: Supply chain attacks could cause vulnerabilities to be introduced in the dependencies we use.
+	\item Vulnerabilities in our code: Among the vulnerabilities that we \textbf{could} have, these are the most relevant ones:
+	      \begin{itemize}
+		      \item SQL injection.
+		      \item Cross Site Scripting (XSS).
+	      \end{itemize}
+	      We need to emphasise that we have checked our code for such vulnerabilities, and we haven't found any.
+	\item Missing HTTPS and firewall.
+	\item Misconfigured firewall.
+	      % \item Stolen SSH keys for the VM.
+	      % \item Stolen credentials for Graphana.
+	\item Public Prometheus metrics.
+	      % \item Stolen credentials for GitHub.
+	      % \item Stolen credentials for DigitalOcean.
+	\item Stolen credentials for all dependencies that require authentication
+	\item Vulnerabilities in the OS or Docker Images used.
+	\item Supply chain attacks.
 \end{itemize}
 
 \subsubsection{Risk scenarios}
@@ -46,17 +47,17 @@
 \paragraph{} Some possible scenarios of attacks are as follows:
 \begin{enumerate}
 	% Note: Add only elements at the end of the list, or you'll have to modify the risk matrix below!
-	\item Attacker performs SQL injection to download sensitive user data.
-	\item Attacker performs XSS on web application to download sensitive user data or deliver malware.
-	\item Attacker snoops on user traffic and obtains a user's password, which then uses to impersonate them.
-	\item Attacker performs a man-in-the-middle attack on a user and provides them with false information.
-	\item Attacker steals SSH keys, connects to the VM, from there to the DB, and downloads sensitive user data or deliver malware.
-	\item Attacker steals Graphana credentials, connects to it, and learns more information about the usage of our system.
-	\item Attacker connects to \textit{/metrics} and learns more information about the usage of our system.
-	\item Attacker steals GitHub credentials and modifies our code or CI/CD to introduce vulnerabilities, or execute arbitrary code.
-	\item Attacker steals DigitalOcean credentials and downloads sensitive user data from the DB, or use our VM to deliver malware.
-	\item Attacker steals DB credentials and connects directly to it, due to a firewall misconfiguration.
-	\item Attacker uses vulnerabilities our the OS or Docker images to connect to the DB and download user data, or to the VM and deliver malware.
+	\item SQL injection. %to download sensitive user data.
+	\item XSS on web application.% to download sensitive user data or deliver malware.
+	\item Snooping on user traffic.% and obtains a user's password, which then uses to impersonate them.
+	\item man-in-the-middle attack.% on a user and provides them with false information.
+	\item Stealing of SSH keys.%, connects to the VM, from there to the DB, and downloads sensitive user data or deliver malware.
+	\item Attacker steals Graphana credentials.%, connects to it, and learns more information about the usage of our system.
+	\item Attacker connects to \textit{/metrics} and can surveil the system.
+	\item Attacker steals GitHub credentials.% and modifies our code.% or CI/CD to introduce vulnerabilities, or execute arbitrary code.
+	\item Attacker steals DigitalOcean credentials.% and downloads sensitive user data from the DB, or use our VM to deliver malware.
+	\item Attacker steals DB credentials.% and connects directly to it, due to a firewall misconfiguration.
+	\item Attacker uses vulnerabilities of our the OS or Docker images to connect to the DB.% and download user data, or to the VM and deliver malware.
 \end{enumerate}
 
 \subsection{Risk Analysis}
@@ -64,28 +65,34 @@
 % Determine likelihood
 % Determine impact
 % Use a Risk Matrix to prioritize risk of scenarios
-\paragraph{} A risk matrix helps visualize the possible risks in terms of impact and probability. We classified the above scenarios according to their likehood and probability on the following matrix. Note that the numbers on the matrix correspond to the numbers on the list of risk scenarions above. \\
+The risk matrix below helps visualize the possible risks in terms of impact and probability. %We classified the above scenarios according to their likehood and probability on the following matrix. Note that the numbers on the matrix correspond to the numbers on the list of risk scenarions above. \\
+
 \begin{tabular}{|l|l|l|l|}
 	\hline
-	& \textbf{High Impact} & \textbf{Medium Impact} & \textbf{Low Impact} \\ \hline
-	\textbf{Low Likelihood} & 5,8,9,10 & - & - \\ \hline
-	\textbf{Medium Likelihood} & 11 & 1,2 & 6 \\ \hline
-	\textbf{High Likelihood} & - & 3,4 & 7 \\ \hline
+	                           & \textbf{High Impact} & \textbf{Medium Impact} & \textbf{Low Impact} \\ \hline
+	\textbf{Low Likelihood}    & 5,8,9,10             & -                      & -                   \\ \hline
+	\textbf{Medium Likelihood} & 11                   & 1,2                    & 6                   \\ \hline
+	\textbf{High Likelihood}   & -                    & 3,4                    & 7                   \\ \hline
 \end{tabular}
 
 \subsubsection{Steps to take}
 % Discuss what are you going to do about each of the scenarios
 \paragraph{} In order to minimize our risk, we are going to take the following steps:
 \begin{itemize}
-	\item Encrypt our SSH key with a passphrase in order to make it more difficult to steal.
+	\item Encrypt our SSH key with a passphrase.% in order to make it more difficult to steal.
 	\item Hide Graphana behind a firewall.
 	\item Limit the access to \textit{/metrics}.
-	\item Use two-factor-authentication in all GitHub and DigitalOcean accounts of the team members.
+	\item Use two-factor-authentication in all GitHub and DigitalOcean accounts.% of the team members.
 	\item Continue using best practices when developing, regarding SQL injection and XSS attacks.
 	\item Be aware of the dependencies we are using and their potential vulnerabilities, and keep them updated.
 \end{itemize}
 
 \subsection{Steps taken}
 % Based on your security assessment, take steps to improve the security of your system. Briefly report on the steps you took.
-\paragraph{} 
-We encrypted our SSH key with a strong passphrase, which teams members keep separate from the key. Most GitHub and DigitalOcean accounts already had 2FA enabled, and we enabled it in all the remaining ones. We decided against hiding Grafana behind a firewall since it needs to be access by third parties, namely the professors.
+
+\begin{itemize}
+	\item We encrypted our SSH key with a strong passphrase.%, which teams members keep separate from the key. 
+	\item Most GitHub and DigitalOcean accounts already had 2FA enabled, and we enabled it in all the remaining ones.
+	\item We decided against hiding Grafana behind a firewall since it needs to be access by third parties, namely the professors.
+\end{itemize}
+
