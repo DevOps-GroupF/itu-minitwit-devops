@@ -13,13 +13,19 @@
 \paragraph{} Together, Prometheus and Grafana form a comprehensive monitoring solution that addresses both data collection and visualization needs. Prometheus's robust data collection, combined with Grafana's powerful visualization and dashboarding features, provide a seamless and efficient way to monitor and manage all our systems.
 
 \subsection{Implementation of monitoring} 
-\paragraph{} A docker container of Prometheus and Grafana is running on the manager node in our docker swarm. Prometheus has been programmed through Grafana to gather mertics on all minitwit instances in all worker nodes and display them on the manager nodes Grafana dashboard. In addition, Grafana gathers data from a managed Digitalocean database, and displays metrics such as total followers and total tweets.
+\paragraph{} A docker container of Prometheus and Grafana is running on the manager node in our docker swarm. Prometheus has been programmed through Grafana to gather mertics on all minitwit instances in all worker nodes and display them on the manager nodes Grafana dashboard. Metrics would be gathered on \{url\}:8080/metrics and that is where Prometheus can find them. In addition, Grafana gathers data from a managed Digitalocean database, and displays metrics such as total followers and total tweets.
 \paragraph{} The following figure describes how monitoring was implemented.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{Monitoring2.png}
 	\caption{Diagram describing our monitoring implementation}
 	\label{fig:Monitoring2}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{metrics.png}
+	\caption{Example of a worker nodes metrics page}
+	\label{fig:metrics}
 \end{figure}
 
 \subsection{Monitoring configuration}
