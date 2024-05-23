@@ -22,6 +22,9 @@ The easiest way to run the application is using the pre-configured docker compos
 docker-compose up
 ```
 
+It should be noted that this is the way to launch MiniTwit in a development environment. The production environment is configured in the [server-files repository](https://github.com/DevOps-GroupF/server-files).
+)
+
 ## Building and running the application manually
 The application can also be run manually. Bear in mind that the application has certain dependencies, like a DB, which will need to be set up manually in this case.
 The application can be built executing:
